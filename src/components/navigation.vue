@@ -32,6 +32,7 @@
     <v-divider></v-divider>
 
     <v-list dense class="pt-0">
+      
       <v-list-tile
         v-for="item in items"
         :key="item.title"
@@ -45,6 +46,28 @@
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
+
+      <v-list-group
+        prepend-icon="account_circle"
+        value="true"
+      >
+        <template v-slot:activator>
+          <v-list-tile>
+            <v-list-tile-title>Reportes</v-list-tile-title>
+          </v-list-tile>
+        </template>
+
+        <v-list-tile
+          v-for="item in reports"
+          :key="item.title"
+          :to="{name: item.link}"
+        >
+          <v-list-tile-title v-text="item.title"></v-list-tile-title>
+          <v-list-tile-action>
+            <v-icon v-text="item.icon"></v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -56,8 +79,14 @@
       return {
         drawer: true,
         items: [
-          { title: 'Home', icon: 'dashboard', link: 'home' },
-          { title: 'About', icon: 'question_answer', link: 'perfil' }
+          { title: 'Entidad', icon: 'dashboard', link: 'entidad' },
+          { title: 'Programa', icon: 'dashboard', link: 'programa' },
+          { title: 'Iniciativas', icon: 'question_answer', link: 'perfil' }
+        ],
+        reports: [
+          {title: 'Indicadores', icon:'dashboard', link:'perfil'},
+          {title: 'Inversión', icon:'dashboard', link:'perfil'},
+          {title: 'Tipo de inversión', icon:'dashboard', link:'perfil'},
         ],
         mini: true,
         right: null
