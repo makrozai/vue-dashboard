@@ -35,9 +35,9 @@
     "vuetify-loader": "^1.0.5"
   },
   "eslintConfig": {
-    "root": true,
+    "root": false,
     "env": {
-      "node": true
+      "node": false
     },
     "extends": [
       "plugin:vue/essential",

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -10,7 +11,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "about" */ './views/Home.vue')
+      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
+    },
+    {
+      path: '/perfil',
+      name: 'perfil',
+      component: () => import(/* webpackChunkName: "perfil" */ './views/Perfil.vue')
     }
   ]
 })
