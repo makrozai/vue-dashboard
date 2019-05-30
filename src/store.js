@@ -9,10 +9,49 @@ export default new Vuex.Store({
       socialRazon: '',
       comercialRazon: '',
       ruc: '',
-      mail:'',
-      password:'',
-      phone:null
+      mail: '',
+      password: '',
+      phone: null
+    },
+    navbarDrawer: {
+      items: [
+        {
+          title: 'Entidad',
+          icon: 'dashboard',
+          link: 'entidad'
+        },
+        {
+          title: 'Programa',
+          icon: 'dashboard',
+          link: 'programa'
+        },
+        {
+          title: 'Iniciativas',
+          icon: 'question_answer',
+          link: 'perfil'
+        }
+      ],
+      reports: [
+        {
+          title: 'Indicadores',
+          icon: 'dashboard',
+          link: 'perfil'
+        },
+        {
+          title: 'Inversión',
+          icon: 'dashboard',
+          link: 'perfil'
+        },
+        {
+          title: 'Tipo de inversión',
+          icon: 'dashboard',
+          link: 'perfil'
+        }
+      ]
     }
+  },
+  getters: {
+
   },
   mutations: {
 

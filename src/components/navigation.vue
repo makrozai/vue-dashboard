@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer 
+  <v-navigation-drawer
     v-model="drawer"
     :mini-variant.sync="mini"
     hide-overlay
@@ -32,9 +32,8 @@
     <v-divider></v-divider>
 
     <v-list dense class="pt-0">
-      
       <v-list-tile
-        v-for="item in items"
+        v-for="item in navbarDrawer.items"
         :key="item.title"
         :to="{name: item.link}"
       >
@@ -58,7 +57,7 @@
         </template>
 
         <v-list-tile
-          v-for="item in reports"
+          v-for="item in navbarDrawer.reports"
           :key="item.title"
           :to="{name: item.link}"
         >
@@ -73,26 +72,18 @@
 </template>
 
 <script>
-  /* eslint-disable */
-  export default {
-    data () {
-      return {
-        drawer: true,
-        items: [
-          { title: 'Entidad', icon: 'dashboard', link: 'entidad' },
-          { title: 'Programa', icon: 'dashboard', link: 'programa' },
-          { title: 'Iniciativas', icon: 'question_answer', link: 'perfil' }
-        ],
-        reports: [
-          {title: 'Indicadores', icon:'dashboard', link:'perfil'},
-          {title: 'Inversión', icon:'dashboard', link:'perfil'},
-          {title: 'Tipo de inversión', icon:'dashboard', link:'perfil'},
-        ],
-        mini: true,
-        right: null
-      }
+import { mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['navbarDrawer'])
+  },
+  data () {
+    return {
+      mini: false,
+      drawer: true
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

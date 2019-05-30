@@ -1,5 +1,8 @@
 <template>
-  <v-layout fill-height="true" flex-start>
+  <v-layout
+    fill-height="true"
+    flex-start
+  >
     <v-flex
       shrink
     >
@@ -11,16 +14,13 @@
       <router-view/>
     </v-flex>
   </v-layout>
-      
 </template>
 
 <script>
-import MNavigation from '../components/navigation';
+import MNavigation from '../components/navigation'
 export default {
-  name: 'App',
   data () {
     return {
-      
     }
   },
   components: {

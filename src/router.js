@@ -11,36 +11,36 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "home" */ './views/Home.vue')
+      component: () => import('./views/Home.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "home" */ './views/Login.vue')
+      component: () => import('./views/Login.vue')
     },
     {
       path: '/register',
       name: 'register',
-      component: () => import(/* webpackChunkName: "home" */ './views/Register.vue')
+      component: () => import('./views/Register.vue')
     },
     {
       path: '/dashboard',
-      component: () => import(/* webpackChunkName: "entidad" */ './pages/Dashboard.vue'),
+      component: () => import('./pages/Dashboard.vue'),
       children: [
         {
           path: 'entidad',
           name: 'entidad',
-          component: () => import(/* webpackChunkName: "entidad" */ './views/Entidad.vue')
+          component: () => import('./views/Entidad.vue')
         },
         {
           path: 'programa',
           name: 'programa',
-          component: () => import(/* webpackChunkName: "programa" */ './views/Programa.vue')
+          component: () => import('./views/Programa.vue')
         },
         {
           path: 'perfil',
           name: 'perfil',
-          component: () => import(/* webpackChunkName: "perfil" */ './views/Perfil.vue')
+          component: () => import('./views/Perfil.vue')
         }
       ]
     }
