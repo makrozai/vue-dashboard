@@ -99,7 +99,7 @@ export default {
       password: '',
       email: '',
       rules: {
-        required: value => !!value || 'Required.',
+        required: value => !!value || 'requerido.',
         min: v => v.length >= 6 || 'Min 6 characters',
         emailMatch: () => ('The email and password you entered don\'t match')
       },
@@ -120,13 +120,13 @@ export default {
     submit () {
       this.$validator.validateAll()
         .then(result => {
-          if(!result){
+          if (!result) {
 
-          }else{
+          } else {
             this.login({ email: this.email, password: this.password })
-            .then(user => {
-
-            })
+              .then(user => {
+                this.$router.push({ name: 'programa' })
+              })
           }
         })
     },

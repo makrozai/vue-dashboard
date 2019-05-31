@@ -24,7 +24,7 @@ Vue.config.productionTip = false
 
 Vue.http.options.root = 'http://localhost:3002/api/'
 Vue.http.interceptors.push((request, next) => {
-  request.headers.set('Authorization', `Beader ${window.localStorage.getItem('_token')}`)
+  request.headers.set('Authorization', `Bearer ${window.localStorage.getItem('_token')}`)
   next()
 })
 

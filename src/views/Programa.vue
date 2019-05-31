@@ -40,13 +40,13 @@
       >
         <m-programa-table></m-programa-table>
       </v-flex>
-
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import MProgramaTable from '../components/programaTable'
+
 export default {
   components: {
     MProgramaTable

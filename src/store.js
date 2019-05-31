@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import of vue resource
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
 
 Vue.use(Vuex)
 
@@ -69,11 +72,22 @@ export default new Vuex.Store({
   actions: {
     login (context, payload) {
       return new Promise((resolve, reject) => {
-        Vue.http.post('login', { user: payload })
+        Vue.http.post('login', payload)
           .then(user => {
-            window.localStorage.getItem('_token', user.body.token)
+            window.localStorage.setItem('_token', user.body.token)
             context.commit('setUser')
             resolve(user)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getAllTasks (context) {
+      return new Promise((resolve, reject) => {
+        Vue.http.get('tasks')
+          .then(response => {
+            resolve(response.data)
           })
           .catch(error => {
             reject(error)
