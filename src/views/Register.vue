@@ -1,7 +1,7 @@
 <template>
   <v-layout wrap fill-height>
     <v-flex md6 xs12 >
-      <v-carousel 
+      <v-carousel
         height="100vh"
         hide-controls
         hide-delimiters
@@ -108,7 +108,7 @@
               ></v-checkbox>
             </v-flex>
             <v-flex xs12>
-              <v-btn 
+              <v-btn
                 large
                 color="primary"
                 class="elevation-0"
@@ -126,58 +126,58 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        items: [
-          {
-            src: 'https://live.staticflickr.com/921/28751703687_ce438f4081_h.jpg'
-          },
-          {
-            src: 'https://live.staticflickr.com/838/28751699137_14d73b2068_k.jpg'
-          }
-        ],
-        razonComercial:'',
-        razonSocial: '',
-        ruc: null,
-        checkbox:false,
-        phone:null,
-        show1: false,
-        password: '',
-        email: '',
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => ('The email and password you entered don\'t match')
+export default {
+  data () {
+    return {
+      items: [
+        {
+          src: 'https://live.staticflickr.com/921/28751703687_ce438f4081_h.jpg'
         },
-        dictionary: {
-          attributes: {
-            email: 'E-mail Address'
-            // custom attributes
-          }
+        {
+          src: 'https://live.staticflickr.com/838/28751699137_14d73b2068_k.jpg'
+        }
+      ],
+      razonComercial: '',
+      razonSocial: '',
+      ruc: null,
+      checkbox: false,
+      phone: null,
+      show1: false,
+      password: '',
+      email: '',
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => ('The email and password you entered don\'t match')
+      },
+      dictionary: {
+        attributes: {
+          email: 'E-mail Address'
+          // custom attributes
         }
       }
-    },
-    mounted () {
-      this.$validator.localize('es', this.dictionary)
-    },
+    }
+  },
+  mounted () {
+    this.$validator.localize('es', this.dictionary)
+  },
 
-    methods: {
-      submit () {
-        this.$validator.validateAll()
-      },
-      clear () {
-        this.razonComercial = ''
-        this.razonSocial = ''
-        this.ruc = null
-        this.checkbox = false
-        this.phone = null
-        this.email = ''
-        this.password = ''
-        this.$validator.reset()
-      }
+  methods: {
+    submit () {
+      this.$validator.validateAll()
+    },
+    clear () {
+      this.razonComercial = ''
+      this.razonSocial = ''
+      this.ruc = null
+      this.checkbox = false
+      this.phone = null
+      this.email = ''
+      this.password = ''
+      this.$validator.reset()
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

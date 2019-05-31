@@ -40,7 +40,7 @@
                 :type="show1 ? 'text' : 'password'"
                 :error-messages="errors.collect('password')"
                 label="Contraseña"
-                hint="At least 8 characters"
+                hint="At least 6 characters"
                 data-vv-name="password"
                 required
                 counter
@@ -79,7 +79,11 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
+  computed: {
+    ...mapState(['user', 'logged'])
+  },
   data () {
     return {
       items: [
@@ -91,13 +95,12 @@ export default {
         }
       ],
       name: '',
-
       show1: false,
       password: '',
       email: '',
       rules: {
         required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
+        min: v => v.length >= 6 || 'Min 6 characters',
         emailMatch: () => ('The email and password you entered don\'t match')
       },
       dictionary: {
@@ -113,8 +116,19 @@ export default {
   },
 
   methods: {
+    ...mapActions(['login']),
     submit () {
       this.$validator.validateAll()
+        .then(result => {
+          if(!result){
+
+          }else{
+            this.login({ email: this.email, password: this.password })
+            .then(user => {
+
+            })
+          }
+        })
     },
     clear () {
       this.email = ''

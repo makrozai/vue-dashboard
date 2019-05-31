@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <v-layout 
+    <v-layout
       wrap="true"
       justify-space-between
     >
       <v-flex
         xs12 sm8
         class="c-dashboard-title"
-      > 
+      >
         <div>
           <v-icon
             large
@@ -17,9 +17,7 @@
           </v-icon>
           <h2>programa</h2>
         </div>
-        
       </v-flex>
-      
       <v-flex
         xs12 sm4
         class="c-dashboard-input"
@@ -48,13 +46,12 @@
 </template>
 
 <script>
-import MProgramaTable from '../components/programaTable';
-  /* eslint-disable */
-  export default {
-    components:{
-      MProgramaTable
-    }
+import MProgramaTable from '../components/programaTable'
+export default {
+  components: {
+    MProgramaTable
   }
+}
 </script>
 
 <style lang="scss" scoped>
