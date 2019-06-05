@@ -1,20 +1,34 @@
 <template>
   <v-layout wrap fill-height>
-    <v-flex md6 xs12 >
+    <div class="c-logo__intro">
+      <a href="#!">
+        <img src="../assets/logo-principal.svg" alt="">
+      </a>
+    </div>
+    <v-flex md6 xs12 class="hidden-sm-and-down c-slider">
       <v-carousel
         height="100vh"
         hide-controls
-        hide-delimiters
-        class="elevation-0"
+        class="elevation-0 c-slider-dashboard"
       >
         <v-carousel-item
           v-for="(item,i) in items"
           :key="i"
           :src="item.src"
-        ></v-carousel-item>
+        >
+          <h3>Se beneficiaron un 11% de alumnos en Lima, La Libertad y Cajamarca</h3>
+        </v-carousel-item>
       </v-carousel>
     </v-flex>
     <v-flex md6 xs12 class="c-form-home">
+      <v-btn
+        fab
+        color="primary"
+        class="c-btn-return elevation-0 hidden-sm-and-up"
+        :to="{name:'home'}"
+      >
+        <v-icon>navigate_before</v-icon>
+      </v-btn>
       <div class="c-form-home__container">
         <h2>Iniciar sesión</h2>
         <!--@FORM LAYOUT START-->
@@ -28,7 +42,7 @@
                 label="Correo electronico"
                 data-vv-name="email"
                 required
-                outline
+                box
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -44,7 +58,7 @@
                 data-vv-name="password"
                 required
                 counter
-                outline
+                box
                 @click:append="show1 = !show1"
               ></v-text-field>
             </v-flex>
@@ -66,10 +80,11 @@
         </p>
         <p class="text-xs-center">Deseo ser parte</p>
         <v-btn
+          :to="{name:'register'}"
+          color="primary"
+          class="elevation-0 c-btn-register"
           large
           outline
-          color="primary"
-          class="elevation-0"
         >
           Regístrate
         </v-btn>
@@ -139,4 +154,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .c-btn-register{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>

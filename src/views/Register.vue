@@ -1,24 +1,38 @@
 <template>
   <v-layout wrap fill-height>
-    <v-flex md6 xs12 >
+    <div class="c-logo__intro">
+      <a href="#!">
+        <img src="../assets/logo-principal.svg" alt="">
+      </a>
+    </div>
+    <v-flex md6 xs12 class="hidden-sm-and-down c-slider">
       <v-carousel
         height="100vh"
         hide-controls
-        hide-delimiters
-        class="elevation-0"
+        class="elevation-0 c-slider-dashboard "
       >
         <v-carousel-item
           v-for="(item,i) in items"
           :key="i"
           :src="item.src"
-        ></v-carousel-item>
+        >
+          <h3>Se beneficiaron un 11% de alumnos en Lima, La Libertad y Cajamarca</h3>
+        </v-carousel-item>
       </v-carousel>
     </v-flex>
 
     <v-flex md6 xs12 class="c-form-home">
+      <v-btn
+        fab
+        color="primary"
+        class="c-btn-return elevation-0 hidden-sm-and-up"
+        :to="{name:'home'}"
+      >
+        <v-icon>navigate_before</v-icon>
+      </v-btn>
       <div class="c-form-home__container">
-        <h2>Registro de empresa</h2>
-        <p class="mt-0">En el siguiente formulario ingresa los campos obligatorios que utilizaremos para la validación y contacto del sistema y de la empresa</p>
+        <h2>Registro</h2>
+        <p class="mt-0">En el siguiente formulario ingresa los campos obligatorios que utilizaremos para la validación y contacto del sistema y de la entidad</p>
         <!--@FORM LAYOUT START-->
         <form class="c-form-home__inputs">
           <v-layout wrap>
@@ -30,7 +44,7 @@
                 label="Razón comercial o nombre de la organización"
                 data-vv-name="razonComercial"
                 required
-                outline
+                box
               ></v-text-field>
             </v-flex>
             <v-flex xs12 md8>
@@ -41,7 +55,7 @@
                 label="Razón social"
                 data-vv-name="razonSocial"
                 required
-                outline
+                box
               ></v-text-field>
             </v-flex>
             <v-flex xs12 md4>
@@ -52,7 +66,7 @@
                 label="Ruc"
                 data-vv-name="Ruc"
                 required
-                outline
+                box
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -66,7 +80,7 @@
                 label="Correo electronico"
                 data-vv-name="email"
                 required
-                outline
+                box
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -82,7 +96,7 @@
                 data-vv-name="password"
                 required
                 counter
-                outline
+                box
                 @click:append="show1 = !show1"
               ></v-text-field>
             </v-flex>
@@ -97,7 +111,7 @@
                 label="Nª Celular"
                 data-vv-name="phone"
                 required
-                outline
+                box
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -181,4 +195,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>

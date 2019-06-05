@@ -33,8 +33,72 @@
   
   @media (min-width: 1264px){
     &__container{
-      width: 65%;
+      max-width: 500px;
     }
   }
 
-} 
+}
+.c-form-home{
+  position: relative;
+
+  .c-btn-return{
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    width: 56px;
+
+    i{
+      display: inherit;
+      font-size: 50px;
+    }
+  }
+}
+.v-input{
+  &__slot{
+    background: #F5F6FD !important;
+
+    &:hover{
+      background: lighten(#DCDDE7,7) !important;
+    }
+  }
+}
+.c-slider{
+  background: #ccc;
+}
+.c-slider-dashboard.v-window{
+  .v-carousel__controls{
+    background: transparent;
+  }
+  .v-responsive__content{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: linear-gradient(rgba(#000,.3),transparent,rgba(#000,.7));
+
+    padding: 1em 1em 3em;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+
+    h3{
+      font-weight: 400;
+      line-height: 1.1;
+    }
+  }
+}
+.c-logo__intro{
+  position: absolute;
+  top: 2em;
+  left: 5%;
+  z-index: 10;
+  width: 90%;
+
+  img{
+    display: block;
+    height: 3em;
+
+    @media (max-width: 960px){
+      margin: 0 auto;
+    }
+  }
+}
