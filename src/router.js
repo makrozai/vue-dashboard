@@ -40,6 +40,11 @@ const router = new Router({
           path: 'perfil',
           name: 'perfil',
           component: () => import('./views/Perfil.vue')
+        },
+        {
+          path: 'usuario',
+          name: 'usuario',
+          component: () => import('./views/User.vue')
         }
       ]
     }

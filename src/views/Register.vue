@@ -31,7 +31,7 @@
         <v-icon>navigate_before</v-icon>
       </v-btn>
       <div class="c-form-home__container">
-        <h2>Registro</h2>
+        <h2>Registro de entidad</h2>
         <p class="mt-0">En el siguiente formulario ingresa los campos obligatorios que utilizaremos para la validación y contacto del sistema y de la entidad</p>
         <!--@FORM LAYOUT START-->
         <form class="c-form-home__inputs">
@@ -47,17 +47,6 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12 md8>
-              <v-text-field
-                v-model="razonSocial"
-                v-validate="'required'"
-                :error-messages="errors.collect('razonSocial')"
-                label="Razón social"
-                data-vv-name="razonSocial"
-                required
-                box
-              ></v-text-field>
-            </v-flex>
             <v-flex xs12 md4>
               <v-text-field
                 v-model="ruc"
@@ -65,6 +54,17 @@
                 :error-messages="errors.collect('Ruc')"
                 label="Ruc"
                 data-vv-name="Ruc"
+                required
+                box
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12 md8>
+              <v-text-field
+                v-model="razonSocial"
+                v-validate="'required'"
+                :error-messages="errors.collect('razonSocial')"
+                label="Razón social"
+                data-vv-name="razonSocial"
                 required
                 box
               ></v-text-field>

@@ -5,6 +5,7 @@
     hide-overlay
     stateless
     dark
+    width="250"
     class="c-navbar"
   >
     <v-toolbar flat class="transparent  c-navbar__logo">

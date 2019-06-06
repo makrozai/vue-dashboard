@@ -149,6 +149,10 @@
   display: flex;
   flex-direction: column;
 
+  .v-list__tile{
+    font-size: 14px;
+  }
+
   &.theme--dark{
     background: #222323;
   }

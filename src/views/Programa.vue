@@ -23,6 +23,7 @@
           fab
           color="primary"
           class="my-0 mr-0"
+          @click.stop="formDrawner = !formDrawner"
         >
           <v-icon dark>add</v-icon>
         </v-btn>
@@ -34,6 +35,27 @@
       >
         <m-programa-table></m-programa-table>
       </v-flex>
+
+      <v-navigation-drawer
+        v-model="formDrawner"
+        temporary
+        right
+        fixed
+        width="550"
+      >
+        <v-list class="pa-1">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src="https://randomuser.me/api/portraits/men/85.jpg">
+            </v-list-tile-avatar>
+
+            <v-list-tile-content>
+              <v-list-tile-title>John Leider</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+
+      </v-navigation-drawer>
     </v-layout>
   </v-container>
 </template>
@@ -44,6 +66,11 @@ import MProgramaTable from '../components/programaTable'
 export default {
   components: {
     MProgramaTable
+  },
+  data () {
+    return {
+      formDrawner: null
+    }
   }
 }
 </script>

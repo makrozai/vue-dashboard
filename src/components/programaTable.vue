@@ -66,7 +66,7 @@ export default {
     return {
       selected: [],
       pagination: {
-        rowsPerPage: 10
+        rowsPerPage: 25
       },
       headers: [
         {
