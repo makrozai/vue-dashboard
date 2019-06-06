@@ -38,7 +38,8 @@
         :to="{name: item.link}"
       >
         <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <!--<v-icon>{{ item.icon }}</v-icon>-->
+          <img src="../assets/icons/entity.svg" alt="">
         </v-list-tile-action>
 
         <v-list-tile-content>
@@ -87,5 +88,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.v-list{
+  &__tile{
+    &__action{
+      img{
+        display: block;
+        height: 70%;
+        margin: 0 auto;
+      }
+    }
+  }
+}
 </style>
