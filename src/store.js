@@ -14,34 +14,34 @@ export default new Vuex.Store({
       items: [
         {
           title: 'Entidad',
-          icon: 'dashboard',
+          icon: 'entity',
           link: 'entidad'
         },
         {
           title: 'Programa',
-          icon: 'dashboard',
+          icon: 'program',
           link: 'programa'
         },
         {
           title: 'Iniciativas',
-          icon: 'question_answer',
+          icon: 'init',
           link: 'perfil'
         }
       ],
       reports: [
         {
           title: 'Indicadores',
-          icon: 'dashboard',
+          icon: 'indicators',
           link: 'perfil'
         },
         {
           title: 'Inversión',
-          icon: 'dashboard',
+          icon: 'inversion',
           link: 'perfil'
         },
         {
           title: 'Tipo de inversión',
-          icon: 'dashboard',
+          icon: 'types',
           link: 'perfil'
         }
       ]

@@ -5,16 +5,19 @@
     hide-overlay
     stateless
     dark
+    class="c-navbar"
   >
-    <v-toolbar flat class="transparent ">
+    <v-toolbar flat class="transparent  c-navbar__logo">
       <v-list class="pa-0">
         <v-list-tile avatar>
           <v-list-tile-avatar>
-            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+            <img src="../assets/exe.svg">
           </v-list-tile-avatar>
 
           <v-list-tile-content>
-            <v-list-tile-title>John Leider</v-list-tile-title>
+            <v-list-tile-title>
+              <img src="../assets/exe-text.svg" alt="">
+            </v-list-tile-title>
           </v-list-tile-content>
 
           <v-list-tile-action>
@@ -29,9 +32,27 @@
       </v-list>
     </v-toolbar>
 
+    <v-list dense class=" c-navbar__list c-navbar__list--user">
+      <v-list-tile
+        :to="{name: 'entidad'}"
+      >
+        <v-list-tile-action>
+          <img src="../assets/icons/user.svg" alt="">
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>
+            <p>Combativa</p>
+            <span>Sin verificar</span>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
+    </v-list>
+
     <v-divider></v-divider>
 
-    <v-list dense class="pt-0">
+    <v-list dense class=" c-navbar__list">
       <v-list-tile
         v-for="item in navbarDrawer.items"
         :key="item.title"
@@ -39,7 +60,7 @@
       >
         <v-list-tile-action>
           <!--<v-icon>{{ item.icon }}</v-icon>-->
-          <img src="../assets/icons/entity.svg" alt="">
+          <i :class="'icon-' + item.icon"></i>
         </v-list-tile-action>
 
         <v-list-tile-content>
@@ -47,27 +68,41 @@
         </v-list-tile-content>
       </v-list-tile>
 
-      <v-list-group
-        prepend-icon="account_circle"
-        value="true"
-      >
-        <template v-slot:activator>
-          <v-list-tile>
-            <v-list-tile-title>Reportes</v-list-tile-title>
-          </v-list-tile>
-        </template>
+    </v-list>
 
-        <v-list-tile
-          v-for="item in navbarDrawer.reports"
-          :key="item.title"
-          :to="{name: item.link}"
-        >
-          <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          <v-list-tile-action>
-            <v-icon v-text="item.icon"></v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list-group>
+    <v-divider></v-divider>
+
+    <v-list dense class=" c-navbar__list">
+      <v-list-tile
+        v-for="item in navbarDrawer.reports"
+        :key="item.title"
+        :to="{name: item.link}"
+      >
+        <v-list-tile-action>
+          <!--<v-icon>{{ item.icon }}</v-icon>-->
+          <i :class="'icon-' + item.icon"></i>
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
+    </v-list>
+
+    <v-list dense class=" c-navbar__list c-navbar__list--footer">
+      <v-list-tile
+        :to="{name: 'login'}"
+      >
+        <v-list-tile-action>
+          <i class="icon-logout"></i>
+        </v-list-tile-action>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Cerrar sesión</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -80,7 +115,7 @@ export default {
   },
   data () {
     return {
-      mini: true ,
+      mini: true,
       drawer: true
     }
   }
@@ -91,10 +126,31 @@ export default {
 .v-list{
   &__tile{
     &__action{
+      i{
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        height: 100%;
+        margin-right: auto;
+      }
       img{
-        display: block;
-        height: 70%;
-        margin: 0 auto;
+        height: 65%;
+      }
+    }
+  }
+}
+
+.v-navigation-drawer--mini-variant{
+  .v-divider{
+    display: block !important;
+  }
+  .v-list{
+    &__tile{
+      &__action{
+        i{
+          margin-right: auto;
+          margin-left: auto;
+        }
       }
     }
   }
