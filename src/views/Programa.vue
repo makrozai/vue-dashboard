@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="c-container-dashboard">
     <v-layout
       wrap="true"
       justify-space-between
@@ -30,7 +30,7 @@
       </v-flex>
       <v-flex
         xs12
-        class="mt-4"
+        class="mt-2"
       >
         <m-programa-table></m-programa-table>
       </v-flex>

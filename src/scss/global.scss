@@ -1,3 +1,6 @@
+.c-container-dashboard{
+  max-width: 1700px;
+}
 .c-form-home{
   display: flex;
   align-items: center;
@@ -106,5 +109,39 @@
   box-shadow: 0 0 0 0 transparent !important;
   &.v-btn--floating{
     box-shadow:  0 0 0 0 transparent !important;
+  }
+}
+
+.c-data-table{
+  thead{
+    tr{
+      border-bottom: 1px solid rgba(#81D7EA,.3) !important;
+    }
+    
+  }
+  tr:hover &__status{
+    background-color: var(--v-primary-darken1);
+  }
+  &__status{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--v-primary-base);
+    transition: all .3s;
+  }
+  &__entity{
+    display: flex;
+    align-items: center;
+
+    img{
+      display: block;
+      margin-right: 1em;
+      width: 2.8em;
+    }
+  }
+
+  td{
+    text-align: center;
   }
 }

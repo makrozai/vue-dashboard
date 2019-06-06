@@ -14,6 +14,7 @@
           :input-value="props.selected"
           primary
           hide-details
+          color="primary"
         ></v-checkbox>
       </td>
       <td>
@@ -24,11 +25,37 @@
       </td>
       <td>{{ props.item.calories }}</td>
       <td>{{ props.item.fat }}</td>
-      <td>{{ props.item.contact }}
-
+      <td>
+        <v-tooltip left>
+          <template v-slot:activator="{ on }">
+            <a v-on="on" href="#!" class="mx-1">
+              <v-icon color="black">email</v-icon>
+            </a>
+          </template>
+          <span>{{ props.item.contact.mail }}</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <a v-on="on" href="#!" class="mx-1">
+              <v-icon color="black">call</v-icon>
+            </a>
+          </template>
+          <span>{{ props.item.contact.phone }}</span>
+        </v-tooltip>
+        <v-tooltip right>
+          <template v-slot:activator="{ on }">
+            <a v-on="on" href="#!" class="mx-1">
+              <v-icon color="black">home</v-icon>
+            </a>
+          </template>
+          <span>{{ props.item.contact.address }}</span>
+        </v-tooltip>
       </td>
       <td>{{ props.item.protein }}</td>
-      <td>{{ props.item.iron }}</td>
+      <td class="c-data-table__status">
+        <span>{{ props.item.iron.status }}</span>
+        <span>{{ props.item.iron.date }}</span>
+      </td>
     </template>
   </v-data-table>
 </template>
@@ -472,21 +499,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .c-data-table{
 
-    &__entity{
-      display: flex;
-      align-items: center;
-
-      img{
-        display: block;
-        margin-right: 1em;
-        width: 2.8em;
-      }
-    }
-
-    td{
-      text-align: center;
-    }
-  }
 </style>
