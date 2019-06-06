@@ -122,6 +122,11 @@
               ></v-checkbox>
             </v-flex>
             <v-flex xs12>
+              <div class="c-recaptcha">
+                <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2"></vue-recaptcha>
+              </div>
+            </v-flex>
+            <v-flex xs12>
               <v-btn
                 large
                 color="primary"
@@ -140,7 +145,9 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha'
 export default {
+  components: { VueRecaptcha },
   data () {
     return {
       items: [
@@ -195,5 +202,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .c-recaptcha{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2em;
+    width: 100%;
+  }
 </style>

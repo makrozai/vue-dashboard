@@ -1,17 +1,34 @@
 <template>
   <v-data-table
+    v-model="selected"
     :headers="headers"
     :items="desserts"
-    class="elevation-1"
+    item-key="name"
+    select-all
+    class="c-data-table"
     :pagination.sync="pagination"
   >
     <template v-slot:items="props">
-      <td>{{ props.item.name }}</td>
-      <td class="text-xs-left">{{ props.item.calories }}</td>
-      <td class="text-xs-center">{{ props.item.fat }}</td>
-      <td class="text-xs-left">{{ props.item.carbs }}</td>
-      <td class="text-xs-left">{{ props.item.protein }}</td>
-      <td class="text-xs-left">{{ props.item.iron }}</td>
+      <td>
+        <v-checkbox
+          :input-value="props.selected"
+          primary
+          hide-details
+        ></v-checkbox>
+      </td>
+      <td>
+        <div class="c-data-table__entity">
+          <img src="../assets/logotipo-entidad.svg" alt="">
+          {{ props.item.name }}
+        </div>
+      </td>
+      <td>{{ props.item.calories }}</td>
+      <td>{{ props.item.fat }}</td>
+      <td>{{ props.item.contact }}
+
+      </td>
+      <td>{{ props.item.protein }}</td>
+      <td>{{ props.item.iron }}</td>
     </template>
   </v-data-table>
 </template>
@@ -20,6 +37,7 @@
 export default {
   data () {
     return {
+      selected: [],
       pagination: {
         rowsPerPage: 10
       },
@@ -51,219 +69,401 @@ export default {
           align: 'center'
         },
         {
-          text: 'Iron (%)',
+          text: '',
           value: 'iron',
           align: 'center'
         }
       ],
       desserts: [
         {
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%'
+          name: 'Juntos por la educación',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%'
+          name: 'Proyecto demo',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Eclair',
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: '7%'
+          name: 'Juntos por la educación 2',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
+          name: 'Juntos por la educación 3',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Gingerbread',
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: '16%'
+          name: 'Proyecto demo 2',
+          calories: 'Grupo Gloria',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Jelly bean',
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: '0%'
+          name: 'Proyecto demo 3',
+          calories: 'Grupo Gloria',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Lollipop',
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: '2%'
+          name: 'Juntos por la educación 4',
+          calories: 'Grupo Gloria',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Honeycomb',
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: '45%'
+          name: 'Juntos por la educación 5',
+          calories: 'Grupo Gloria',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Juntos por la educación 6',
+          calories: 'Grupo Gloria',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Proyecto demo 4',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Proyecto demo 5',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Proyecto demo 6',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Juntos por la educación 7',
+          calories: 'Grupo Gloria',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Juntos por la educación 8',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Proyecto demo 7',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Proyecto demo 8',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Proyecto demo 9',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Juntos por la educación 9',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Juntos por la educación 10',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Proyecto demo 10',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Proyecto demo 11',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Proyecto demo 12',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Proyecto demo 13',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Juntos por la educación 11',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'Donut',
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: '22%'
+          name: 'Juntos por la educación 12',
+          calories: 'EXE Perú',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         },
         {
-          name: 'KitKat',
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: '6%'
+          name: 'Proyecto demo 14',
+          calories: 'Graña y Montero',
+          fat: '23/12/1988',
+          contact: {
+            mail: 'marco@localhost.com',
+            phone: '987654321',
+            address: 'av. los resintos Nº 1234 - miraflores'
+          },
+          protein: 'Capacitación',
+          iron: {
+            status: 'Validado',
+            date: '12/10/2019'
+          }
         }
       ]
     }
@@ -272,4 +472,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .c-data-table{
+
+    &__entity{
+      display: flex;
+      align-items: center;
+
+      img{
+        display: block;
+        margin-right: 1em;
+        width: 2.8em;
+      }
+    }
+
+    td{
+      text-align: center;
+    }
+  }
 </style>

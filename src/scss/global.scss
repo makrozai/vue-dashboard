@@ -53,8 +53,8 @@
     }
   }
 }
-.v-input{
-  &__slot{
+.v-input.v-text-field--box{
+  .v-input__slot{
     background: #F5F6FD !important;
 
     &:hover{
@@ -100,5 +100,11 @@
     @media (max-width: 960px){
       margin: 0 auto;
     }
+  }
+}
+.v-btn{
+  box-shadow: 0 0 0 0 transparent !important;
+  &.v-btn--floating{
+    box-shadow:  0 0 0 0 transparent !important;
   }
 }

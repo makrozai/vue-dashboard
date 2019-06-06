@@ -5,31 +5,25 @@
       justify-space-between
     >
       <v-flex
-        xs12 sm8
+        xs12 md6 lg8
         class="c-dashboard-title"
       >
-        <div>
-          <v-icon
-            large
-            color="black"
-          >
-            layers
-          </v-icon>
-          <h2>programa</h2>
-        </div>
+        <h2>programa</h2>
       </v-flex>
       <v-flex
-        xs12 sm4
+        xs12 md6 lg4
         class="c-dashboard-input"
       >
         <v-text-field
-          label="Director de ventas"
-          outline
+          box
+          label=""
+          prepend-inner-icon="search"
         ></v-text-field>
-        <v-btn fab dark color="indigo" class="my-0">
-          <v-icon dark>search</v-icon>
-        </v-btn>
-        <v-btn fab dark color="indigo" class="my-0">
+        <v-btn
+          fab
+          color="primary"
+          class="my-0 mr-0"
+        >
           <v-icon dark>add</v-icon>
         </v-btn>
 
@@ -59,6 +53,7 @@ export default {
   &-input{
     display: flex;
     align-items: flex-start;
+    justify-content: flex-end;
   }
   &-title{
     display: flex;
