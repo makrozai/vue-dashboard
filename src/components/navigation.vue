@@ -43,8 +43,8 @@
 
         <v-list-tile-content>
           <v-list-tile-title>
-            <p>{{ user.name }}</p>
-            <span>{{ user.status }}</span>
+            <p>{{ user ? user.name : 'Sin Usuario' }}</p>
+            <span>{{ user ? user.status : 'Error' }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>

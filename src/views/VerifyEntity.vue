@@ -56,6 +56,52 @@
           </v-flex>
         </v-layout>
       </div>
+
+      <span class="c-verify-entity__spacer"></span>
+      <div class="c-verify-entity__row">
+        <div class="c-verify-entity__row-small">
+        </div>
+        <div class="c-verify-entity__row-large">
+          <v-layout wrap class="c-verify-entity__form">
+            <v-flex xs12>
+              Informacion de la entidad
+            </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                v-model="razonComercial"
+                v-validate="'required'"
+                :error-messages="errors.collect('razonComercial')"
+                label="Razón comercial o nombre de la organización"
+                data-vv-name="razonComercial"
+                required
+                box
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12 md4>
+              <v-text-field
+                  v-model="ruc"
+                  v-validate="'required|integer'"
+                  :error-messages="errors.collect('Ruc')"
+                  label="Ruc"
+                  data-vv-name="Ruc"
+                  required
+                  box
+                ></v-text-field>
+            </v-flex>
+            <v-flex xs12 md8>
+              <v-text-field
+                v-model="razonSocial"
+                v-validate="'required'"
+                :error-messages="errors.collect('razonSocial')"
+                label="Razón social"
+                data-vv-name="razonSocial"
+                required
+                box
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+        </div>
+      </div>
     </form>
   </v-container>
 </template>

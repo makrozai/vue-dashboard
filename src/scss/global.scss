@@ -259,6 +259,8 @@
 .c-verify-entity{
   display: flex;
   flex-wrap: wrap;
+  margin-left: -1em;
+  margin-right: -1em;
 
   &__row{
     &-small, &-large{
@@ -271,6 +273,7 @@
       width: 70%;
     }
   }
+
 
   &__upload{
     span{
@@ -289,5 +292,11 @@
     input{
       display: none;
     }
+  }
+  &__spacer{
+    display: block;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    width: 100%;
   }
 }
