@@ -35,7 +35,7 @@
 
     <v-list dense class=" c-navbar__list c-navbar__list--user">
       <v-list-tile
-        :to="{name: 'usuario'}"
+        :to="{name: 'ficha-de-verificacion'}"
       >
         <v-list-tile-action>
           <img src="../assets/icons/user.svg" alt="">

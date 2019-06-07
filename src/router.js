@@ -42,9 +42,9 @@ const router = new Router({
           component: () => import('./views/Perfil.vue')
         },
         {
-          path: 'usuario',
-          name: 'usuario',
-          component: () => import('./views/User.vue')
+          path: 'ficha-de-verificacion',
+          name: 'ficha-de-verificacion',
+          component: () => import('./views/VerifyEntity.vue')
         }
       ]
     }
