@@ -76,27 +76,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.c-dashboard{
-  &-input{
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
-  &-title{
-    display: flex;
-    text-transform: uppercase;
-    align-items: flex-start;
-    padding-top: .5em;
-    font-size: 1.4em;
 
-    div{
-      display: flex;
-      align-items: center;
-
-      h2{
-        margin-left: .5em;
-      }
-    }
-  }
-}
 </style>
