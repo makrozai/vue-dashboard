@@ -43,8 +43,8 @@
 
         <v-list-tile-content>
           <v-list-tile-title>
-            <p>Combativa</p>
-            <span>Sin verificar</span>
+            <p>{{ user.name }}</p>
+            <span>{{ user.status }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -112,7 +112,7 @@
 import { mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState(['navbarDrawer'])
+    ...mapState(['navbarDrawer','user'])
   },
   data () {
     return {

@@ -13,7 +13,11 @@
     </v-layout>
     <form class="c-verify-entity">
       <div class="c-verify-entity__row-small">
-
+        <label class="c-verify-entity__upload">
+          <span :style="'background-image:url(' + fileImage + ')'"></span>
+          <p>Formato válido (jpg, png), máximo 20MB</p>
+          <input type="file" name="" @change="updateLocal" ref="myFiles">
+        </label>
       </div>
       <div class="c-verify-entity__row-large">
         <v-layout wrap class="c-verify-entity__form">
@@ -63,7 +67,15 @@ export default {
     return {
       ruc: '',
       razonSocial: '',
-      razonComercial: ''
+      razonComercial: '',
+      fileImage: null
+    }
+  },
+  methods: {
+    updateLocal () {
+      console.log(this.$refs.myFiles.files[0])
+      const file = this.$refs.myFiles.files[0]
+      this.fileImage = URL.createObjectURL(file)
     }
   }
 }

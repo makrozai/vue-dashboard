@@ -52,12 +52,9 @@ export default new Vuex.Store({
   },
   mutations: {
     // establece el usuario a traves del token jwt
-    setUser (state) {
+    setUser (state, payload) {
       if (window.localStorage.getItem('_token')) {
-        const token = window.localStorage.getItem('_token')
-        // eslint-disable-next-line no-undef
-        const jwtDecode = require('jwt-decode')
-        state.user = jwtDecode(token)
+        state.user = payload
         state.logged = true
       } else {
         state.logged = false
@@ -71,52 +68,17 @@ export default new Vuex.Store({
   },
   actions: {
     login (context, payload) {
-      return new Promise((resolve, reject) => {
-        Vue.http.post('login', payload)
-          .then(user => {
-            window.localStorage.setItem('_token', user.body.token)
-            context.commit('setUser')
-            resolve(user)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    getAllTasks (context) {
-      return new Promise((resolve, reject) => {
-        Vue.http.get('tasks')
-          .then(response => {
-            resolve(response.data)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    register (context, payload) {
-      return new Promise((resolve, reject) => {
-        Vue.http.post('register', { user: payload })
-          .then(user => {
-            resolve(user)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
-    },
-    updateProfile (context, payload) {
-      return new Promise((resolve, reject) => {
-        Vue.http.put('profile', { user: payload })
-          .then(user => {
-            window.localStorage.getItem('_token', user.body.token)
-            context.commit('setUser')
-            resolve(user)
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
+      window.localStorage.setItem('_token', payload.data.token)
+      // eslint-disable-next-line no-undef
+      let jwtDecode = require('jwt-decode')
+      let userId = jwtDecode(payload.data.token)
+
+      // set de user -reemplazar por get user-
+      let userData = {
+        name: 'Combativa',
+        status: 'Sin verificar'
+      }
+      context.commit('setUser', userData)
     },
     logout (context) {
       window.localStorage.removeItem('_token')

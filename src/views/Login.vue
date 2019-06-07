@@ -97,7 +97,6 @@
 import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapState(['user', 'logged'])
   },
   data () {
     return {
@@ -138,9 +137,14 @@ export default {
           if (!result) {
 
           } else {
-            this.login({ email: this.email, password: this.password })
+            this.$http.post('auth/login',  {email: this.email, password: this.password })
               .then(user => {
+                this.login(user.body)
                 this.$router.push({ name: 'programa' })
+                //resolve(user.body)
+              })
+              .catch(error => {
+                //reject(error)
               })
           }
         })
