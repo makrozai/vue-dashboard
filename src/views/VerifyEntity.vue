@@ -248,6 +248,54 @@
 
         </div>
       </div>
+      <div class="c-verify-entity__row">
+        <div class="c-verify-entity__row-small">
+        </div>
+        <div class="c-verify-entity__row-large">
+          <h3 class="c-verify-entity__title">Programas</h3>
+          <p class="c-verify-entity__subtitle">Ingresa minimo un programa</p>
+
+          <span class="c-verify-entity__span">Entidades beneficiadas</span>
+          <div class="c-verify-entity__add-program">
+            <div class="c-verify-entity__add-program__item" v-for="(program, index) in programs" :key="index">
+              <img :src="program.image" alt="">
+              <div class="information">
+                <p>{{ program.name }} {{ index }}</p>
+                <span>{{ program.from.day }} {{ program.from.mounth }} {{ program.from.year }} hasta la actualidad</span>
+              </div>
+              <v-btn
+                fab
+                small
+                outline
+                color="error"
+                @click="removeProgram(index)"
+              >
+                <v-icon dark>remove</v-icon>
+              </v-btn>
+            </div>
+          </div>
+          <div class="c-verify-entity__add-contact">
+            <v-btn fab color="primary" @click="addProgram">
+              <v-icon>add</v-icon>
+            </v-btn>
+            <span>Agregar otro contacto</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="c-verify-entity__row">
+        <div class="c-verify-entity__row-small">
+        </div>
+        <div class="c-verify-entity__row-large">
+          <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
+
+          <v-radio-group v-model="conditions" class="c-verify-entity__radios">
+            <v-radio label="Terminos y condiciones" value="accept"></v-radio>
+            <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
+            <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su politica de privacidad en y los terminos y condiciones.</p>
+          </v-radio-group>
+        </div>
+      </div>
     </form>
   </v-container>
 </template>
@@ -283,7 +331,25 @@ export default {
           annexed: null
         }
 
-      ]
+      ],
+      programs: [
+        {
+          id: 1,
+          image: require('../assets/default-img.svg'),
+          name: 'Proyecto de educación APC',
+          from: {
+            day: 3,
+            mounth: 'Febrero',
+            year: 2017
+          },
+          to: {
+            day: 3,
+            mounth: 'Febrero',
+            year: 2017
+          }
+        }
+      ],
+      conditions: false
     }
   },
   methods: {
@@ -304,6 +370,27 @@ export default {
         annexed: null
       }
       this.perfilContact.push(contact)
+    },
+    addProgram () {
+      let program = {
+        id: null,
+        image: require('../assets/default-img.svg'),
+        name: 'Proyecto de educación APC',
+        from: {
+          day: 3,
+          mounth: 'Febrero',
+          year: 2017
+        },
+        to: {
+          day: 3,
+          mounth: 'Febrero',
+          year: 2017
+        }
+      }
+      this.programs.push(program)
+    },
+    removeProgram (index) {
+      this.programs.splice(index, 1)
     }
   }
 }
