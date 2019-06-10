@@ -257,12 +257,14 @@
   }
 }
 .c-verify-entity{
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -1em;
-  margin-right: -1em;
 
   &__row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -1em;
+    margin-right: -1em;
+    padding-bottom: 2em;
+
     &-small, &-large{
       padding: 0 1em;
     }
@@ -295,8 +297,45 @@
   }
   &__spacer{
     display: block;
-    margin-top: 3em;
-    margin-bottom: 3em;
+    height: 4em;
     width: 100%;
+  }
+
+  .layout{
+    margin: 0 -.5em;
+    .flex{
+      padding: 0 .5em;
+    }
+  }
+
+  &__inputs-equals{
+    display: flex;
+    width: 100%;
+
+    .v-textarea{
+      height: 100%;
+
+      .v-input__control{
+        height: 100%;
+
+        .v-input__slot{
+          height: 89%;
+        }
+        
+      }
+    }
+  }
+  &__title{
+    font-size: 1.5em;
+    margin-bottom: .1em;
+    font-weight: 400;
+  }
+  &__subtitle{
+    font-size: 1.2em;
+  }
+  &__add-contact{
+    color: var(--v-primary-base);
+    font-size: 1.1em;
+    font-weight: 500;
   }
 }

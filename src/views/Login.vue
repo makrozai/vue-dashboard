@@ -64,12 +64,19 @@
             </v-flex>
             <v-flex xs12>
               <v-btn
+                :disabled="loadingSubmit"
                 large
-                color="primary"
+                :color='statusSubmit'
                 class="elevation-0"
                 @click="submit"
               >
                 Ingresar
+                <v-progress-circular
+                  indeterminate
+                  color="gray"
+                  class="ml-4"
+                  v-if="LoadingSubmit"
+                ></v-progress-circular>
               </v-btn>
             </v-flex>
           </v-layout>
@@ -94,12 +101,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   computed: {
   },
   data () {
     return {
+      loadingSubmit: false,
+      statusSubmit: 'primary',
       items: [
         {
           src: 'https://live.staticflickr.com/921/28751703687_ce438f4081_h.jpg'
@@ -132,19 +141,30 @@ export default {
   methods: {
     ...mapActions(['login']),
     submit () {
+      // - bloquea el boton
+      this.LoadingSubmit = true
+
       this.$validator.validateAll()
         .then(result => {
           if (!result) {
-
+            // - estado del boton
+            this.loadingSubmit = false
+            this.statusSubmit = 'error'
           } else {
-            this.$http.post('auth/login',  {email: this.email, password: this.password })
+            this.$http.post('auth/login', { email: this.email, password: this.password })
               .then(user => {
                 this.login(user.body)
+                // - stado del boton
+                this.loadingSubmit = false
+                this.statusSubmit = 'success'
+                // - redireccion de pagina
                 this.$router.push({ name: 'programa' })
-                //resolve(user.body)
               })
               .catch(error => {
-                //reject(error)
+                // - stado del boton
+                console.log(error)
+                this.loadingSubmit = false
+                this.statusSubmit = 'error'
               })
           }
         })
