@@ -158,7 +158,7 @@ export default {
                 this.loadingSubmit = false
                 this.statusSubmit = 'success'
                 // - redireccion de pagina
-                this.$router.push({ name: 'programa' })
+                this.$router.push({ name: 'ficha-de-verificacion' })
               })
               .catch(error => {
                 // - stado del boton

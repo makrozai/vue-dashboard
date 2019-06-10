@@ -7,6 +7,7 @@
     dark
     width="250"
     class="c-navbar"
+    fixed
   >
     <v-toolbar flat class="transparent  c-navbar__logo">
       <v-list class="pa-0">
@@ -118,6 +119,12 @@ export default {
     return {
       mini: true,
       drawer: true
+    }
+  },
+  watch: {
+    mini: function (response) {
+      console.log('emit realizado')
+      this.$emit('update-navbar', !response)
     }
   }
 }
