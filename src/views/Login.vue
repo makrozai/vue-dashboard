@@ -75,7 +75,7 @@
                   indeterminate
                   color="gray"
                   class="ml-4"
-                  v-if="LoadingSubmit"
+                  v-if="loadingSubmit"
                 ></v-progress-circular>
               </v-btn>
             </v-flex>
@@ -142,7 +142,7 @@ export default {
     ...mapActions(['login']),
     submit () {
       // - bloquea el boton
-      this.LoadingSubmit = true
+      this.loadingSubmit = true
 
       this.$validator.validateAll()
         .then(result => {

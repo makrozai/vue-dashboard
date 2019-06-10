@@ -6,13 +6,13 @@
     >
       <v-flex
         xs12
-        class="c-dashboard-title"
+        class="c-dashboard-title mb-4"
       >
         <h2>Ficha de verificación de entidad</h2>
       </v-flex>
     </v-layout>
     <form class="c-verify-entity">
-      <div class="c-verify-entity__row">
+      <div class="c-verify-entity__row mb-5">
         <div class="c-verify-entity__row-small">
           <label class="c-verify-entity__upload">
             <img :src="fileImage" alt="">
@@ -63,6 +63,9 @@
 
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
+          <div class="c-verify-entity__section complete">
+            <span>1</span>
+          </div>
         </div>
         <div class="c-verify-entity__row-large">
           <v-layout wrap>
@@ -138,6 +141,9 @@
       </div>
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
+          <div class="c-verify-entity__section">
+            <span>2</span>
+          </div>
         </div>
         <div class="c-verify-entity__row-large">
           <h3 class="c-verify-entity__title">Información contacto directo con Empresarios por la educación</h3>
@@ -250,6 +256,9 @@
       </div>
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
+          <div class="c-verify-entity__section">
+            <span>3</span>
+          </div>
         </div>
         <div class="c-verify-entity__row-large">
           <h3 class="c-verify-entity__title">Programas</h3>
@@ -285,6 +294,9 @@
       </div>
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
+          <div class="c-verify-entity__section c-verify-entity__section--final">
+            <span>4</span>
+          </div>
         </div>
         <div class="c-verify-entity__row-large">
           <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
@@ -294,6 +306,11 @@
             <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
             <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su politica de privacidad en y los terminos y condiciones.</p>
           </v-radio-group>
+
+
+          <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" class="mb-4"></vue-recaptcha>
+
+          <v-btn color="primary" large class="c-verify-entity__submit">Registrate</v-btn>
         </div>
       </div>
     </form>
@@ -301,8 +318,10 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha'
 
 export default {
+  components: { VueRecaptcha },
   data () {
     return {
       distritoItems: ['a', 'b', 'c', 'd'],
