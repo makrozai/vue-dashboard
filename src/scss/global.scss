@@ -277,18 +277,21 @@
   }
   &__upload{
     display: block;
-    span{
+    img{
       display: block;
-      width: 100%;
+      width: 143px;
       height: 143px;
-      background-color: rgba(black, .5);
+      margin:0 auto;
       background-size: cover;
       background-position: center center;
     }
     p{
       text-align: center;
       font-size: .9em;
-      padding: .5em 2em;
+      padding: .5em 1em;
+      max-width: 160px;
+      margin-left: auto;
+      margin-right: auto;
       margin-bottom: 0;
     }
     input{

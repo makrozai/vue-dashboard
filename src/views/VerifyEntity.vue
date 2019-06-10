@@ -15,7 +15,7 @@
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
           <label class="c-verify-entity__upload">
-            <span :style="'background-image:url(' + fileImage + ')'"></span>
+            <img :src="fileImage" alt="">
             <p>Formato válido (jpg, png), máximo 20MB</p>
             <input type="file" name="" @change="updateLocal" ref="myFiles">
           </label>
@@ -318,7 +318,7 @@ export default {
       ruc: '',
       razonSocial: '',
       razonComercial: '',
-      fileImage: null,
+      fileImage: require('../assets/default-img.svg'),
       perfilContact: [
         {
           name: '',
