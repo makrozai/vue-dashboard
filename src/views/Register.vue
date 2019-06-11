@@ -37,13 +37,13 @@
         <div class="c-register__forms">
           <div class="c-register__forms__item">
             <h3>Consultas</h3>
-            <i class="icon-init"></i>
+            <i class="icon-consultas"></i>
             <p>¿Deseas consultar información de la plataforma <b>EXE Perú</b></p>
             <v-btn color="primary" @click="registerPage = 'particular'">Registrate</v-btn>
           </div>
           <div class="c-register__forms__item">
             <h3>Entidad</h3>
-            <i class="icon-init"></i>
+            <i class="icon-entidad"></i>
             <p>Manejas o ejecutas proyectos relacionados a la educación y soy parte de EXE Perú</p>
             <v-btn color="primary" @click="registerPage = 'entity'">Registrate</v-btn>
           </div>
