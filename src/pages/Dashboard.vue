@@ -4,19 +4,17 @@
     flex-start
   >
     <v-flex
-      shrink
+      grow
       class="c-navbar__spacing"
       :class="{ 'active' : navbarStatus }"
     >
       <m-navigation @update-navbar="updateNavbar"></m-navigation>
     </v-flex>
     <v-flex
-      shrink
       xs12
     >
       <v-alert
         v-model="alert"
-        dismissible
         type="error"
         class="mt-0"
       >

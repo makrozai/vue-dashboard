@@ -277,10 +277,10 @@
       padding: 0 1em;
     }
     &-small{
-      width: 20%;
+      width: 30%;
     }
     &-large{
-      width: 80%;
+      width: 70%;
       padding-bottom: 2em;
     }
   }
@@ -440,13 +440,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
 
   h2{
     font-size: 2.5em;
+    margin-top: 1em;
+  }
+  p{
+    text-align: center;
+    line-height: 1.5;
+    padding-bottom: 4em;
+    margin-bottom: 2em;
+    border-bottom: 1px solid rgba(black, 0.1);
+  }
+
+  img{
+    display: block;
+    margin-top: 1em;
   }
 }
 .c-check-entity{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8em;
+  height: 8em;
+  border: 2px solid rgb(85, 189, 85);
+  border-radius: 50%;
+  margin: 2em 0;
   i{
     font-size: 5em;
+    color: rgb(85, 189, 85) !important;
   }
 }
