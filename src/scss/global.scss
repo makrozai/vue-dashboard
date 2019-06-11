@@ -474,3 +474,51 @@
     color: rgb(85, 189, 85) !important;
   }
 }
+.c-register{
+  text-align: center;
+
+  &__forms{
+    display: flex;
+
+    &__item{
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      padding: 5em 2em;
+      margin-top: 3em;
+      transition: all .3s;
+
+      &:hover{
+        background: rgba(#81D7EA,.1);
+      }
+
+      h3{
+        font-size: 1.6em;
+      }
+      i{
+        display:block;
+        font-size: 6em;
+        margin-top: .3em;
+      }
+      p{
+        text-align: center;
+        margin-top: 0;
+      }
+      .v-btn{
+        margin-top: auto;
+      }
+    }
+  }
+  &__particular{
+    &__radio{
+      .v-input--radio-group__input{
+        display: flex;
+        flex-direction: row;
+
+        div{
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+}
