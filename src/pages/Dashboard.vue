@@ -21,7 +21,9 @@
       >
         El usuario aun no esta validado correctamente
       </v-alert>
-      <router-view/>
+      <transition>
+        <router-view/>
+      </transition>
     </v-flex>
   </v-layout>
 </template>

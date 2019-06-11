@@ -10,6 +10,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="email"
             v-validate="'required|email'"
             :error-messages="errors.collect('Correo electronico')"
@@ -21,6 +22,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="password"
             v-validate="'required|alpha_dash|min:6'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
@@ -38,6 +40,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="identity"
             v-validate="'required|integer'"
             :error-messages="errors.collect('Documento de identidad')"
@@ -63,6 +66,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="phone"
             v-validate="'required|integer|min:9'"
             :error-messages="errors.collect('Nº Celular')"
@@ -91,12 +95,19 @@
         </v-flex>
         <v-flex xs12>
           <v-btn
+            :disabled="loadingSubmit"
             large
-            color="primary"
+            :color='statusSubmit'
             class="elevation-0"
             @click="submit"
           >
             Registrar
+            <v-progress-circular
+              indeterminate
+              color="gray"
+              class="ml-4"
+              v-if="loadingSubmit"
+            ></v-progress-circular>
           </v-btn>
         </v-flex>
       </v-layout>
@@ -106,13 +117,17 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha },
   data () {
     return {
+      loadingSubmit: false,
+      statusSubmit: 'primary',
+
       typeIdentity: null,
-      identity: null,
+      identity: '',
       autorization: null,
       phone: null,
       show1: false,
@@ -122,13 +137,28 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setUser']),
     submit () {
+      this.loadingSubmit = true
+
       this.$validator.validateAll()
         .then(response => {
+          setInterval(() => {
+            this.loadingSubmit = false
+          }, 3000)
+
           if (this.verifyRecaptcha && response) {
-            console.log('validacion correcta')
+            var user = {
+              typeIdentity: this.typeIdentity,
+              identity: this.identity,
+              phone: this.phone,
+              password: this.password,
+              email: this.email
+            }
+            this.setUser(user)
+            this.statusSubmit = 'success'
           } else {
-            console.log('los campos no se validaron correctamente')
+            this.statusSubmit = 'error'
           }
         })
     },

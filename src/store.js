@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    placeholderUser: {},
     user: null,
     logged: !!window.localStorage.getItem('_token'),
     navbarDrawer: {
@@ -52,7 +53,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     // establece el usuario a traves del token jwt
-    setUser (state, payload) {
+    setLogin (state, payload) {
       if (window.localStorage.getItem('_token')) {
         state.user = payload
         state.logged = true
@@ -65,6 +66,9 @@ const store = new Vuex.Store({
     setLogged (state) {
       state.logged = false
       state.user = {}
+    },
+    setUser (state, payload) {
+      state.placeholderUser = payload
     }
   },
   actions: {
@@ -84,11 +88,14 @@ const store = new Vuex.Store({
         status: 'no-valid',
         email: 'marco@localhost.com'
       }
-      context.commit('setUser', userData)
+      context.commit('setLogin', userData)
     },
     logout (context) {
       window.localStorage.removeItem('_token')
       context.commit('setLogged')
+    },
+    setUser (context, payload) {
+      context.commit('setUser', payload)
     }
   }
 })

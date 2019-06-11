@@ -7,6 +7,7 @@
       <v-layout wrap>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="comercialReason"
             v-validate="'required'"
             :error-messages="errors.collect('razón comercial')"
@@ -18,6 +19,7 @@
         </v-flex>
         <v-flex xs12 md4>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="ruc"
             v-validate="'required|integer'"
             :error-messages="errors.collect('ruc')"
@@ -29,6 +31,7 @@
         </v-flex>
         <v-flex xs12 md8>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="socialReason"
             v-validate="'required'"
             :error-messages="errors.collect('razón social')"
@@ -43,6 +46,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="email"
             v-validate="'required|email'"
             :error-messages="errors.collect('correo electronico')"
@@ -54,6 +58,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="password"
             v-validate="'required|alpha_dash|min:6'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
@@ -71,6 +76,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
+            :disabled="loadingSubmit"
             v-model="phone"
             v-validate="'required|integer'"
             :error-messages="errors.collect('Nº Celular')"
@@ -87,6 +93,7 @@
             :error-messages="errors.collect('autorización')"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
             data-vv-name="autorización"
+            color="primary"
             class="mt-0"
           ></v-checkbox>
         </v-flex>
@@ -97,12 +104,19 @@
         </v-flex>
         <v-flex xs12>
           <v-btn
+            :disabled="loadingSubmit"
             large
-            color="primary"
+            :color='statusSubmit'
             class="elevation-0"
             @click="submit"
           >
             Registrar
+            <v-progress-circular
+              indeterminate
+              color="gray"
+              class="ml-4"
+              v-if="loadingSubmit"
+            ></v-progress-circular>
           </v-btn>
         </v-flex>
       </v-layout>
@@ -112,11 +126,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha },
   data () {
     return {
+      loadingSubmit: false,
+      statusSubmit: 'primary',
+
       comercialReason: '',
       socialReason: '',
       ruc: null,
@@ -129,13 +147,28 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setUser']),
     submit () {
+      this.loadingSubmit = true
+
       this.$validator.validateAll()
         .then(response => {
+          setInterval(() => {
+            this.loadingSubmit = false
+          }, 3000)
+
           if (this.verifyRecaptcha && response) {
-            console.log('validacion correcta')
+            var user = {
+              comercialReason: this.comercialReason,
+              socialReason: this.socialReason,
+              ruc: this.ruc,
+              phone: this.phone,
+              email: this.email
+            }
+            this.setUser(user)
+            this.statusSubmit = 'success'
           } else {
-            console.log('los campos no se validaron correctamente')
+            this.statusSubmit = 'error'
           }
         })
     },
