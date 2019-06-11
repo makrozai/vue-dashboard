@@ -436,3 +436,17 @@
     }
   }
 }
+.c-accept-entity{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2{
+    font-size: 2.5em;
+  }
+}
+.c-check-entity{
+  i{
+    font-size: 5em;
+  }
+}

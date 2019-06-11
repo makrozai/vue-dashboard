@@ -11,7 +11,8 @@
       <m-navigation @update-navbar="updateNavbar"></m-navigation>
     </v-flex>
     <v-flex
-      grow
+      shrink
+      xs12
     >
       <v-alert
         v-model="alert"

@@ -45,6 +45,11 @@ const router = new Router({
           path: 'ficha-de-verificacion',
           name: 'ficha-de-verificacion',
           component: () => import('./views/VerifyEntity.vue')
+        },
+        {
+          path: 'ficha-aprobada',
+          name: 'ficha-aprobada',
+          component: () => import('./views/AcceptEntity.vue')
         }
       ]
     }
