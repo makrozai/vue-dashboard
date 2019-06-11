@@ -109,11 +109,23 @@ export default {
       items: [
         {
           title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y Cajamarca',
-          src: 'https://live.staticflickr.com/921/28751703687_ce438f4081_h.jpg'
+          // eslint-disable-next-line
+          src: require('../assets/slider-1.jpg')
         },
         {
           title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-          src: 'https://live.staticflickr.com/838/28751699137_14d73b2068_k.jpg'
+          // eslint-disable-next-line
+          src: require('../assets/slider-2.jpg')
+        },
+        {
+          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
+          // eslint-disable-next-line
+          src: require('../assets/slider-5.jpg')
+        },
+        {
+          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
+          // eslint-disable-next-line
+          src: require('../assets/slider-4.jpg')
         }
       ],
       show1: false,

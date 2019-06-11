@@ -59,3 +59,9 @@
 .icon-logout:before {
   content: "\67";
 }
+.icon-entidad:before {
+  content: "\68";
+}
+.icon-consultas:before {
+  content: "\69";
+}
