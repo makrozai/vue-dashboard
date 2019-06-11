@@ -6,7 +6,7 @@ Vue.use(VueResource)
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     user: null,
     logged: !!window.localStorage.getItem('_token'),
@@ -86,3 +86,5 @@ export default new Vuex.Store({
     }
   }
 })
+
+export default store
