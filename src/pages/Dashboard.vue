@@ -14,6 +14,7 @@
       xs12
     >
       <v-alert
+        v-if="user.status == 'no-valid'"
         v-model="alert"
         type="error"
         class="mt-0"
@@ -26,8 +27,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import MNavigation from '../components/navigation'
 export default {
+  computed: {
+    ...mapState(['user'])
+  },
   data () {
     return {
       alert: true,

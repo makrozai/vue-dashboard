@@ -68,15 +68,19 @@ const store = new Vuex.Store({
   },
   actions: {
     login (context, payload) {
-      window.localStorage.setItem('_token', payload.data.token)
+      if (payload) {
+        window.localStorage.setItem('_token', payload.data.token)
+      } else {
+        payload = window.localStorage.getItem('_token')
+      }
       // eslint-disable-next-line no-undef
-      let jwtDecode = require('jwt-decode')
-      let userId = jwtDecode(payload.data.token)
+      // let jwtDecode = require('jwt-decode')
+      // let userId = jwtDecode(payload)
 
       // set de user -reemplazar por get user-
       let userData = {
         name: 'Combativa',
-        status: 'Sin verificar'
+        status: 'no-valid'
       }
       context.commit('setUser', userData)
     },

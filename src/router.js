@@ -34,7 +34,7 @@ const router = new Router({
       },
       beforeEnter: (to, from, next) => {
         if (store.state.logged) {
-          next({ name: 'programa' })
+          next({ name: 'ficha-de-verificacion' })
         } else {
           next()
         }
@@ -43,7 +43,18 @@ const router = new Router({
     {
       path: '/register',
       name: 'register',
-      component: register
+      component: register,
+      meta: {
+        Auth: false,
+        title: 'Registro'
+      },
+      beforeEnter: (to, from, next) => {
+        if (store.state.logged) {
+          next({ name: 'ficha-de-verificacion' })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/dashboard',
@@ -52,27 +63,47 @@ const router = new Router({
         {
           path: 'entidad',
           name: 'entidad',
-          component: entity
+          component: entity,
+          meta: {
+            Auth: true,
+            title: 'Entidad'
+          }
         },
         {
           path: 'programa',
           name: 'programa',
-          component: program
+          component: program,
+          meta: {
+            Auth: true,
+            title: 'Programas'
+          }
         },
         {
           path: 'perfil',
           name: 'perfil',
-          component: perfil
+          component: perfil,
+          meta: {
+            Auth: true,
+            title: 'Perfil'
+          }
         },
         {
           path: 'ficha-de-verificacion',
           name: 'ficha-de-verificacion',
-          component: verifyEntity
+          component: verifyEntity,
+          meta: {
+            Auth: true,
+            title: 'Ficha de verificación'
+          }
         },
         {
           path: 'ficha-aprobada',
           name: 'ficha-aprobada',
-          component: acceptEntity
+          component: acceptEntity,
+          meta: {
+            Auth: true,
+            title: 'Aprovación de Entidad'
+          }
         }
       ]
     }
@@ -84,6 +115,12 @@ router.beforeEach((to, from, next) => {
   if (to.meta.Auth && !store.state.logged) {
     next({ name: 'login' })
   } else {
+    if (store.state.logged) {
+      store.dispatch('login')
+        .then(res => {
+
+        })
+    }
     next()
   }
 })
