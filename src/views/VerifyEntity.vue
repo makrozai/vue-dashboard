@@ -336,6 +336,7 @@ export default {
       ruc: '',
       razonSocial: '',
       razonComercial: '',
+      // eslint-disable-next-line
       fileImage: require('../assets/default-img.svg'),
       perfilContact: [
         {
@@ -353,6 +354,7 @@ export default {
       programs: [
         {
           id: 1,
+          // eslint-disable-next-line
           image: require('../assets/default-img.svg'),
           name: 'Proyecto de educación APC',
           from: {
@@ -392,6 +394,7 @@ export default {
     addProgram () {
       let program = {
         id: null,
+        // eslint-disable-next-line
         image: require('../assets/default-img.svg'),
         name: 'Proyecto de educación APC',
         from: {

@@ -38,7 +38,7 @@
         </v-flex>
         <v-flex xs12>
           <v-text-field
-            v-model="identidad"
+            v-model="identity"
             v-validate="'required|integer'"
             :error-messages="errors.collect('Documento de identidad')"
             label="Nº Documento de identidad"
@@ -75,8 +75,8 @@
         <v-flex xs12>
           <v-checkbox
             v-validate="'required'"
-            :error-messages="errors.collect('Autorizacion')"
-            data-vv-name="Autorizacion"
+            :error-messages="errors.collect('autorizacion')"
+            data-vv-name="autorizacion"
             v-model="autorization"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
             class="mt-0"
@@ -112,7 +112,7 @@ export default {
   data () {
     return {
       typeIdentity: null,
-      identidad: null,
+      identity: null,
       autorization: null,
       phone: null,
       show1: false,
@@ -121,29 +121,20 @@ export default {
       verifyRecaptcha: null
     }
   },
-  mounted () {
-    this.$validator.localize('es', this.dictionary)
-  },
-
   methods: {
     submit () {
       this.$validator.validateAll()
-        .then(reponse => {
-
+        .then(response => {
+          if (this.verifyRecaptcha && response) {
+            console.log('validacion correcta')
+          } else {
+            console.log('los campos no se validaron correctamente')
+          }
         })
-    },
-    clear () {
-      this.typeIdentidad = null
-      this.identidad = null
-      this.checkbox = false
-      this.phone = null
-      this.email = ''
-      this.password = ''
-      this.$validator.reset()
     },
     onVerify (response) {
       this.verifyRecaptcha = response
-    },
+    }
   }
 }
 </script>

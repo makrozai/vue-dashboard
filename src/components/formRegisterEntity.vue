@@ -7,11 +7,11 @@
       <v-layout wrap>
         <v-flex xs12>
           <v-text-field
-            v-model="razonComercial"
+            v-model="comercialReason"
             v-validate="'required'"
-            :error-messages="errors.collect('razonComercial')"
+            :error-messages="errors.collect('razón comercial')"
             label="Razón comercial o nombre de la organización"
-            data-vv-name="razonComercial"
+            data-vv-name="razón comercial"
             required
             box
           ></v-text-field>
@@ -20,20 +20,20 @@
           <v-text-field
             v-model="ruc"
             v-validate="'required|integer'"
-            :error-messages="errors.collect('Ruc')"
+            :error-messages="errors.collect('ruc')"
             label="Ruc"
-            data-vv-name="Ruc"
+            data-vv-name="ruc"
             required
             box
           ></v-text-field>
         </v-flex>
         <v-flex xs12 md8>
           <v-text-field
-            v-model="razonSocial"
+            v-model="socialReason"
             v-validate="'required'"
-            :error-messages="errors.collect('razonSocial')"
+            :error-messages="errors.collect('razón social')"
             label="Razón social"
-            data-vv-name="razonSocial"
+            data-vv-name="razón social"
             required
             box
           ></v-text-field>
@@ -45,9 +45,9 @@
           <v-text-field
             v-model="email"
             v-validate="'required|email'"
-            :error-messages="errors.collect('email')"
+            :error-messages="errors.collect('correo electronico')"
             label="Correo electronico"
-            data-vv-name="email"
+            data-vv-name="correo electronico"
             required
             box
           ></v-text-field>
@@ -55,16 +55,13 @@
         <v-flex xs12>
           <v-text-field
             v-model="password"
-            v-validate="'required|alpha_dash'"
+            v-validate="'required|alpha_dash|min:6'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
-            :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
-            :error-messages="errors.collect('password')"
+            :error-messages="errors.collect('contraseña')"
             label="Contraseña"
-            hint="At least 8 characters"
-            data-vv-name="password"
+            data-vv-name="contraseña"
             required
-            counter
             box
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -76,23 +73,26 @@
           <v-text-field
             v-model="phone"
             v-validate="'required|integer'"
-            :error-messages="errors.collect('phone')"
-            label="Nª Celular"
-            data-vv-name="phone"
+            :error-messages="errors.collect('Nº Celular')"
+            label="Nº Celular"
+            data-vv-name="Nº Celular"
             required
             box
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
           <v-checkbox
-            v-model="checkbox"
+            v-model="autorization"
+            v-validate="'required'"
+            :error-messages="errors.collect('autorización')"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
+            data-vv-name="autorización"
             class="mt-0"
           ></v-checkbox>
         </v-flex>
         <v-flex xs12>
           <div class="c-recaptcha">
-            <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2"></vue-recaptcha>
+            <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2"  @verify="onVerify"></vue-recaptcha>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -117,44 +117,30 @@ export default {
   components: { VueRecaptcha },
   data () {
     return {
-      razonComercial: '',
-      razonSocial: '',
+      comercialReason: '',
+      socialReason: '',
       ruc: null,
-      checkbox: false,
+      autorization: false,
       phone: null,
       show1: false,
       password: '',
       email: '',
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => ('The email and password you entered don\'t match')
-      },
-      dictionary: {
-        attributes: {
-          email: 'E-mail Address'
-          // custom attributes
-        }
-      }
+      verifyRecaptcha: null
     }
   },
-  mounted () {
-    this.$validator.localize('es', this.dictionary)
-  },
-
   methods: {
     submit () {
       this.$validator.validateAll()
+        .then(response => {
+          if (this.verifyRecaptcha && response) {
+            console.log('validacion correcta')
+          } else {
+            console.log('los campos no se validaron correctamente')
+          }
+        })
     },
-    clear () {
-      this.razonComercial = ''
-      this.razonSocial = ''
-      this.ruc = null
-      this.checkbox = false
-      this.phone = null
-      this.email = ''
-      this.password = ''
-      this.$validator.reset()
+    onVerify (response) {
+      this.verifyRecaptcha = response
     }
   }
 }

@@ -511,6 +511,10 @@
   }
   &__particular{
     &__radio{
+      margin-bottom: .7em;
+      .v-input__slot{
+        margin-bottom: .2em !important ;
+      }
       .v-input--radio-group__input{
         display: flex;
         flex-direction: row;
