@@ -94,7 +94,7 @@
 
     <v-list dense class=" c-navbar__list c-navbar__list--footer">
       <v-list-tile
-        :to="{name: 'login'}"
+        @click="endSesion"
       >
         <v-list-tile-action>
           <i class="icon-logout"></i>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapState(['navbarDrawer', 'user'])
@@ -124,6 +124,13 @@ export default {
   watch: {
     mini: function (response) {
       this.$emit('update-navbar', !response)
+    }
+  },
+  methods: {
+    ...mapActions(['logout']),
+    endSesion () {
+      this.logout()
+      this.$router.push({ name: 'login' })
     }
   }
 }

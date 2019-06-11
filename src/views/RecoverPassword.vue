@@ -30,7 +30,8 @@
         <v-icon>navigate_before</v-icon>
       </v-btn>
       <div class="c-form-home__container">
-        <h2>Iniciar sesión</h2>
+        <h2>Recuperar contraseña</h2>
+        <p class="c-form-home__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum error voluptatum officiis ad porro temporibus vel voluptatibus non odio? Similique ratione aliquam nostrum? Ducimus deserunt sed a harum, optio perspiciatis.</p>
         <!--@FORM LAYOUT START-->
         <form class="c-form-home__inputs">
           <v-layout wrap>
@@ -46,20 +47,6 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <v-text-field
-                v-model="password"
-                v-validate="'required|alpha_dash|min:6'"
-                :append-icon="show1 ? 'visibility' : 'visibility_off'"
-                :type="show1 ? 'text' : 'password'"
-                :error-messages="errors.collect('Contraseña')"
-                label="Contraseña"
-                data-vv-name="Contraseña"
-                required
-                box
-                @click:append="show1 = !show1"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12>
               <v-btn
                 :disabled="loadingSubmit"
                 large
@@ -67,7 +54,7 @@
                 class="elevation-0"
                 @click="submit"
               >
-                Ingresar
+                Recuperar
                 <v-progress-circular
                   indeterminate
                   color="gray"
@@ -79,19 +66,6 @@
           </v-layout>
         </form>
         <!--@FORM LAYOUT END-->
-        <p class="text-xs-center">¿No puedes acceder?
-          <router-link :to="{name:'recuperar-contrasena'}" class="red--text">Recupera tu clave</router-link>
-        </p>
-        <p class="text-xs-center">Deseo ser parte</p>
-        <v-btn
-          :to="{name:'register'}"
-          color="primary"
-          class="elevation-0 c-btn-register"
-          large
-          outline
-        >
-          Regístrate
-        </v-btn>
       </div>
     </v-flex>
   </v-layout>

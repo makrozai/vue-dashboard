@@ -8,6 +8,7 @@ import program from './views/Programa.vue'
 import perfil from './views/Perfil.vue'
 import verifyEntity from './views/VerifyEntity'
 import acceptEntity from './views/AcceptEntity'
+import recoverPassword from './views/RecoverPassword'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -47,6 +48,22 @@ const router = new Router({
       meta: {
         Auth: false,
         title: 'Registro'
+      },
+      beforeEnter: (to, from, next) => {
+        if (store.state.logged) {
+          next({ name: 'ficha-de-verificacion' })
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: 'recuperar-contrasena',
+      name: 'recuperar-contrasena',
+      component: recoverPassword,
+      meta: {
+        Auth: false,
+        title: 'Aprovación de Entidad'
       },
       beforeEnter: (to, from, next) => {
         if (store.state.logged) {

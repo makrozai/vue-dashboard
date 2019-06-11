@@ -62,8 +62,9 @@ const store = new Vuex.Store({
       }
     },
     // establece el estado del usuario
-    setLogged (state, logged) {
-      state.logged = logged
+    setLogged (state) {
+      state.logged = false
+      state.user = {}
     }
   },
   actions: {
@@ -80,13 +81,14 @@ const store = new Vuex.Store({
       // set de user -reemplazar por get user-
       let userData = {
         name: 'Combativa',
-        status: 'no-valid'
+        status: 'no-valid',
+        email: 'marco@localhost.com'
       }
       context.commit('setUser', userData)
     },
     logout (context) {
       window.localStorage.removeItem('_token')
-      context.commit('setUser')
+      context.commit('setLogged')
     }
   }
 })
