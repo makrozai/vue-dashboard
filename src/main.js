@@ -7,7 +7,8 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 // import of vee validate
-import VeeValidate from 'vee-validate'
+import es from 'vee-validate/dist/locale/es'
+import VeeValidate, { Validator } from 'vee-validate'
 
 // import of vue resource
 import VueResource from 'vue-resource'
@@ -19,6 +20,8 @@ import VueResource from 'vue-resource'
 
 Vue.use(VeeValidate)
 Vue.use(VueResource)
+
+Validator.localize('es', es)
 
 Vue.config.productionTip = false
 

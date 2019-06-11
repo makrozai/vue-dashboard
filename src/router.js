@@ -117,9 +117,6 @@ router.beforeEach((to, from, next) => {
   } else {
     if (store.state.logged) {
       store.dispatch('login')
-        .then(res => {
-
-        })
     }
     next()
   }

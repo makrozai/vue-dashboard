@@ -12,9 +12,9 @@
           <v-text-field
             v-model="email"
             v-validate="'required|email'"
-            :error-messages="errors.collect('email')"
+            :error-messages="errors.collect('Correo electronico')"
             label="Correo electronico"
-            data-vv-name="email"
+            data-vv-name="Correo electronico"
             required
             box
           ></v-text-field>
@@ -22,16 +22,13 @@
         <v-flex xs12>
           <v-text-field
             v-model="password"
-            v-validate="'required|alpha_dash'"
+            v-validate="'required|alpha_dash|min:6'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
-            :rules="[rules.required, rules.min]"
             :type="show1 ? 'text' : 'password'"
-            :error-messages="errors.collect('password')"
+            :error-messages="errors.collect('Contraseña')"
             label="Contraseña"
-            hint="At least 8 characters"
-            data-vv-name="password"
+            data-vv-name="Contraseña"
             required
-            counter
             box
             @click:append="show1 = !show1"
           ></v-text-field>
@@ -51,7 +48,15 @@
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-radio-group v-model="typeIdentidad" :mandatory="false" class="c-register__particular__radio">
+          <v-radio-group
+            v-validate="'required'"
+            :error-messages="errors.collect('Tipo de identidad')"
+            data-vv-name="Tipo de identidad"
+            v-model="typeIdentity"
+            :mandatory="false"
+            required
+            class="c-register__particular__radio"
+          >
             <v-radio label="DNI" value="radio-1" color="primary"></v-radio>
             <v-radio label="Doc. Extranjería" value="radio-2" color="primary"></v-radio>
           </v-radio-group>
@@ -59,24 +64,29 @@
         <v-flex xs12>
           <v-text-field
             v-model="phone"
-            v-validate="'required|integer'"
-            :error-messages="errors.collect('phone')"
+            v-validate="'required|integer|min:9'"
+            :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
-            data-vv-name="phone"
+            data-vv-name="Nº Celular"
             required
             box
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
           <v-checkbox
-            v-model="checkbox"
+            v-validate="'required'"
+            :error-messages="errors.collect('Autorizacion')"
+            data-vv-name="Autorizacion"
+            v-model="autorization"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
             class="mt-0"
+            color="primary"
+            required
           ></v-checkbox>
         </v-flex>
         <v-flex xs12>
           <div class="c-recaptcha">
-            <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2"></vue-recaptcha>
+            <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" @verify="onVerify"></vue-recaptcha>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -101,24 +111,14 @@ export default {
   components: { VueRecaptcha },
   data () {
     return {
-      typeIdentidad: null,
+      typeIdentity: null,
       identidad: null,
-      checkbox: false,
+      autorization: null,
       phone: null,
       show1: false,
       password: '',
       email: '',
-      rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => ('The email and password you entered don\'t match')
-      },
-      dictionary: {
-        attributes: {
-          email: 'E-mail Address'
-          // custom attributes
-        }
-      }
+      verifyRecaptcha: null
     }
   },
   mounted () {
@@ -128,6 +128,9 @@ export default {
   methods: {
     submit () {
       this.$validator.validateAll()
+        .then(reponse => {
+
+        })
     },
     clear () {
       this.typeIdentidad = null
@@ -137,7 +140,10 @@ export default {
       this.email = ''
       this.password = ''
       this.$validator.reset()
-    }
+    },
+    onVerify (response) {
+      this.verifyRecaptcha = response
+    },
   }
 }
 </script>

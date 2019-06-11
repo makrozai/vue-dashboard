@@ -302,11 +302,10 @@
           <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
 
           <v-radio-group v-model="conditions" class="c-verify-entity__radios">
-            <v-radio label="Terminos y condiciones" value="accept"></v-radio>
+            <v-radio label="Terminos y condiciones" value="accept" color="primary"></v-radio>
             <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
             <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su politica de privacidad en y los terminos y condiciones.</p>
           </v-radio-group>
-
 
           <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" class="mb-4"></vue-recaptcha>
 

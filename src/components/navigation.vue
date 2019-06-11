@@ -113,7 +113,7 @@
 import { mapState } from 'vuex'
 export default {
   computed: {
-    ...mapState(['navbarDrawer','user'])
+    ...mapState(['navbarDrawer', 'user'])
   },
   data () {
     return {
@@ -123,7 +123,6 @@ export default {
   },
   watch: {
     mini: function (response) {
-      console.log('emit realizado')
       this.$emit('update-navbar', !response)
     }
   }
