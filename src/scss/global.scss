@@ -69,6 +69,9 @@
   }
 
 }
+.v-input, .v-label, .v-list__tile{
+  font-size: 14px;
+}
 .v-input.v-text-field--box{
   .v-input__slot{
     background: #F5F6FD !important;
@@ -293,6 +296,7 @@
   }
   &__upload{
     display: block;
+
     img{
       display: block;
       width: 143px;
@@ -312,6 +316,18 @@
     }
     input{
       display: none;
+    }
+
+
+    &--large{
+      img{
+        width: 85%;
+        height: 170px;
+      }
+      p{
+        max-width: 100%;
+        margin-top: .7em;
+      }
     }
   }
   &__spacer{
@@ -531,6 +547,67 @@
           margin-bottom: 0 !important;
         }
       }
+    }
+  }
+}
+.c-program-type{
+  background-color: #9B9B9B;
+  color: white;
+  padding: 1em 1.5em;
+  display: flex;
+  align-items: center;
+  height: 6.5em;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.active{
+    background-color: var(--v-primary-base);
+  }
+
+  i{
+    font-size: 3.5em;
+    line-height: 1;
+    width: 25%;
+
+    &:before{
+      display: block;
+    }
+  }
+  p{
+    width: 75%;
+    margin: 0;
+    line-height: 1.2;
+  }
+}
+.c-form-program{
+  position: relative !important;
+  overflow: hidden;
+
+  &__card{
+    height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 4em;
+  }
+
+  &--dialog{
+    height: 90vh;
+  }
+
+  &__footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: .5em 2.5em;
+    background-color: white;
+    border-top: 1px solid rgba(#000,.1);
+  }
+  .v-input__append-outer{
+    margin-left:1em;
+    margin-right: 1em;
+    i{
+      font-size: 1.6em;
     }
   }
 }

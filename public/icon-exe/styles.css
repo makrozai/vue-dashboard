@@ -65,3 +65,24 @@
 .icon-consultas:before {
   content: "\69";
 }
+.icon-archivo:before {
+  content: "\6a";
+}
+.icon-facebook:before {
+  content: "\6b";
+}
+.icon-home:before {
+  content: "\6c";
+}
+.icon-huella:before {
+  content: "\6d";
+}
+.icon-twitter:before {
+  content: "\6e";
+}
+.icon-youtube:before {
+  content: "\6f";
+}
+.icon-instagram:before {
+  content: "\70";
+}

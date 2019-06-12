@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="38px" viewBox="0 0 33 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>huella-dactilar</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Entidades-Programa-Detalle-Copy-5" transform="translate(-883.000000, -202.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Ficha" transform="translate(830.000000, 0.000000)">
+                <g id="Boton-1" transform="translate(33.000000, 188.000000)">
+                    <g id="huella-dactilar" transform="translate(20.000000, 14.000000)">
+                        <polygon id="Shape" points="7 38 0 38 0 0 7 0 7 2.2265625 2.33333333 2.2265625 2.33333333 35.7734375 7 35.7734375"></polygon>
+                        <polygon id="Shape" points="33 38 26 38 26 35.7734375 30.6666667 35.7734375 30.6666667 2.2265625 26 2.2265625 26 0 33 0"></polygon>
+                        <path d="M17,35 C11.4861111,35 7,30.6260417 7,25.25 L9.22222222,25.25 C9.22222222,29.4315539 12.7112268,32.8333333 17,32.8333333 C21.2887732,32.8333333 24.7777778,29.4315539 24.7777778,25.25 L24.7777778,22 L27,22 L27,25.25 C27,30.6260417 22.5138889,35 17,35 Z" id="Shape"></path>
+                        <path d="M9.22222222,23 L7,23 L7,11.8780488 C7,6.43140244 11.4861111,2 17,2 C22.5138889,2 27,6.43140244 27,11.8780488 L24.7777778,11.8780488 C24.7777778,7.64157771 21.2887732,4.19512195 17,4.19512195 C12.7112268,4.19512195 9.22222222,7.64157771 9.22222222,11.8780488 L9.22222222,23 Z" id="Shape"></path>
+                        <path d="M16.5,32 C13.4672656,32 11,29.4803655 11,26.3832599 L11,15 L13.2,15 L13.2,26.3832599 C13.2,28.2414648 14.6804167,29.753304 16.5,29.753304 C18.3195833,29.753304 19.8,28.2414648 19.8,26.3832599 L22,26.3832599 C22,29.4803655 19.5327344,32 16.5,32 Z" id="Shape"></path>
+                        <path d="M22,24 L19.8,24 L19.8,12.6167401 C19.8,10.7585352 18.3195833,9.24669604 16.5,9.24669604 C14.6804167,9.24669604 13.2,10.7585352 13.2,12.6167401 L11,12.6167401 C11,9.51963448 13.4672656,7 16.5,7 C19.5327344,7 22,9.51963448 22,12.6167401 L22,24 Z" id="Shape"></path>
+                        <polygon id="Shape" points="16 20 18 20 18 27 16 27"></polygon>
+                        <polygon id="Shape" points="16 11 18 11 18 18 16 18"></polygon>
+                        <polygon id="Shape" points="24 15 26 15 26 21 24 21"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

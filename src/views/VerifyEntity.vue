@@ -61,6 +61,7 @@
 
       <span class="c-verify-entity__spacer"></span>
 
+      <!--@ informacion de entidad-->
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
           <div class="c-verify-entity__section complete">
@@ -139,6 +140,9 @@
           </v-layout>
         </div>
       </div>
+      <!--@ informacion de entidad-->
+
+      <!--@ informacion de contacto-->
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
           <div class="c-verify-entity__section">
@@ -254,6 +258,9 @@
 
         </div>
       </div>
+      <!--@ informacion de contacto-->
+
+      <!--@ registro de programa-->
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
           <div class="c-verify-entity__section">
@@ -292,6 +299,77 @@
 
         </div>
       </div>
+
+      <v-dialog v-model="dialog" persistent max-width="600px">
+        <div class="c-form-program c-form-program--dialog">
+          <v-card class="c-form-program__card">
+            <v-card-title>
+              <v-container class="pb-0">
+                <h2>PROGRAMA</h2>
+              </v-container>
+            </v-card-title>
+            <v-card-text class="pt-0">
+              <v-container grid-list-md class="py-0">
+                <v-layout wrap>
+                  <v-flex xs12>
+                    <v-text-field
+                      disabled
+                      v-model="program.name"
+                      v-validate="'required'"
+                      :error-messages="errors.collect('empresa creadora')"
+                      label="Empresa u operador (creadora de la iniciativa)"
+                      data-vv-name="empresa creadora"
+                      required
+                      box
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <h3>¿El programa es propio?</h3>
+                  </v-flex>
+                  <v-flex xs6>
+                    <div
+                      class="c-program-type"
+                      :class="program.type == 'propio' ? 'active':''"
+                      @click="changeTypeProgram('propio')"
+                    >
+                      <i class="icon-huella"></i>
+                      <p>
+                        Propia<br>
+                        El programa es de mi propia autoria como Entidad y esta registrada
+                      </p>
+                    </div>
+                  </v-flex>
+                  <v-flex xs6>
+                    <div
+                      class="c-program-type"
+                      :class="program.type == 'convenio' ? 'active':''"
+                      @click="changeTypeProgram('convenio')"
+                    >
+                      <i class="icon-archivo"></i>
+                      <p>
+                        En convenio<br>
+                        El programa le pertenece a un grupo de Entidades
+                      </p>
+                    </div>
+                  </v-flex>
+                  <!--@ formulario de programa propio-->
+                  <v-flex xs12 class="mt-4">
+                    <form-program-own></form-program-own>
+                  </v-flex>
+                  <!--@ formulario de programa propio-->
+                </v-layout>
+              </v-container>
+            </v-card-text>
+          </v-card>
+
+          <div class="c-form-program__footer">
+            <v-btn large color="primary">Guardar</v-btn>
+          </div>
+        </div>
+      </v-dialog>
+      <!--@ registro de programa-->
+
+      <!--@ terminos y condiciones-->
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
           <div class="c-verify-entity__section c-verify-entity__section--final">
@@ -312,17 +390,25 @@
           <v-btn color="primary" large class="c-verify-entity__submit">Registrate</v-btn>
         </div>
       </div>
+      <!--@ terminos y condiciones-->
     </form>
   </v-container>
 </template>
 
 <script>
+import formProgramOwn from '../components/formProgramOwn'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  components: { VueRecaptcha },
+  components: { VueRecaptcha, formProgramOwn },
   data () {
     return {
+      program: {
+        name: 'RUC 234523432 EMPRESARIOS POR LA EDUCACIÓN',
+        type: 'propio'
+      },
+
+      dialog: false,
       distritoItems: ['a', 'b', 'c', 'd'],
       provinciaItems: ['a', 'b', 'c', 'd'],
       departamentoItems: ['a', 'b', 'c', 'd'],
@@ -392,6 +478,7 @@ export default {
       this.perfilContact.push(contact)
     },
     addProgram () {
+      this.dialog = true
       let program = {
         id: null,
         // eslint-disable-next-line
@@ -412,6 +499,9 @@ export default {
     },
     removeProgram (index) {
       this.programs.splice(index, 1)
+    },
+    changeTypeProgram (type) {
+      this.program.type = type
     }
   }
 }
