@@ -302,6 +302,7 @@
       width: 143px;
       height: 143px;
       margin:0 auto;
+      object-fit: cover;
       background-size: cover;
       background-position: center center;
     }
@@ -322,7 +323,7 @@
     &--large{
       img{
         width: 85%;
-        height: 170px;
+        height: 160px;
       }
       p{
         max-width: 100%;

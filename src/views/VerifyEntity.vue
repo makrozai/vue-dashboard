@@ -300,7 +300,7 @@
         </div>
       </div>
 
-      <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-dialog v-model="dialog" max-width="600px">
         <div class="c-form-program c-form-program--dialog">
           <v-card class="c-form-program__card">
             <v-card-title>
@@ -354,7 +354,8 @@
                   </v-flex>
                   <!--@ formulario de programa propio-->
                   <v-flex xs12 class="mt-4">
-                    <form-program-own></form-program-own>
+                    <form-program-own v-if="program.type == 'propio'"></form-program-own>
+                    <form-program-group v-if="program.type == 'convenio'"></form-program-group>
                   </v-flex>
                   <!--@ formulario de programa propio-->
                 </v-layout>
@@ -396,16 +397,17 @@
 </template>
 
 <script>
+import formProgramGroup from '../components/formProgramGroup'
 import formProgramOwn from '../components/formProgramOwn'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  components: { VueRecaptcha, formProgramOwn },
+  components: { VueRecaptcha, formProgramOwn, formProgramGroup },
   data () {
     return {
       program: {
         name: 'RUC 234523432 EMPRESARIOS POR LA EDUCACIÓN',
-        type: 'propio'
+        type: 'convenio'
       },
 
       dialog: false,
