@@ -147,7 +147,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser']),
+    ...mapActions(['setUser', 'setEntity']),
     submit () {
       this.loadingSubmit = true
 
@@ -159,13 +159,19 @@ export default {
 
           if (this.verifyRecaptcha && response) {
             var user = {
+              email: this.email,
+              password: this.password
+            }
+            var entity = {
               comercialReason: this.comercialReason,
               socialReason: this.socialReason,
               ruc: this.ruc,
-              phone: this.phone,
-              email: this.email
+              phone: this.phone
             }
+            // save information in state and database
             this.setUser(user)
+            this.setEntity(entity)
+            // change state of button
             this.statusSubmit = 'success'
           } else {
             this.statusSubmit = 'error'

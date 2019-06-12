@@ -9,6 +9,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     placeholderUser: {},
+    placeholderEntity: {},
+    placeholderPartaker: {},
     user: null,
     logged: !!window.localStorage.getItem('_token'),
     navbarDrawer: {
@@ -69,6 +71,12 @@ const store = new Vuex.Store({
     },
     setUser (state, payload) {
       state.placeholderUser = payload
+    },
+    setEntity (state, payload) {
+      state.placeholderEntity = payload
+    },
+    setPartaker (state, payload) {
+      state.placeholderPartaker = payload
     }
   },
   actions: {
@@ -96,6 +104,12 @@ const store = new Vuex.Store({
     },
     setUser (context, payload) {
       context.commit('setUser', payload)
+    },
+    setEntity (context, payload) {
+      context.commit('setEntity', payload)
+    },
+    setPartaker (context, payload) {
+      context.commit('setPartaker', payload)
     }
   }
 })

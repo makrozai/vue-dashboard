@@ -36,6 +36,7 @@
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="email"
                 v-validate="'required|email'"
                 :error-messages="errors.collect('Correo electronico')"
@@ -47,6 +48,7 @@
             </v-flex>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="password"
                 v-validate="'required|alpha_dash|min:6'"
                 :append-icon="show1 ? 'visibility' : 'visibility_off'"
