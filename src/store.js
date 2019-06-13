@@ -103,10 +103,30 @@ const store = new Vuex.Store({
       context.commit('setLogged')
     },
     setUser (context, payload) {
-      context.commit('setUser', payload)
+      return Vue.http.post('users', payload)
+        .then(response => {
+          // enruta correctamente el usuario a la respuesta
+          response = response.body.data.user
+
+          context.commit('setUser', response)
+          return response
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     setEntity (context, payload) {
-      context.commit('setEntity', payload)
+      return Vue.http.post('entities', payload)
+        .then(response => {
+          // enruta correctamente la entidad a la respuesta
+          response = response.body.data.entity
+
+          context.commit('setEntity', response)
+          return response
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     setPartaker (context, payload) {
       context.commit('setPartaker', payload)

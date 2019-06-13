@@ -160,17 +160,22 @@ export default {
           if (this.verifyRecaptcha && response) {
             var user = {
               email: this.email,
-              password: this.password
+              password: this.password,
+              type_user_id: 2
             }
             var entity = {
-              comercialReason: this.comercialReason,
-              socialReason: this.socialReason,
+              name: this.comercialReason,
+              social_reason: this.socialReason,
               ruc: this.ruc,
-              phone: this.phone
+              main_phone: this.phone,
+              state: 2
             }
             // save information in state and database
             this.setUser(user)
-            this.setEntity(entity)
+              .then(response => {
+                entity.user_id = response.id
+                this.setEntity(entity)
+              })
             // change state of button
             this.statusSubmit = 'success'
           } else {
