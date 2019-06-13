@@ -11,7 +11,7 @@
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="email"
+            v-model="userInfo.email"
             v-validate="'required|email'"
             :error-messages="errors.collect('Correo electronico')"
             label="Correo electronico"
@@ -23,7 +23,7 @@
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="password"
+            v-model="userInfo.password"
             v-validate="'required|alpha_dash|min:6'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
@@ -38,10 +38,34 @@
         <v-flex xs12>
           <p class="mt-0">Indicanos datos de contacto para la validacion y contacto de la cuenta</p>
         </v-flex>
+        <v-flex xs4>
+          <v-text-field
+            :disabled="loadingSubmit"
+            v-model="partakerInfo.name"
+            v-validate="'required|alpha_spaces'"
+            :error-messages="errors.collect('nombre')"
+            label="Nombre"
+            data-vv-name="nombre"
+            required
+            box
+          ></v-text-field>
+        </v-flex>
+        <v-flex xs8>
+          <v-text-field
+            :disabled="loadingSubmit"
+            v-model="partakerInfo.lastname"
+            v-validate="'required|alpha_spaces'"
+            :error-messages="errors.collect('apellidos')"
+            label="Apellidos"
+            data-vv-name="apellidos"
+            required
+            box
+          ></v-text-field>
+        </v-flex>
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="identity"
+            v-model="partakerInfo.nro_doc"
             v-validate="'required|integer'"
             :error-messages="errors.collect('Documento de identidad')"
             label="Nº Documento de identidad"
@@ -55,19 +79,19 @@
             v-validate="'required'"
             :error-messages="errors.collect('Tipo de identidad')"
             data-vv-name="Tipo de identidad"
-            v-model="typeIdentity"
+            v-model="partakerInfo.type_doc"
             :mandatory="false"
             required
             class="c-register__particular__radio"
           >
-            <v-radio label="DNI" value="radio-1" color="primary"></v-radio>
-            <v-radio label="Doc. Extranjería" value="radio-2" color="primary"></v-radio>
+            <v-radio label="DNI" value="DNI" color="primary"></v-radio>
+            <v-radio label="Doc. Extranjería" value="DEX" color="primary"></v-radio>
           </v-radio-group>
         </v-flex>
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="phone"
+            v-model="partakerInfo.phone"
             v-validate="'required|integer|min:9'"
             :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
@@ -123,45 +147,71 @@ export default {
   components: { VueRecaptcha },
   data () {
     return {
+      userInfo: {
+        type_user_id: 3,
+        email: '',
+        password: ''
+      },
+      partakerInfo: {
+        name: '',
+        lastname: '',
+        type_doc: null,
+        nro_doc: null,
+        phone: null,
+        user_id: null
+      },
       loadingSubmit: false,
       statusSubmit: 'primary',
 
-      typeIdentity: null,
-      identity: '',
       autorization: null,
-      phone: null,
       show1: false,
-      password: '',
-      email: '',
       verifyRecaptcha: null
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setPartaker']),
+    ...mapActions(['setUser', 'setPartaker', 'setAlert']),
     submit () {
       this.loadingSubmit = true
+      let alertError = null
 
       this.$validator.validateAll()
         .then(response => {
-          setInterval(() => {
-            this.loadingSubmit = false
-          }, 3000)
-
           if (this.verifyRecaptcha && response) {
-            var user = {
-              password: this.password,
-              email: this.email
-            }
-            var partaker = {
-              typeIdentity: this.typeIdentity,
-              identity: this.identity,
-              phone: this.phone
-            }
             // save information in state and database
-            this.setUser(user)
-            this.partaker(partaker)
+            this.setUser(this.userInfo)
+              .then(response => {
+                this.partakerInfo.user_id = response.id
+
+                this.setPartaker(this.partakerInfo)
+                  .then(result => {
+
+                  })
+                  .catch(error => {
+                    // - despliega la alerta
+                    alertError = error
+                  })
+
+                this.statusSubmit = 'success'
+              })
+              .catch(error => {
+                // - despliega la alerta
+                alertError = error
+                // - stado del boton
+                this.statusSubmit = 'error'
+                console.log(error)
+              })
+              .finally(() => {
+                this.loadingSubmit = false
+                if (alertError) {
+                  this.setAlert({
+                    text: alertError.body.message,
+                    state: true,
+                    dismissible: true,
+                    type: 'error'
+                  })
+                }
+              })
             // change state of button
-            this.statusSubmit = 'success'
           } else {
             this.statusSubmit = 'error'
           }

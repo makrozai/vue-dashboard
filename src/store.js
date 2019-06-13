@@ -134,7 +134,19 @@ const store = new Vuex.Store({
       })
     },
     setPartaker (context, payload) {
-      context.commit('setPartaker', payload)
+      return new Promise((resolve, reject) => {
+        Vue.http.post('partakers', payload)
+          .then(response => {
+            // enruta correctamente la entidad a la respuesta
+            response = response.body.data.partaker
+
+            context.commit('setPartaker', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     },
     setAlert (context, payload) {
       context.commit('setAlert', payload)

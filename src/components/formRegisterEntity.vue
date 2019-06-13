@@ -9,7 +9,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="entityInfo.name"
-            v-validate="'required|alpha'"
+            v-validate="'required|alpha_spaces'"
             :error-messages="errors.collect('razón comercial')"
             label="Razón comercial o nombre de la organización"
             data-vv-name="razón comercial"
@@ -33,7 +33,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="entityInfo.social_reason"
-            v-validate="'required|alpha'"
+            v-validate="'required|alpha_spaces'"
             :error-messages="errors.collect('razón social')"
             label="Razón social"
             data-vv-name="razón social"
@@ -166,13 +166,18 @@ export default {
                 this.entityInfo.user_id = response.id
 
                 this.setEntity(this.entityInfo)
+                  .then(result => {
+
+                  })
                   .catch(error => {
-                    // - despliega la alerta
+                    // - envia la alerta
                     alertError = error
                   })
+
+                this.statusSubmit = 'success'
               })
               .catch(error => {
-                // - despliega la alerta
+                // - envia la alerta
                 alertError = error
                 // - stado del boton
                 this.statusSubmit = 'error'
@@ -180,12 +185,15 @@ export default {
               .finally(() => {
                 this.loadingSubmit = false
 
-                this.setAlert({
-                  text: alertError.body.message,
-                  state: true,
-                  dismissible: true,
-                  type: 'error'
-                })
+                // - comprueba si existe un error y despliega la alerta
+                if (alertError) {
+                  this.setAlert({
+                    text: alertError.body.message,
+                    state: true,
+                    dismissible: true,
+                    type: 'error'
+                  })
+                }
               })
             // change state of button
           } else {
