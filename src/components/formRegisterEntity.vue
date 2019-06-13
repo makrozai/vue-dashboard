@@ -8,8 +8,8 @@
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="comercialReason"
-            v-validate="'required'"
+            v-model="entityInfo.name"
+            v-validate="'required|alpha'"
             :error-messages="errors.collect('razón comercial')"
             label="Razón comercial o nombre de la organización"
             data-vv-name="razón comercial"
@@ -20,8 +20,8 @@
         <v-flex xs12 md4>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="ruc"
-            v-validate="'required|integer'"
+            v-model="entityInfo.ruc"
+            v-validate="'required|integer|length:11'"
             :error-messages="errors.collect('ruc')"
             label="Ruc"
             data-vv-name="ruc"
@@ -32,8 +32,8 @@
         <v-flex xs12 md8>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="socialReason"
-            v-validate="'required'"
+            v-model="entityInfo.social_reason"
+            v-validate="'required|alpha'"
             :error-messages="errors.collect('razón social')"
             label="Razón social"
             data-vv-name="razón social"
@@ -47,7 +47,7 @@
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="email"
+            v-model="userInfo.email"
             v-validate="'required|email'"
             :error-messages="errors.collect('correo electronico')"
             label="Correo electronico"
@@ -59,7 +59,7 @@
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="password"
+            v-model="userInfo.password"
             v-validate="'required|alpha_dash|min:6'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
@@ -77,7 +77,7 @@
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
-            v-model="phone"
+            v-model="entityInfo.main_phone"
             v-validate="'required|integer'"
             :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
@@ -132,52 +132,62 @@ export default {
   components: { VueRecaptcha },
   data () {
     return {
+      userInfo: {
+        type_user_id: 2,
+        email: '',
+        password: ''
+      },
+      entityInfo: {
+        name: '',
+        social_reason: '',
+        ruc: null,
+        main_phone: null,
+        state: 2,
+        user_id: null
+      },
       loadingSubmit: false,
       statusSubmit: 'primary',
-
-      comercialReason: '',
-      socialReason: '',
-      ruc: null,
       autorization: false,
-      phone: null,
       show1: false,
-      password: '',
-      email: '',
       verifyRecaptcha: null
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setEntity']),
+    ...mapActions(['setUser', 'setEntity', 'setAlert']),
     submit () {
       this.loadingSubmit = true
-
+      let alertError = null
       this.$validator.validateAll()
         .then(response => {
-          setInterval(() => {
-            this.loadingSubmit = false
-          }, 3000)
-
           if (this.verifyRecaptcha && response) {
-            var user = {
-              email: this.email,
-              password: this.password,
-              type_user_id: 2
-            }
-            var entity = {
-              name: this.comercialReason,
-              social_reason: this.socialReason,
-              ruc: this.ruc,
-              main_phone: this.phone,
-              state: 2
-            }
             // save information in state and database
-            this.setUser(user)
+            this.setUser(this.userInfo)
               .then(response => {
-                entity.user_id = response.id
-                this.setEntity(entity)
+                this.entityInfo.user_id = response.id
+
+                this.setEntity(this.entityInfo)
+                  .catch(error => {
+                    // - despliega la alerta
+                    alertError = error
+                  })
+              })
+              .catch(error => {
+                // - despliega la alerta
+                alertError = error
+                // - stado del boton
+                this.statusSubmit = 'error'
+              })
+              .finally(() => {
+                this.loadingSubmit = false
+
+                this.setAlert({
+                  text: alertError.body.message,
+                  state: true,
+                  dismissible: true,
+                  type: 'error'
+                })
               })
             // change state of button
-            this.statusSubmit = 'success'
           } else {
             this.statusSubmit = 'error'
           }

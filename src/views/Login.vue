@@ -137,7 +137,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getUser']),
+    ...mapActions(['getUser', 'setAlert']),
     submit () {
       // - bloquea el boton
       this.loadingSubmit = true
@@ -160,8 +160,15 @@ export default {
                 this.$router.push({ name: 'ficha-de-verificacion' })
               })
               .catch(error => {
+                // - despliega la alerta
+                this.setAlert({
+                  text: error.body.message,
+                  state: true,
+                  dismissible: false,
+                  type: 'error',
+                  time: 4000
+                })
                 // - stado del boton
-                console.log(error)
                 this.loadingSubmit = false
                 this.statusSubmit = 'error'
               })

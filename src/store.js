@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    alert: {},
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
@@ -77,6 +78,9 @@ const store = new Vuex.Store({
     },
     setPartaker (state, payload) {
       state.placeholderPartaker = payload
+    },
+    setAlert (state, payload) {
+      state.alert = payload
     }
   },
   actions: {
@@ -100,33 +104,40 @@ const store = new Vuex.Store({
       context.commit('setLogged')
     },
     setUser (context, payload) {
-      return Vue.http.post('users', payload)
-        .then(response => {
-          // enruta correctamente el usuario a la respuesta
-          response = response.body.data.user
+      return new Promise((resolve, reject) => {
+        Vue.http.post('users', payload)
+          .then(response => {
+            // enruta correctamente el usuario a la respuesta
+            response = response.body.data.user
 
-          context.commit('setUser', response)
-          return response
-        })
-        .catch(error => {
-          console.log(error)
-        })
+            context.commit('setUser', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     },
     setEntity (context, payload) {
-      return Vue.http.post('entities', payload)
-        .then(response => {
-          // enruta correctamente la entidad a la respuesta
-          response = response.body.data.entity
+      return new Promise((resolve, reject) => {
+        Vue.http.post('entities', payload)
+          .then(response => {
+            // enruta correctamente la entidad a la respuesta
+            response = response.body.data.entity
 
-          context.commit('setEntity', response)
-          return response
-        })
-        .catch(error => {
-          console.log(error)
-        })
+            context.commit('setEntity', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     },
     setPartaker (context, payload) {
       context.commit('setPartaker', payload)
+    },
+    setAlert (context, payload) {
+      context.commit('setAlert', payload)
     }
   }
 })
