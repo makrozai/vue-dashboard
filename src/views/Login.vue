@@ -137,7 +137,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['getUser']),
     submit () {
       // - bloquea el boton
       this.loadingSubmit = true
@@ -151,7 +151,8 @@ export default {
           } else {
             this.$http.post('auth/login', { email: this.email, password: this.password })
               .then(user => {
-                this.login(user.body)
+                window.localStorage.setItem('_token', user.body.data.token)
+                this.getUser()
                 // - stado del boton
                 this.loadingSubmit = false
                 this.statusSubmit = 'success'

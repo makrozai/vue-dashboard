@@ -133,7 +133,7 @@ router.beforeEach((to, from, next) => {
     next({ name: 'login' })
   } else {
     if (store.state.logged) {
-      store.dispatch('login')
+      store.dispatch('getUser')
     }
     next()
   }
