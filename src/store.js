@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import of vue resource
-import VueResource from 'vue-resource'
-
 // import services
 import usersService from './services/users'
+import entitiesService from './services/entities'
+import partakersService from './services/partakers'
 
-Vue.use(VueResource)
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -109,7 +107,7 @@ const store = new Vuex.Store({
     },
     setUser (context, payload) {
       return new Promise((resolve, reject) => {
-        usersService.set(payload)
+        usersService.save(payload)
           .then(response => {
             context.commit('setUser', response)
             resolve(response)
@@ -121,11 +119,8 @@ const store = new Vuex.Store({
     },
     setEntity (context, payload) {
       return new Promise((resolve, reject) => {
-        Vue.http.post('entities', payload)
+        entitiesService.set(payload)
           .then(response => {
-            // enruta correctamente la entidad a la respuesta
-            response = response.body.data.entity
-
             context.commit('setEntity', response)
             resolve(response)
           })
@@ -136,11 +131,8 @@ const store = new Vuex.Store({
     },
     setPartaker (context, payload) {
       return new Promise((resolve, reject) => {
-        Vue.http.post('partakers', payload)
+        partakersService.set(payload)
           .then(response => {
-            // enruta correctamente la entidad a la respuesta
-            response = response.body.data.partaker
-
             context.commit('setPartaker', response)
             resolve(response)
           })

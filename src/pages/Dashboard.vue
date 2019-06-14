@@ -35,7 +35,7 @@ export default {
   components: {
     MNavigation
   },
-  created() {
+  created () {
     this.setAlert({
       text: 'Usuario no validado correctamente',
       state: true,

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
-const userService = {
-  set: (payload) => {
+const usersService = {
+  save: (payload) => {
     return new Promise((resolve, reject) => {
       Vue.http.post('users', payload)
         .then(response => {
@@ -18,4 +18,4 @@ const userService = {
   }
 }
 
-export default userService
+export default usersService

@@ -126,6 +126,7 @@
 </template>
 
 <script>
+import authService from '../services/auth'
 import { mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
 export default {
@@ -153,7 +154,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setEntity', 'setAlert','getUser']),
+    ...mapActions(['setUser', 'setEntity', 'setAlert']),
     submit () {
       this.loadingSubmit = true
       let alertError = null
@@ -167,10 +168,8 @@ export default {
 
                 this.setEntity(this.entityInfo)
                   .then(result => {
-                    this.$http.post('auth/login', { email: this.userInfo.email, password: this.userInfo.password })
-                      .then(user => {
-                        window.localStorage.setItem('_token', user.body.data.token)
-                        this.getUser()
+                    authService.login({ email: this.email, password: this.password })
+                      .then(logged => {
                         // - redireccion de pagina
                         this.$router.push({ name: 'ficha-de-verificacion' })
                       })

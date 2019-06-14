@@ -1,12 +1,12 @@
 import Vue from 'vue'
 
-const entitiesService = {
+const partakersServices = {
   set: (payload) => {
     return new Promise((resolve, reject) => {
-      Vue.http.post('entities', payload)
+      Vue.http.post('partakers', payload)
         .then(response => {
           // enruta correctamente la entidad a la respuesta
-          response = response.body.data.entity
+          response = response.body.data.partaker
 
           resolve(response)
         })
@@ -17,4 +17,4 @@ const entitiesService = {
   }
 }
 
-export default entitiesService
+export default partakersServices
