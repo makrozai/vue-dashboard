@@ -63,18 +63,6 @@
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-text-field
-            :disabled="loadingSubmit"
-            v-model="partakerInfo.nro_doc"
-            v-validate="'required|integer'"
-            :error-messages="errors.collect('Documento de identidad')"
-            label="Nº Documento de identidad"
-            data-vv-name="Documento de identidad"
-            required
-            box
-          ></v-text-field>
-        </v-flex>
-        <v-flex xs12>
           <v-radio-group
             v-validate="'required'"
             :error-messages="errors.collect('Tipo de identidad')"
@@ -88,6 +76,19 @@
             <v-radio label="Doc. Extranjería" value="DEX" color="primary"></v-radio>
           </v-radio-group>
         </v-flex>
+        <v-flex xs12>
+          <v-text-field
+            :disabled="loadingSubmit"
+            v-model="partakerInfo.nro_doc"
+            v-validate="'required|integer'"
+            :error-messages="errors.collect('Documento de identidad')"
+            label="Nº Documento de identidad"
+            data-vv-name="Documento de identidad"
+            required
+            box
+          ></v-text-field>
+        </v-flex>
+
         <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
@@ -169,7 +170,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setPartaker', 'setAlert']),
+    ...mapActions(['setUser', 'setPartaker', 'setAlert','getUser']),
     submit () {
       this.loadingSubmit = true
       let alertError = null
@@ -184,7 +185,13 @@ export default {
 
                 this.setPartaker(this.partakerInfo)
                   .then(result => {
-
+                    this.$http.post('auth/login', { email: this.userInfo.email, password: this.userInfo.password })
+                      .then(user => {
+                        window.localStorage.setItem('_token', user.body.data.token)
+                        this.getUser()
+                        // - redireccion de pagina
+                        this.$router.push({ name: 'ficha-de-verificacion' })
+                      })
                   })
                   .catch(error => {
                     // - despliega la alerta
@@ -213,6 +220,7 @@ export default {
               })
             // change state of button
           } else {
+            this.loadingSubmit = false
             this.statusSubmit = 'error'
           }
         })

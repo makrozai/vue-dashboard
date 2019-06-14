@@ -13,14 +13,6 @@
     <v-flex
       xs12
     >
-      <v-alert
-        v-if="user.status == 'no-valid'"
-        v-model="alert"
-        type="error"
-        class="mt-0"
-      >
-        El usuario aun no esta validado correctamente
-      </v-alert>
       <transition>
         <router-view/>
       </transition>
@@ -29,7 +21,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import MNavigation from '../components/navigation'
 export default {
   computed: {
@@ -37,14 +29,22 @@ export default {
   },
   data () {
     return {
-      alert: true,
       navbarStatus: false
     }
   },
   components: {
     MNavigation
   },
+  created() {
+    this.setAlert({
+      text: 'Usuario no validado correctamente',
+      state: true,
+      dismissible: true,
+      type: 'error'
+    })
+  },
   methods: {
+    ...mapActions(['setAlert']),
     updateNavbar (response) {
       this.navbarStatus = response
     }

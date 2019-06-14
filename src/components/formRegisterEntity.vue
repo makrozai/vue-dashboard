@@ -153,7 +153,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setEntity', 'setAlert']),
+    ...mapActions(['setUser', 'setEntity', 'setAlert','getUser']),
     submit () {
       this.loadingSubmit = true
       let alertError = null
@@ -167,7 +167,13 @@ export default {
 
                 this.setEntity(this.entityInfo)
                   .then(result => {
-
+                    this.$http.post('auth/login', { email: this.userInfo.email, password: this.userInfo.password })
+                      .then(user => {
+                        window.localStorage.setItem('_token', user.body.data.token)
+                        this.getUser()
+                        // - redireccion de pagina
+                        this.$router.push({ name: 'ficha-de-verificacion' })
+                      })
                   })
                   .catch(error => {
                     // - envia la alerta
@@ -197,6 +203,7 @@ export default {
               })
             // change state of button
           } else {
+            this.loadingSubmit = false
             this.statusSubmit = 'error'
           }
         })
