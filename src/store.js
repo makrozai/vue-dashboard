@@ -170,6 +170,7 @@ const store = new Vuex.Store({
         authService.register(payload)
           .then(response => {
             context.commit('authRegister', payload)
+            resolve(response)
           })
           .catch(error => {
             reject(error)

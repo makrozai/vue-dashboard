@@ -126,7 +126,6 @@
 </template>
 
 <script>
-import authService from '../services/auth'
 import { mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
 export default {
@@ -154,51 +153,35 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setEntity', 'setAlert']),
+    ...mapActions(['setAlert', 'authRegister', 'login']),
     submit () {
       this.loadingSubmit = true
-      let alertError = null
+
       this.$validator.validateAll()
         .then(response => {
           if (this.verifyRecaptcha && response) {
             // save information in state and database
-            this.setUser(this.userInfo)
+            this.authRegister({ user: this.userInfo, entity: this.entityInfo })
               .then(response => {
-                this.entityInfo.user_id = response.id
-
-                this.setEntity(this.entityInfo)
-                  .then(result => {
-                    authService.login({ email: this.email, password: this.password })
-                      .then(logged => {
-                        // - redireccion de pagina
-                        this.$router.push({ name: 'ficha-de-verificacion' })
-                      })
+                // login de usuario
+                this.login({ email: this.userInfo.email, password: this.userInfo.password })
+                  .then(logged => {
+                    // - redireccion de pagina
+                    this.$router.push({ name: 'ficha-de-verificacion' })
                   })
-                  .catch(error => {
-                    // - envia la alerta
-                    alertError = error
-                  })
-
-                this.statusSubmit = 'success'
               })
               .catch(error => {
-                // - envia la alerta
-                alertError = error
-                // - stado del boton
                 this.statusSubmit = 'error'
+
+                this.setAlert({
+                  text: error.body.message,
+                  state: true,
+                  dismissible: true,
+                  type: 'error'
+                })
               })
               .finally(() => {
                 this.loadingSubmit = false
-
-                // - comprueba si existe un error y despliega la alerta
-                if (alertError) {
-                  this.setAlert({
-                    text: alertError.body.message,
-                    state: true,
-                    dismissible: true,
-                    type: 'error'
-                  })
-                }
               })
             // change state of button
           } else {

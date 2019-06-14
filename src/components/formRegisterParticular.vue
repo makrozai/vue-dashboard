@@ -144,7 +144,6 @@
 <script>
 import { mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
-import { userInfo } from 'os';
 export default {
   components: { VueRecaptcha },
   data () {
@@ -171,39 +170,35 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setPartaker', 'setAlert', 'login', 'authRegister']),
+    ...mapActions(['setAlert', 'login', 'authRegister']),
     submit () {
       this.loadingSubmit = true
-      let alertError = null
 
       this.$validator.validateAll()
         .then(response => {
           if (this.verifyRecaptcha && response) {
             // save information in state and database
-            this.authRegister({user: this.userInfo,partaker: this.partakerInfo})
+            this.authRegister({ user: this.userInfo, partaker: this.partakerInfo })
               .then(response => {
-                console.log(response)
+                // login de usuario
                 this.login({ email: this.userInfo.email, password: this.userInfo.password })
                   .then(logged => {
                     // - redireccion de pagina
-                    // this.$router.push({ name: 'ficha-de-verificacion' })
+                    this.$router.push({ name: 'ficha-de-verificacion' })
                   })
               })
               .catch(error => {
-                alertError = error
                 this.statusSubmit = 'error'
-                console.log(error)
+
+                this.setAlert({
+                  text: error.body.message,
+                  state: true,
+                  dismissible: true,
+                  type: 'error'
+                })
               })
               .finally(() => {
                 this.loadingSubmit = false
-                if (alertError) {
-                  this.setAlert({
-                    text: alertError.body.message,
-                    state: true,
-                    dismissible: true,
-                    type: 'error'
-                  })
-                }
               })
             // change state of button
           } else {
