@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
 // import of vue resource
 import VueResource from 'vue-resource'
-Vue.use(VueResource)
 
+// import services
+import usersService from './services/users'
+
+Vue.use(VueResource)
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -105,11 +109,8 @@ const store = new Vuex.Store({
     },
     setUser (context, payload) {
       return new Promise((resolve, reject) => {
-        Vue.http.post('users', payload)
+        usersService.set(payload)
           .then(response => {
-            // enruta correctamente el usuario a la respuesta
-            response = response.body.data.user
-
             context.commit('setUser', response)
             resolve(response)
           })
