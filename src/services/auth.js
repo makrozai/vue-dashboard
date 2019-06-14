@@ -1,14 +1,24 @@
 import Vue from 'vue'
-import store from './../store'
 
 const authService = {
   login: (payload) => {
     return new Promise((resolve, reject) => {
       Vue.http.post('auth/login', payload)
-        .then(user => {
-          window.localStorage.setItem('_token', user.body.data.token)
-          store.dispatch('getUser')
-          resolve(user)
+        .then(response => {
+          // guarda el token generado en localstorage
+          window.localStorage.setItem('_token', response.body.data.token)
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  register: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.post('auth/register', payload)
+        .then(response => {
+          resolve(response)
         })
         .catch(error => {
           reject(error)

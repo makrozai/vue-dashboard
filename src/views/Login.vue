@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import authService from '../services/auth'
 import { mapActions } from 'vuex'
 export default {
   computed: {
@@ -138,10 +137,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getUser', 'setAlert']),
+    ...mapActions(['getUser', 'setAlert', 'login']),
     submit () {
       // - bloquea el boton
       this.loadingSubmit = true
+
       this.$validator.validateAll()
         .then(result => {
           if (!result) {
@@ -149,11 +149,10 @@ export default {
             this.loadingSubmit = false
             this.statusSubmit = 'error'
           } else {
-            authService.login({ email: this.email, password: this.password })
-              .then(response => {
-                // - stado del boton
+            this.login({ email: this.email, password: this.password })
+              .then(logged => {
+                this.loadingSubmit = false
                 this.statusSubmit = 'success'
-                // - redireccion de pagina
                 this.$router.push({ name: 'ficha-de-verificacion' })
               })
               .catch(error => {
@@ -166,10 +165,8 @@ export default {
                   time: 4000
                 })
                 // - stado del boton
-                this.statusSubmit = 'error'
-              })
-              .finally(() => {
                 this.loadingSubmit = false
+                this.statusSubmit = 'error'
               })
           }
         })

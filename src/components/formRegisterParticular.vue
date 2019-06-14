@@ -142,9 +142,9 @@
 </template>
 
 <script>
-import authService from '../services/auth'
 import { mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
+import { userInfo } from 'os';
 export default {
   components: { VueRecaptcha },
   data () {
@@ -171,7 +171,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUser', 'setPartaker', 'setAlert']),
+    ...mapActions(['setUser', 'setPartaker', 'setAlert', 'login', 'authRegister']),
     submit () {
       this.loadingSubmit = true
       let alertError = null
@@ -180,30 +180,19 @@ export default {
         .then(response => {
           if (this.verifyRecaptcha && response) {
             // save information in state and database
-            this.setUser(this.userInfo)
+            this.authRegister({user: this.userInfo,partaker: this.partakerInfo})
               .then(response => {
-                this.partakerInfo.user_id = response.id
-
-                this.setPartaker(this.partakerInfo)
-                  .then(result => {
-                    authService.login({ email: this.email, password: this.password })
-                      .then(logged => {
-                        // - redireccion de pagina
-                        this.$router.push({ name: 'ficha-de-verificacion' })
-                      })
+                console.log(response)
+                this.login({ email: this.userInfo.email, password: this.userInfo.password })
+                  .then(logged => {
+                    // - redireccion de pagina
+                    // this.$router.push({ name: 'ficha-de-verificacion' })
                   })
-                  .catch(error => {
-                    // - despliega la alerta
-                    alertError = error
-                  })
-
-                this.statusSubmit = 'success'
               })
               .catch(error => {
-                // - despliega la alerta
                 alertError = error
-                // - stado del boton
                 this.statusSubmit = 'error'
+                console.log(error)
               })
               .finally(() => {
                 this.loadingSubmit = false

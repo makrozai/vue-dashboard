@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import services
+import authService from './services/auth'
 import usersService from './services/users'
 import entitiesService from './services/entities'
 import partakersService from './services/partakers'
@@ -10,6 +11,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    userSesion: {},
     alert: {},
     placeholderUser: {},
     placeholderEntity: {},
@@ -57,8 +59,11 @@ const store = new Vuex.Store({
 
   },
   mutations: {
+    login (state) {
+      state.logged = true
+    },
     // establece el usuario a traves del token jwt
-    setLogin (state, payload) {
+    getUser (state, payload) {
       if (window.localStorage.getItem('_token')) {
         state.user = payload
         state.logged = true
@@ -83,6 +88,9 @@ const store = new Vuex.Store({
     },
     setAlert (state, payload) {
       state.alert = payload
+    },
+    authRegister (state, payload) {
+      state.userSesion = payload
     }
   },
   actions: {
@@ -93,13 +101,26 @@ const store = new Vuex.Store({
         let jwtDecode = require('jwt-decode')
         payload = jwtDecode(payload).user_id
       }
-      // set de user -reemplazar por get user-
-      let userData = {
-        name: 'Combativa',
-        status: 'no-valid',
-        email: 'marco@localhost.com'
-      }
-      context.commit('setLogin', userData)
+
+      return new Promise((resolve, reject) => {
+        usersService.get(payload)
+          .then(response => {
+            context.commit('getUser', response)
+            resolve(response)
+          })
+      })
+    },
+    login (context, payload) {
+      return new Promise((resolve, reject) => {
+        authService.login(payload)
+          .then(response => {
+            context.commit('login')
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     },
     logout (context) {
       window.localStorage.removeItem('_token')
@@ -143,6 +164,17 @@ const store = new Vuex.Store({
     },
     setAlert (context, payload) {
       context.commit('setAlert', payload)
+    },
+    authRegister (context, payload) {
+      return new Promise((resolve, reject) => {
+        authService.register(payload)
+          .then(response => {
+            context.commit('authRegister', payload)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   }
 })
