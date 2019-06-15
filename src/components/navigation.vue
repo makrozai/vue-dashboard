@@ -44,8 +44,8 @@
 
         <v-list-tile-content>
           <v-list-tile-title>
-            <p>{{ user ? user.name : 'Sin Usuario' }}</p>
-            <span>{{ user ? user.status : 'Error' }}</span>
+            <p>{{ getName(userSesion.user.type_user_id) }}</p>
+            <span>{{ userSesion.user ? userSesion.user.state : 'Error' }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -113,7 +113,7 @@
 import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapState(['navbarDrawer', 'user'])
+    ...mapState(['navbarDrawer', 'userSesion'])
   },
   data () {
     return {
@@ -131,6 +131,18 @@ export default {
     endSesion () {
       this.logout()
       this.$router.push({ name: 'login' })
+    },
+    getName (type) {
+      switch (type) {
+        case 1:
+          return 'Administrador'
+          break
+        case 2:
+          return this.userSesion.entity.name
+          break
+        case 3:
+          return this.userSesion.partaker.name
+      }
     }
   }
 }

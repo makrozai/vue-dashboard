@@ -11,7 +11,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    userSesion: {},
+    userSesion: {
+      user: {},
+      entity: {},
+      partaker: {}
+    },
     alert: {},
     placeholderUser: {},
     placeholderEntity: {},
@@ -65,12 +69,18 @@ const store = new Vuex.Store({
     // establece el usuario a traves del token jwt
     getUser (state, payload) {
       if (window.localStorage.getItem('_token')) {
-        state.user = payload
+        state.userSesion.user = payload
         state.logged = true
       } else {
         state.logged = false
         state.user = null
       }
+    },
+    getEntity (state, payload) {
+      state.userSesion.entity = payload
+    },
+    getPartaker (state, payload) {
+      state.userSesion.partaker = payload
     },
     // establece el estado del usuario
     setLogged (state) {
@@ -95,17 +105,37 @@ const store = new Vuex.Store({
   },
   actions: {
     getUser (context, payload) {
+      let decodeUser = null
       if (!payload) {
         payload = window.localStorage.getItem('_token')
         // eslint-disable-next-line no-undef
         let jwtDecode = require('jwt-decode')
-        payload = jwtDecode(payload).user_id
+        decodeUser = jwtDecode(payload)
+        payload = decodeUser.user_id
       }
 
       return new Promise((resolve, reject) => {
         usersService.get(payload)
           .then(response => {
             context.commit('getUser', response)
+            resolve({ response: response, decode: decodeUser })
+          })
+      })
+    },
+    getEntity (context, payload) {
+      return new Promise((resolve, reject) => {
+        entitiesService.get(payload)
+          .then(response => {
+            context.commit('getEntity', response)
+            resolve(response)
+          })
+      })
+    },
+    getPartaker (context, payload) {
+      return new Promise((resolve, reject) => {
+        partakersService.get(payload)
+          .then(response => {
+            context.commit('getPartaker', response)
             resolve(response)
           })
       })

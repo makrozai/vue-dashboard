@@ -130,7 +130,6 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
   if (to.meta.Auth && !store.state.logged) {
-    console.log('no esta logeado')
     next({ name: 'login' })
   } else {
     // comprueba que el usuario esta ok
@@ -138,20 +137,19 @@ router.beforeEach((to, from, next) => {
       store.dispatch('getUser')
         .then(response => {
           // comprueba que tipo de usuario es
-          console.log('usuario', response)
 
-          switch (response.type_user_id) {
+          switch (response.response.type_user_id) {
             case 1 :
               // administrador
               console.log('es administrador')
               break
             case 2 :
               // entidad
-              console.log('es entidad')
+              store.dispatch('getEntity', response.decode.entity_id)
               break
             case 3 :
               // participante
-              console.log('es participante')
+              store.dispatch('getPartaker', response.decode.partaker_id)
               break
           }
         })
