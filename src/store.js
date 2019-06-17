@@ -86,6 +86,10 @@ const store = new Vuex.Store({
     setLogged (state) {
       state.logged = false
       state.user = {}
+      state.alert = {}
+      state.userSesion.user = {}
+      state.userSesion.entity = {}
+      state.userSesion.partaker = {}
     },
     setUser (state, payload) {
       state.placeholderUser = payload
@@ -119,6 +123,9 @@ const store = new Vuex.Store({
           .then(response => {
             context.commit('getUser', response)
             resolve({ response: response, decode: decodeUser })
+          })
+          .catch(error => {
+            reject(error)
           })
       })
     },

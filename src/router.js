@@ -133,7 +133,7 @@ router.beforeEach((to, from, next) => {
     next({ name: 'login' })
   } else {
     // comprueba que el usuario esta ok
-    if (store.state.logged) {
+    if (store.state.logged && !store.state.userSesion.user.id) {
       store.dispatch('getUser')
         .then(response => {
           // comprueba que tipo de usuario es
@@ -154,7 +154,10 @@ router.beforeEach((to, from, next) => {
           }
         })
         .catch(error => {
-          console.log(error)
+          if (error.body.code === 'token_expired') {
+            store.dispatch('logout')
+            next({ name: 'login' })
+          }
         })
     }
     next()
