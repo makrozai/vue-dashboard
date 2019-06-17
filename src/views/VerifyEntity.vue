@@ -183,9 +183,9 @@
               <v-text-field
                 v-model="perfil.name"
                 v-validate="'required'"
-                :error-messages="errors.collect('nombre')"
+                :error-messages="errors.collect(getNameSpace('nombre',index))"
                 label="Nombre Completo"
-                data-vv-name="nombre"
+                :data-vv-name="getNameSpace('nombre',index)"
                 required
                 box
               ></v-text-field>
@@ -194,9 +194,9 @@
               <v-text-field
                 v-model="perfil.lastName"
                 v-validate="'required'"
-                :error-messages="errors.collect('perfilLastName')"
+                :error-messages="errors.collect(getNameSpace('apellido',index))"
                 label="Apellido"
-                data-vv-name="perfilLastName"
+                :data-vv-name="getNameSpace('apellido',index)"
                 required
                 box
               ></v-text-field>
@@ -205,9 +205,9 @@
               <v-text-field
                 v-model="perfil.position"
                 v-validate="'required'"
-                :error-messages="errors.collect('perfilPosition')"
+                :error-messages="errors.collect(getNameSpace('posición',index))"
                 label="cargo"
-                data-vv-name="perfilPosition"
+                :data-vv-name="getNameSpace('posición',index)"
                 required
                 box
               ></v-text-field>
@@ -216,9 +216,9 @@
               <v-text-field
                 v-model="perfil.dni"
                 v-validate="'required|integer'"
-                :error-messages="errors.collect('perfilDni')"
+                :error-messages="errors.collect(getNameSpace('dni',index))"
                 label="DNI"
-                data-vv-name="perfilDni"
+                :data-vv-name="getNameSpace('dni',index)"
                 required
                 box
               ></v-text-field>
@@ -230,9 +230,9 @@
               <v-text-field
                 v-model="perfil.mail"
                 v-validate="'required|email'"
-                :error-messages="errors.collect('email')"
+                :error-messages="errors.collect(getNameSpace('email',index))"
                 label="Correo electrónico"
-                data-vv-name="email"
+                :data-vv-name="getNameSpace('email',index)"
                 required
                 box
               ></v-text-field>
@@ -241,9 +241,9 @@
               <v-text-field
                 v-model="perfil.phone"
                 v-validate="'required|integer'"
-                :error-messages="errors.collect('perfilCelular')"
+                :error-messages="errors.collect(getNameSpace('celular',index))"
                 label="Nº Celular"
-                data-vv-name="perfilCelular"
+                :data-vv-name="getNameSpace('celular',index)"
                 required
                 box
               ></v-text-field>
@@ -252,9 +252,9 @@
               <v-text-field
                 v-model="perfil.telephone"
                 v-validate="'required|integer'"
-                :error-messages="errors.collect('perfilTelephone')"
+                :error-messages="errors.collect(getNameSpace('teléfono',index))"
                 label="Nº Fijo"
-                data-vv-name="perfilTelephone"
+                :data-vv-name="getNameSpace('teléfono',index)"
                 required
                 box
               ></v-text-field>
@@ -263,9 +263,9 @@
               <v-text-field
                 v-model="perfil.annexed"
                 v-validate="'required|integer'"
-                :error-messages="errors.collect('perfilAnnexed')"
+                :error-messages="errors.collect(getNameSpace('anexo',index))"
                 label="Anexo"
-                data-vv-name="perfilAnnexed"
+                :data-vv-name="getNameSpace('anexo',index)"
                 required
                 box
               ></v-text-field>
@@ -537,6 +537,9 @@ export default {
     },
     changeTypeProgram (type) {
       this.program.type = type
+    },
+    getNameSpace (name, value) {
+      return name + ' ' + value
     }
   }
 }
