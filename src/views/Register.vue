@@ -2,10 +2,11 @@
   <v-layout wrap fill-height>
     <div class="c-logo__intro">
       <a href="#!">
-        <img src="../assets/logo-principal.svg" alt="">
+        <img src="../assets/logo-principal.svg" alt="" class="hidden-sm-and-down">
+        <img src="../assets/exe.svg" alt="" class="hidden-md-and-up">
       </a>
     </div>
-    <v-flex md6 xs12 class="hidden-sm-and-down c-slider">
+    <v-flex md7 xs12 class="hidden-sm-and-down c-slider">
       <v-carousel
         height="100vh"
         hide-controls
@@ -21,11 +22,11 @@
       </v-carousel>
     </v-flex>
 
-    <v-flex md6 xs12 class="c-form-home">
+    <v-flex md5 xs12 class="c-form-home">
       <v-btn
         fab
         color="primary"
-        class="c-btn-return elevation-0 hidden-sm-and-up"
+        class="c-btn-return elevation-0 hidden-md-and-up"
         :to="{name:'home'}"
       >
         <v-icon>navigate_before</v-icon>

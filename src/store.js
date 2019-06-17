@@ -17,6 +17,7 @@ const store = new Vuex.Store({
       partaker: {}
     },
     alert: {},
+    recaptchaCode: '6LcPVqkUAAAAAGsjs7Vcn5iE5Z4uulpiFSXverbi',
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},

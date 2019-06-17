@@ -115,7 +115,7 @@
         </v-flex>
         <v-flex xs12>
           <div class="c-recaptcha">
-            <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" @verify="onVerify"></vue-recaptcha>
+            <vue-recaptcha :sitekey="recaptchaCode" @verify="onVerify"></vue-recaptcha>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -142,10 +142,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha },
+  computed: {
+    ...mapState(['recaptchaCode'])
+  },
   data () {
     return {
       userInfo: {
