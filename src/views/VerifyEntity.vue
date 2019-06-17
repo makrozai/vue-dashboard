@@ -15,42 +15,48 @@
       <div class="c-verify-entity__row mb-5">
         <div class="c-verify-entity__row-small">
           <label class="c-verify-entity__upload">
-            <img :src="fileImage" alt="">
+            <img :src="entity.image" alt="">
             <p>Formato válido (jpg, png), máximo 20MB</p>
-            <input type="file" name="" @change="updateLocal" ref="myFiles">
+            <input
+              required
+              type="file"
+              name=""
+              @change="updateLocal"
+              ref="myFiles"
+            >
           </label>
         </div>
         <div class="c-verify-entity__row-large">
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
-                v-model="razonComercial"
+                v-model="entity.name"
                 v-validate="'required'"
-                :error-messages="errors.collect('razonComercial')"
+                :error-messages="errors.collect('razón comercial')"
                 label="Razón comercial o nombre de la organización"
-                data-vv-name="razonComercial"
+                data-vv-name="razón comercial"
                 required
                 box
               ></v-text-field>
             </v-flex>
             <v-flex xs12 md4>
               <v-text-field
-                  v-model="ruc"
+                  v-model="entity.ruc"
                   v-validate="'required|integer'"
-                  :error-messages="errors.collect('Ruc')"
+                  :error-messages="errors.collect('ruc')"
                   label="Ruc"
-                  data-vv-name="Ruc"
+                  data-vv-name="ruc"
                   required
                   box
                 ></v-text-field>
             </v-flex>
             <v-flex xs12 md8>
               <v-text-field
-                v-model="razonSocial"
+                v-model="entity.social_reason"
                 v-validate="'required'"
-                :error-messages="errors.collect('razonSocial')"
+                :error-messages="errors.collect('razón social')"
                 label="Razón social"
-                data-vv-name="razonSocial"
+                data-vv-name="razón social"
                 required
                 box
               ></v-text-field>
@@ -75,40 +81,56 @@
             </v-flex>
             <v-flex xs12>
               <v-select
-                v-model="tipoRubro"
-                :items="tipoRubroItems"
-                v-validate="'required'"
-                :error-messages="errors.collect('tipoRubro')"
+                v-model="entity.line_id"
+                :items="gettingSelects.lines"
+                v-validate="'required|integer'"
+                :error-messages="errors.collect('tipo de rubro')"
                 label="Seleccione tipo de rubro"
-                data-vv-name="tipoRubro"
+                data-vv-name="tipo de rubro"
                 required
                 box
               ></v-select>
             </v-flex>
             <v-flex xs12>
               <v-select
-                v-model="tipoEntidad"
-                :items="tipoEntidadItems"
-                v-validate="'required'"
-                :error-messages="errors.collect('tipoEntidad')"
+                v-model="entity.type_entity_id"
+                :items="gettingSelects.typeEntities"
+                v-validate="'required|integer'"
+                :error-messages="errors.collect('tipo de entidad')"
                 label="Tipo de entidad"
-                data-vv-name="tipoEntidad"
+                data-vv-name="tipo de entidad"
                 required
                 box
               ></v-select>
             </v-flex>
+            <v-flex xs12>
+              <v-text-field
+                v-model="entity.website"
+                v-validate="'required'"
+                :error-messages="errors.collect('sitio web')"
+                label="Sitio web"
+                data-vv-name="sitio web"
+                required
+                box
+              ></v-text-field>
+            </v-flex>
             <div class="c-verify-entity__inputs-equals">
               <v-flex xs6>
                 <v-textarea
+                  v-model="entity.address"
+                  v-validate="'required'"
+                  :error-messages="errors.collect('dirección')"
+                  data-vv-name="dirección"
+                  label="Dirección de oficina"
+                  required
                   box
-                  label="Direccion de oficina"
                 ></v-textarea>
               </v-flex>
               <v-flex xs6>
                 <v-select
-                  v-model="departamento"
-                  :items="departamentoItems"
-                  v-validate="'required'"
+                  v-model="entity.regions_id"
+                  :items="gettingSelects.regions"
+                  v-validate="'required|integer'"
                   :error-messages="errors.collect('departamento')"
                   label="Seleccione departamento"
                   data-vv-name="departamento"
@@ -116,9 +138,9 @@
                   box
                 ></v-select>
                 <v-select
-                  v-model="provincia"
-                  :items="provinciaItems"
-                  v-validate="'required'"
+                  v-model="entity.provinces_id"
+                  :items="gettingSelects.provinces"
+                  v-validate="'required|integer'"
                   :error-messages="errors.collect('provincia')"
                   label="Seleccione provincia"
                   data-vv-name="provincia"
@@ -126,9 +148,9 @@
                   box
                 ></v-select>
                 <v-select
-                  v-model="distrito"
-                  :items="distritoItems"
-                  v-validate="'required'"
+                  v-model="entity.districts_id"
+                  :items="gettingSelects.districts"
+                  v-validate="'required|integer'"
                   :error-messages="errors.collect('distrito')"
                   label="Seleccione distrito"
                   data-vv-name="distrito"
@@ -161,9 +183,9 @@
               <v-text-field
                 v-model="perfil.name"
                 v-validate="'required'"
-                :error-messages="errors.collect('perfilName')"
+                :error-messages="errors.collect('nombre')"
                 label="Nombre Completo"
-                data-vv-name="perfilName"
+                data-vv-name="nombre"
                 required
                 box
               ></v-text-field>
@@ -249,7 +271,7 @@
               ></v-text-field>
             </v-flex>
           </v-layout>
-          <div class="c-verify-entity__add-contact">
+          <div class="c-verify-entity__add-contact" v-if="perfilContact.length < 2">
             <v-btn fab dark  color="primary" @click="addContact">
               <v-icon dark>add</v-icon>
             </v-btn>
@@ -405,27 +427,32 @@ export default {
   components: { VueRecaptcha, formProgramOwn, formProgramGroup },
   data () {
     return {
+      entity: {
+        // eslint-disable-next-line
+        image: require('../assets/default-img.svg'),
+        name: '',
+        ruc: null,
+        social_reason: '',
+        line_id: null,
+        type_entity_id: '',
+        address: '',
+        regions_id: '',
+        provinces_id: '',
+        districts_id: '',
+        website: ''
+      },
       program: {
         name: 'RUC 234523432 EMPRESARIOS POR LA EDUCACIÓN',
         type: 'convenio'
       },
-
+      gettingSelects: {
+        districts: ['a', 'b', 'c', 'd'],
+        provinces: ['a', 'b', 'c', 'd'],
+        regions: ['a', 'b', 'c', 'd'],
+        lines: ['a', 'b', 'c', 'd'],
+        typeEntities: ['a', 'b', 'c', 'd']
+      },
       dialog: false,
-      distritoItems: ['a', 'b', 'c', 'd'],
-      provinciaItems: ['a', 'b', 'c', 'd'],
-      departamentoItems: ['a', 'b', 'c', 'd'],
-      tipoRubroItems: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-      tipoEntidadItems: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-      departamento: '',
-      provincia: '',
-      distrito: '',
-      tipoRubro: '',
-      tipoEntidad: '',
-      ruc: '',
-      razonSocial: '',
-      razonComercial: '',
-      // eslint-disable-next-line
-      fileImage: require('../assets/default-img.svg'),
       perfilContact: [
         {
           name: '',
@@ -464,7 +491,13 @@ export default {
     updateLocal () {
       console.log(this.$refs.myFiles.files[0])
       const file = this.$refs.myFiles.files[0]
-      this.fileImage = URL.createObjectURL(file)
+      this.entity.image = URL.createObjectURL(file)
+
+      let imageData = new FormData()
+      imageData.append('name', 'my-file')
+      imageData.append('file', file)
+
+      console.log('imagen formateada', imageData)
     },
     addContact () {
       let contact = {
