@@ -25,5 +25,10 @@ npm run test
 npm run lint
 ```
 
+### Configuracion de servidor
+```
+https://router.vuejs.org/guide/essentials/history-mode.html#example-server-configurations
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
