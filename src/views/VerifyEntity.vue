@@ -128,9 +128,12 @@
               </v-flex>
               <v-flex xs6>
                 <v-select
+                  v-if="this.ubigeo.regions"
                   v-model="entity.regions_id"
-                  :items="gettingSelects.regions"
-                  v-validate="'required|integer'"
+                  :items="this.ubigeo.regions"
+                  item-text="name"
+                  item-value="id"
+                  v-validate="'required'"
                   :error-messages="errors.collect('departamento')"
                   label="Seleccione departamento"
                   data-vv-name="departamento"
@@ -138,9 +141,12 @@
                   box
                 ></v-select>
                 <v-select
+                  v-if="this.ubigeo.provinces"
                   v-model="entity.provinces_id"
-                  :items="gettingSelects.provinces"
-                  v-validate="'required|integer'"
+                  :items="this.ubigeo.provinces"
+                  item-text="name"
+                  item-value="id"
+                  v-validate="'required'"
                   :error-messages="errors.collect('provincia')"
                   label="Seleccione provincia"
                   data-vv-name="provincia"
@@ -148,9 +154,12 @@
                   box
                 ></v-select>
                 <v-select
+                  v-if="this.ubigeo.districts"
                   v-model="entity.districts_id"
-                  :items="gettingSelects.districts"
-                  v-validate="'required|integer'"
+                  :items="this.ubigeo.districts"
+                  item-text="name"
+                  item-value="id"
+                  v-validate="'required'"
                   :error-messages="errors.collect('distrito')"
                   label="Seleccione distrito"
                   data-vv-name="distrito"
@@ -410,7 +419,7 @@
 
           <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" class="mb-4"></vue-recaptcha>
 
-          <v-btn color="primary" large class="c-verify-entity__submit">Registrate</v-btn>
+          <v-btn color="primary" large class="c-verify-entity__submit" @click="submit">Registrate</v-btn>
         </div>
       </div>
       <!--@ terminos y condiciones-->
@@ -419,12 +428,16 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import formProgramGroup from '../components/formProgramGroup'
 import formProgramOwn from '../components/formProgramOwn'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
   components: { VueRecaptcha, formProgramOwn, formProgramGroup },
+  computed: {
+    ...mapState(['ubigeo'])
+  },
   data () {
     return {
       entity: {
@@ -488,6 +501,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions([]),
     updateLocal () {
       console.log(this.$refs.myFiles.files[0])
       const file = this.$refs.myFiles.files[0]
@@ -540,6 +554,17 @@ export default {
     },
     getNameSpace (name, value) {
       return name + ' ' + value
+    },
+    submit () {
+      this.$validator.validateAll()
+    },
+    valuesObject (obj, key) {
+      let arrayObj = []
+      obj.forEach(item => {
+        arrayObj.push(item[key])
+      })
+      console.log(arrayObj)
+      return arrayObj
     }
   }
 }

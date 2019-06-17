@@ -6,6 +6,8 @@ import authService from './services/auth'
 import usersService from './services/users'
 import entitiesService from './services/entities'
 import partakersService from './services/partakers'
+// import ubigeo service
+import ubigeoService from './services/ubigeo'
 
 Vue.use(Vuex)
 
@@ -18,6 +20,11 @@ const store = new Vuex.Store({
     },
     alert: {},
     recaptchaCode: '6LcPVqkUAAAAAGsjs7Vcn5iE5Z4uulpiFSXverbi',
+    ubigeo: {
+      regions: null,
+      provinces: null,
+      districts: null
+    },
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
@@ -106,6 +113,15 @@ const store = new Vuex.Store({
     },
     authRegister (state, payload) {
       state.userSesion = payload
+    },
+    getRegions (state, payload) {
+      state.ubigeo.regions = payload
+    },
+    getProvinces (state, payload) {
+      state.ubigeo.provinces = payload
+    },
+    getDistricts (state, payload) {
+      state.ubigeo.districts = payload
     }
   },
   actions: {
@@ -208,6 +224,42 @@ const store = new Vuex.Store({
         authService.register(payload)
           .then(response => {
             context.commit('authRegister', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getRegions (context) {
+      return new Promise((resolve, reject) => {
+        ubigeoService.getRegions()
+          .then(response => {
+            context.commit('getRegions', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getProvinces (context) {
+      return new Promise((resolve, reject) => {
+        ubigeoService.getProvinces()
+          .then(response => {
+            context.commit('getProvinces', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getDistricts (context) {
+      return new Promise((resolve, reject) => {
+        ubigeoService.getDistricts()
+          .then(response => {
+            context.commit('getDistricts', response)
             resolve(response)
           })
           .catch(error => {

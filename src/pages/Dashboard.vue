@@ -24,16 +24,14 @@
 import { mapState, mapActions } from 'vuex'
 import MNavigation from '../components/navigation'
 export default {
+  components: { MNavigation },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user', 'ubigeo'])
   },
   data () {
     return {
       navbarStatus: false
     }
-  },
-  components: {
-    MNavigation
   },
   created () {
     this.setAlert({
@@ -42,9 +40,20 @@ export default {
       dismissible: true,
       type: 'error'
     })
+
+
+    if (!this.ubigeo.regions) {
+      this.getRegions()
+    }
+    if (!this.ubigeo.provinces) {
+      this.getProvinces()
+    }
+    if (!this.ubigeo.districts) {
+      this.getDistricts()
+    }
   },
   methods: {
-    ...mapActions(['setAlert']),
+    ...mapActions(['setAlert', 'getRegions', 'getProvinces', 'getDistricts']),
     updateNavbar (response) {
       this.navbarStatus = response
     }
