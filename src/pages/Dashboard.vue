@@ -43,9 +43,11 @@ export default {
     if (!this.ubigeo.districts) {
       this.getDistricts()
     }
+    this.getLines()
+    this.getTypeEntities()
   },
   methods: {
-    ...mapActions(['getRegions', 'getProvinces', 'getDistricts']),
+    ...mapActions(['getRegions', 'getProvinces', 'getDistricts', 'getLines', 'getTypeEntities']),
     updateNavbar (response) {
       this.navbarStatus = response
     }

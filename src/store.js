@@ -8,6 +8,8 @@ import entitiesService from './services/entities'
 import partakersService from './services/partakers'
 // import ubigeo service
 import ubigeoService from './services/ubigeo'
+import linesService from './services/lines'
+import typeEntities from './services/typeEntities'
 
 Vue.use(Vuex)
 
@@ -25,6 +27,8 @@ const store = new Vuex.Store({
       provinces: null,
       districts: null
     },
+    lines: [],
+    typeEntities: [],
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
@@ -127,6 +131,12 @@ const store = new Vuex.Store({
     },
     getDistricts (state, payload) {
       state.ubigeo.districts = payload
+    },
+    getLines (state, payload) {
+      state.lines = payload
+    },
+    getTypeEntities (state, payload) {
+      state.typeEntities = payload
     }
   },
   actions: {
@@ -265,6 +275,30 @@ const store = new Vuex.Store({
         ubigeoService.getDistricts()
           .then(response => {
             context.commit('getDistricts', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getLines (context) {
+      return new Promise((resolve, reject) => {
+        linesService.get()
+          .then(response => {
+            context.commit('getLines', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getTypeEntities (context) {
+      return new Promise((resolve, reject) => {
+        typeEntities.get()
+          .then(response => {
+            context.commit('getTypeEntities', response)
             resolve(response)
           })
           .catch(error => {

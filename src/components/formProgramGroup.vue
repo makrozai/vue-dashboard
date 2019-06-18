@@ -1,13 +1,52 @@
 <template>
   <v-layout wrap>
-    <v-flex xs12>
-      <v-autocomplete
+    <v-flex xs10>
+      <v-combobox
         v-model="entityModel"
-        :items="states"
+        :items="people"
         label="Buscar entidad propietaria del programa"
+        item-text="name"
+        item-value="name"
         box
       >
-      </v-autocomplete>
+        <template v-slot:item="data">
+          <v-list-tile-avatar>
+            <img :src="data.item.avatar">
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+            <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+          </v-list-tile-content>
+        </template>
+      </v-combobox>
+
+    </v-flex>
+    <v-flex xs2 class="text-xs-center pt-2">
+      <v-btn fab small color="primary" @click="addEntityGroup">
+        <v-icon dark>add</v-icon>
+      </v-btn>
+    </v-flex>
+    <v-flex xs12>
+      <!--@ contenedor de programas-->
+        <div class="c-verify-entity__add-program">
+          <div class="c-verify-entity__add-program__item" v-for="(program, index) in programs" :key="index">
+            <img :src="program.image" alt="">
+            <div class="information">
+              <p>{{ program.name }} {{ index }}</p>
+              <span>{{ program.from.day }} {{ program.from.mounth }} {{ program.from.year }} hasta la actualidad</span>
+            </div>
+            <v-btn
+              fab
+              small
+              outline
+              color="error"
+              @click="removeProgram(index)"
+            >
+              <v-icon dark>remove</v-icon>
+            </v-btn>
+          </div>
+        </div>
+        <!--@ contenedor de programas-->
     </v-flex>
     <v-flex xs8>
       <v-text-field
@@ -104,44 +143,60 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        entityModel: null,
-        isEditing: true,
-        states: [
-          'Alabama', 'Alaska', 'American Samoa', 'Arizona',
-          'Arkansas', 'California', 'Colorado', 'Connecticut',
-          'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-          'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-          'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-          'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-          'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-          'Missouri', 'Montana', 'Nebraska', 'Nevada',
-          'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-          'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-          'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-          'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-          'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-          'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-        ],
-        program: '',
-        typeProgram: '',
-        programDescription: '',
-        startYear: '',
-        tipoRubroItems: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-        // eslint-disable-next-line
-        fileImage: require('../assets/default-img.svg'),
-      }
+export default {
+  data () {
+    return {
+      entityModel: null,
+      isEditing: true,
+      program: '',
+      typeProgram: '',
+      programDescription: '',
+      startYear: '',
+      tipoRubroItems: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+      // eslint-disable-next-line
+      fileImage: require('../assets/default-img.svg'),
+      programs: [
+        {
+          id: 1,
+          // eslint-disable-next-line
+          image: require('../assets/default-img.svg'),
+          name: 'Proyecto de educación APC',
+          from: {
+            day: 3,
+            mounth: 'Febrero',
+            year: 2017
+          },
+          to: {
+            day: 3,
+            mounth: 'Febrero',
+            year: 2017
+          }
+        }
+      ],
+      people: [
+        { name: 'Sandra Adams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
+        { name: 'Ali Connors', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+        { name: 'Trevor Hansen', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+        { name: 'Tucker Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+        { name: 'Britta Holt', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+        { name: 'Jane Smith ', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' },
+        { name: 'John Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
+        { name: 'Sandra Williams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
+      ]
+    }
+  },
+  methods: {
+    updateLocal () {
+      console.log(this.$refs.myFiles.files[0])
+      const file = this.$refs.myFiles.files[0]
+      this.fileImage = URL.createObjectURL(file)
     },
-    methods: {
-      updateLocal () {
-        console.log(this.$refs.myFiles.files[0])
-        const file = this.$refs.myFiles.files[0]
-        this.fileImage = URL.createObjectURL(file)
-      }
+    addEntityGroup () {
+      console.log(this.entityModel)
+      // this.programs.push(entityModel)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

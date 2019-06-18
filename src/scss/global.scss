@@ -407,11 +407,24 @@
     }
   }
   &__radios{
-    label{
-      color: black !important;
-    }
     p{
-      padding-left: 2.1em;
+      padding-left: .5em;
+    }
+    .v-radio{
+      margin-left: 16px;
+      margin-right: 0;
+
+      flex-direction: row;
+      align-items: flex-start;
+
+      
+      label{
+        color: black !important;
+        flex-direction: column;
+        font-size: 16px;
+        color: rgba(black,0.87) !important;
+        align-items: flex-start !important;
+      }
     }
   }
   &__submit{

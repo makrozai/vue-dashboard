@@ -81,8 +81,11 @@
             </v-flex>
             <v-flex xs12>
               <v-select
+                v-if="lines"
                 v-model="entity.line_id"
-                :items="ubigeoPrepare.lines"
+                :items="lines"
+                item-text="name"
+                item-value="id"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect('tipo de rubro')"
                 label="Seleccione tipo de rubro"
@@ -93,8 +96,11 @@
             </v-flex>
             <v-flex xs12>
               <v-select
+                v-if="typeEntities"
                 v-model="entity.type_entity_id"
-                :items="ubigeoPrepare.typeEntities"
+                :items="typeEntities"
+                item-text="name"
+                item-value="id"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect('tipo de entidad')"
                 label="Tipo de entidad"
@@ -128,7 +134,7 @@
               </v-flex>
               <v-flex xs6>
                 <v-select
-                  v-if="this.ubigeo.regions"
+                  v-if="ubigeo.regions"
                   v-model="entity.regions_id"
                   :items="ubigeo.regions"
                   item-text="name"
@@ -142,7 +148,7 @@
                   box
                 ></v-select>
                 <v-select
-                  v-if="this.ubigeo.provinces"
+                  v-if="ubigeo.provinces"
                   v-model="entity.provinces_id"
                   :items="ubigeoPrepare.provinces"
                   item-text="name"
@@ -156,7 +162,7 @@
                   box
                 ></v-select>
                 <v-select
-                  v-if="this.ubigeo.districts"
+                  v-if="ubigeo.districts"
                   v-model="entity.districts_id"
                   :items="ubigeoPrepare.districts"
                   item-text="name"
@@ -305,6 +311,7 @@
           <p class="c-verify-entity__subtitle">Ingresa minimo un programa</p>
 
           <span class="c-verify-entity__span">Entidades beneficiadas</span>
+          <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-program">
             <div class="c-verify-entity__add-program__item" v-for="(program, index) in programs" :key="index">
               <img :src="program.image" alt="">
@@ -323,6 +330,7 @@
               </v-btn>
             </div>
           </div>
+          <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-contact">
             <v-btn fab color="primary" @click="addProgram">
               <v-icon>add</v-icon>
@@ -334,72 +342,7 @@
       </div>
 
       <v-dialog v-model="dialog" max-width="600px">
-        <div class="c-form-program c-form-program--dialog">
-          <v-card class="c-form-program__card">
-            <v-card-title>
-              <v-container class="pb-0">
-                <h2>PROGRAMA</h2>
-              </v-container>
-            </v-card-title>
-            <v-card-text class="pt-0">
-              <v-container grid-list-md class="py-0">
-                <v-layout wrap>
-                  <v-flex xs12>
-                    <v-text-field
-                      disabled
-                      v-model="program.name"
-                      v-validate="'required'"
-                      :error-messages="errors.collect('empresa creadora')"
-                      label="Empresa u operador (creadora de la iniciativa)"
-                      data-vv-name="empresa creadora"
-                      required
-                      box
-                    ></v-text-field>
-                  </v-flex>
-                  <v-flex xs12>
-                    <h3>¿El programa es propio?</h3>
-                  </v-flex>
-                  <v-flex xs6>
-                    <div
-                      class="c-program-type"
-                      :class="program.type == 'propio' ? 'active':''"
-                      @click="changeTypeProgram('propio')"
-                    >
-                      <i class="icon-huella"></i>
-                      <p>
-                        Propia<br>
-                        El programa es de mi propia autoria como Entidad y esta registrada
-                      </p>
-                    </div>
-                  </v-flex>
-                  <v-flex xs6>
-                    <div
-                      class="c-program-type"
-                      :class="program.type == 'convenio' ? 'active':''"
-                      @click="changeTypeProgram('convenio')"
-                    >
-                      <i class="icon-archivo"></i>
-                      <p>
-                        En convenio<br>
-                        El programa le pertenece a un grupo de Entidades
-                      </p>
-                    </div>
-                  </v-flex>
-                  <!--@ formulario de programa propio-->
-                  <v-flex xs12 class="mt-4">
-                    <form-program-own v-if="program.type == 'propio'"></form-program-own>
-                    <form-program-group v-if="program.type == 'convenio'"></form-program-group>
-                  </v-flex>
-                  <!--@ formulario de programa propio-->
-                </v-layout>
-              </v-container>
-            </v-card-text>
-          </v-card>
-
-          <div class="c-form-program__footer">
-            <v-btn large color="primary">Guardar</v-btn>
-          </div>
-        </div>
+        <form-program></form-program>
       </v-dialog>
       <!--@ registro de programa-->
 
@@ -413,10 +356,22 @@
         <div class="c-verify-entity__row-large">
           <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
 
-          <v-radio-group v-model="conditions" class="c-verify-entity__radios">
-            <v-radio label="Terminos y condiciones" value="accept" color="primary"></v-radio>
-            <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
-            <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su politica de privacidad en y los terminos y condiciones.</p>
+          <v-radio-group
+            v-model="conditions"
+            class="c-verify-entity__radios"
+            v-validate="'required'"
+            :error-messages="errors.collect('terminos y condiciones')"
+            data-vv-name="terminos y condiciones"
+            required
+          >
+            <v-radio value="accept" color="primary">
+              <template v-slot:label>
+                <p>Terminos y condiciones</p>
+                <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
+                <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su politica de privacidad en y los terminos y condiciones.</p>
+              </template>
+            </v-radio>
+
           </v-radio-group>
 
           <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" class="mb-4"></vue-recaptcha>
@@ -431,14 +386,13 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import formProgramGroup from '../components/formProgramGroup'
-import formProgramOwn from '../components/formProgramOwn'
+import formProgram from '../components/formProgram'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  components: { VueRecaptcha, formProgramOwn, formProgramGroup },
+  components: { VueRecaptcha, formProgram },
   computed: {
-    ...mapState(['ubigeo']),
+    ...mapState(['ubigeo', 'lines', 'typeEntities']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
@@ -456,10 +410,6 @@ export default {
         provinces_id: '',
         districts_id: '',
         website: ''
-      },
-      program: {
-        name: 'RUC 234523432 EMPRESARIOS POR LA EDUCACIÓN',
-        type: 'convenio'
       },
       ubigeoPrepare: {
         districts: [],
@@ -550,9 +500,6 @@ export default {
     },
     removeProgram (index) {
       this.programs.splice(index, 1)
-    },
-    changeTypeProgram (type) {
-      this.program.type = type
     },
     getNameSpace (name, value) {
       return name + ' ' + value
