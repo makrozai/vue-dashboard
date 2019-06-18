@@ -26,7 +26,7 @@ import MNavigation from '../components/navigation'
 export default {
   components: { MNavigation },
   computed: {
-    ...mapState(['user', 'ubigeo'])
+    ...mapState(['ubigeo'])
   },
   data () {
     return {
@@ -34,14 +34,6 @@ export default {
     }
   },
   created () {
-    this.setAlert({
-      text: 'Usuario no validado correctamente',
-      state: true,
-      dismissible: true,
-      type: 'error'
-    })
-
-
     if (!this.ubigeo.regions) {
       this.getRegions()
     }
@@ -53,7 +45,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setAlert', 'getRegions', 'getProvinces', 'getDistricts']),
+    ...mapActions(['getRegions', 'getProvinces', 'getDistricts']),
     updateNavbar (response) {
       this.navbarStatus = response
     }

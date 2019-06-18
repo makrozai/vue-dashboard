@@ -68,7 +68,12 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-
+    getTypeProvinces: (state) => (id) => {
+      return state.ubigeo.provinces.filter(item => item.region_id === id)
+    },
+    getTypeDistricts: (state) => (id) => {
+      return state.ubigeo.districts.filter(item => item.province_id === id)
+    }
   },
   mutations: {
     login (state) {

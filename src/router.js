@@ -146,6 +146,16 @@ router.beforeEach((to, from, next) => {
             case 2 :
               // entidad
               store.dispatch('getEntity', response.decode.entity_id)
+                .then(response => {
+                  if (response.state === 2) {
+                    store.dispatch('setAlert', {
+                      text: 'Su entidad aun no esta validada',
+                      state: true,
+                      dismissible: true,
+                      type: 'error'
+                    })
+                  }
+                })
               break
             case 3 :
               // participante

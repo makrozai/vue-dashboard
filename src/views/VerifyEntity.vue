@@ -82,7 +82,7 @@
             <v-flex xs12>
               <v-select
                 v-model="entity.line_id"
-                :items="gettingSelects.lines"
+                :items="ubigeoPrepare.lines"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect('tipo de rubro')"
                 label="Seleccione tipo de rubro"
@@ -94,7 +94,7 @@
             <v-flex xs12>
               <v-select
                 v-model="entity.type_entity_id"
-                :items="gettingSelects.typeEntities"
+                :items="ubigeoPrepare.typeEntities"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect('tipo de entidad')"
                 label="Tipo de entidad"
@@ -130,9 +130,10 @@
                 <v-select
                   v-if="this.ubigeo.regions"
                   v-model="entity.regions_id"
-                  :items="this.ubigeo.regions"
+                  :items="ubigeo.regions"
                   item-text="name"
                   item-value="id"
+                  @change="selectRegion"
                   v-validate="'required'"
                   :error-messages="errors.collect('departamento')"
                   label="Seleccione departamento"
@@ -143,9 +144,10 @@
                 <v-select
                   v-if="this.ubigeo.provinces"
                   v-model="entity.provinces_id"
-                  :items="this.ubigeo.provinces"
+                  :items="ubigeoPrepare.provinces"
                   item-text="name"
                   item-value="id"
+                  @change="selectProvince"
                   v-validate="'required'"
                   :error-messages="errors.collect('provincia')"
                   label="Seleccione provincia"
@@ -156,7 +158,7 @@
                 <v-select
                   v-if="this.ubigeo.districts"
                   v-model="entity.districts_id"
-                  :items="this.ubigeo.districts"
+                  :items="ubigeoPrepare.districts"
                   item-text="name"
                   item-value="id"
                   v-validate="'required'"
@@ -428,7 +430,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import formProgramGroup from '../components/formProgramGroup'
 import formProgramOwn from '../components/formProgramOwn'
 import VueRecaptcha from 'vue-recaptcha'
@@ -436,7 +438,8 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha, formProgramOwn, formProgramGroup },
   computed: {
-    ...mapState(['ubigeo'])
+    ...mapState(['ubigeo']),
+    ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
     return {
@@ -458,10 +461,9 @@ export default {
         name: 'RUC 234523432 EMPRESARIOS POR LA EDUCACIÓN',
         type: 'convenio'
       },
-      gettingSelects: {
-        districts: ['a', 'b', 'c', 'd'],
-        provinces: ['a', 'b', 'c', 'd'],
-        regions: ['a', 'b', 'c', 'd'],
+      ubigeoPrepare: {
+        districts: [],
+        provinces: [],
         lines: ['a', 'b', 'c', 'd'],
         typeEntities: ['a', 'b', 'c', 'd']
       },
@@ -565,6 +567,12 @@ export default {
       })
       console.log(arrayObj)
       return arrayObj
+    },
+    selectRegion (value) {
+      this.ubigeoPrepare.provinces = this.getTypeProvinces(value)
+    },
+    selectProvince (value) {
+      this.ubigeoPrepare.districts = this.getTypeDistricts(value)
     }
   }
 }
