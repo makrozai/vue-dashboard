@@ -341,7 +341,7 @@
         </div>
       </div>
 
-      <v-dialog v-model="dialog" max-width="600px">
+      <v-dialog v-model="dialog" max-width="600px" scrollable>
         <form-program></form-program>
       </v-dialog>
       <!--@ registro de programa-->
@@ -533,7 +533,6 @@ export default {
             })
             if (stateContacts) {
               this.resetContacts([])
-              console.log('reset de campos')
             }
             this.perfilContact.forEach(contact => {
               contact.entity_id = this.entity.id

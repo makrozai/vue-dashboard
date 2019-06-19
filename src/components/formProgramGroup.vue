@@ -50,7 +50,7 @@
     </v-flex>
     <v-flex xs8>
       <v-text-field
-        v-model="program"
+        v-model="programOwn.name"
         v-validate="'required'"
         :error-messages="errors.collect('nombre de programa')"
         label="Nombre de programa"
@@ -59,7 +59,7 @@
         box
       ></v-text-field>
       <v-select
-        v-model="typeProgram"
+        v-model="programOwn.type_program"
         :items="tipoRubroItems"
         v-validate="'required'"
         :error-messages="errors.collect('tipo de programa')"
@@ -69,7 +69,7 @@
         box
       ></v-select>
       <v-text-field
-        v-model="startYear"
+        v-model="programOwn.year_start"
         v-validate="'required'"
         :error-messages="errors.collect('año de inicio')"
         label="Año de inicio"
@@ -87,7 +87,7 @@
     </v-flex>
     <v-flex xs12>
       <v-textarea
-        v-model="programDescription"
+        v-model="programOwn.description"
         v-validate="'alpha|required'"
         :error-messages="errors.collect('descripción  del programa')"
         label="Descripción del programa"
@@ -101,40 +101,61 @@
     </v-flex>
     <v-flex xs12>
       <v-text-field
-        box
+        v-model="programOwn.website"
+        v-validate="'required'"
+        :error-messages="errors.collect('sitio web')"
+        data-vv-name="sitio web"
         label="Pagina web"
+        box
       >
         <i slot="append-outer" class="icon-home"></i>
       </v-text-field>
     </v-flex>
     <v-flex xs6>
       <v-text-field
-        box
+        v-model="programOwn.social.twitter"
+        v-validate="'required'"
+        :error-messages="errors.collect('twitter')"
+        data-vv-name="twitter"
         label="Twitter"
+        box
       >
         <i slot="append-outer" class="icon-twitter"></i>
       </v-text-field>
     </v-flex>
     <v-flex xs6>
       <v-text-field
-        box
+
+        v-model="programOwn.social.facebook"
+        v-validate="'required'"
+        :error-messages="errors.collect('facebook')"
+        data-vv-name="facebook"
         label="Facebook"
+        box
       >
         <i slot="append-outer" class="icon-facebook"></i>
       </v-text-field>
     </v-flex>
     <v-flex xs6>
       <v-text-field
-        box
+        v-model="programOwn.social.youtube"
+        v-validate="'required'"
+        :error-messages="errors.collect('youtube')"
+        data-vv-name="youtube"
         label="Youtube"
+        box
       >
         <i slot="append-outer" class="icon-youtube"></i>
       </v-text-field>
     </v-flex>
     <v-flex xs6>
       <v-text-field
-        box
+        v-model="programOwn.social.instagram"
+        v-validate="'required'"
+        :error-messages="errors.collect('instagram')"
+        data-vv-name="instagram"
         label="Intagram"
+        box
       >
         <i slot="append-outer" class="icon-instagram"></i>
       </v-text-field>
@@ -144,14 +165,11 @@
 
 <script>
 export default {
+  props: ['submit'],
   data () {
     return {
       entityModel: null,
       isEditing: true,
-      program: '',
-      typeProgram: '',
-      programDescription: '',
-      startYear: '',
       tipoRubroItems: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       // eslint-disable-next-line
       fileImage: require('../assets/default-img.svg'),
@@ -182,7 +200,25 @@ export default {
         { name: 'Jane Smith ', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' },
         { name: 'John Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
         { name: 'Sandra Williams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
-      ]
+      ],
+      programOwn: {
+        name: '',
+        type_program: null,
+        year_start: null,
+        description: null,
+        website: '',
+        social: {
+          twitter: '',
+          facebook: '',
+          youtube: '',
+          instagram: ''
+        }
+      }
+    }
+  },
+  whatch: {
+    submit (resposnse){
+      console.log(response)
     }
   },
   methods: {

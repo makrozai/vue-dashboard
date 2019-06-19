@@ -596,28 +596,7 @@
   }
 }
 .c-form-program{
-  position: relative !important;
-  overflow: hidden;
 
-  &__card{
-    height: 90vh;
-    overflow-y: auto;
-    padding-bottom: 4em;
-  }
-
-  &--dialog{
-    height: 90vh;
-  }
-
-  &__footer{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: .5em 2.5em;
-    background-color: white;
-    border-top: 1px solid rgba(#000,.1);
-  }
   .v-input__append-outer{
     margin-left:1em;
     margin-right: 1em;
@@ -633,4 +612,10 @@
   width: 100%;
   margin-top: 0;
   z-index: 1000;
+}
+.none-errors{
+  .v-text-field__details{
+    display: none;
+  }
+
 }
