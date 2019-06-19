@@ -41,32 +41,21 @@
         temporary
         right
         fixed
+        scrollable
         width="550"
       >
-        <v-list class="pa-1">
-          <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <img src="https://randomuser.me/api/portraits/men/85.jpg">
-            </v-list-tile-avatar>
-
-            <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-
+        <form-program></form-program>
       </v-navigation-drawer>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import FormProgram from '../components/formProgram'
 import MProgramaTable from '../components/programaTable'
 
 export default {
-  components: {
-    MProgramaTable
-  },
+  components: { MProgramaTable, FormProgram },
   data () {
     return {
       formDrawner: null

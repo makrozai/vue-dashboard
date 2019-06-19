@@ -386,11 +386,11 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import formProgram from '../components/formProgram'
+import FormProgram from '../components/formProgram'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  components: { VueRecaptcha, formProgram },
+  components: { VueRecaptcha, FormProgram },
   computed: {
     ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])

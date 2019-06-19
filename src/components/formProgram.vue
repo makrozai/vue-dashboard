@@ -55,7 +55,9 @@
             </v-flex>
             <!--@ tab select type program-->
 
-            <!--@ formulario de programa-->
+            <!--@ program form-->
+
+            <!--@ select entities in group program-->
             <template v-if="type_program == 'convenio'">
               <v-flex xs10>
                 <v-combobox
@@ -106,7 +108,9 @@
                   <!--@ contenedor de programas-->
               </v-flex>
             </template>
+            <!--@ select entities in group program-->
 
+            <!--@ program information-->
             <v-flex xs8>
               <v-text-field
                 v-model="programOwn.name"
@@ -147,7 +151,7 @@
             <v-flex xs12>
               <v-textarea
                 v-model="programOwn.description"
-                v-validate="'alpha|required'"
+                v-validate="'required'"
                 :error-messages="errors.collect('descripción  del programa')"
                 label="Descripción del programa"
                 data-vv-name="descripción  del programa"
@@ -170,6 +174,9 @@
                 <i slot="append-outer" class="icon-home"></i>
               </v-text-field>
             </v-flex>
+            <!--@ program information-->
+
+            <!--@ social inputs -->
             <v-flex xs6>
               <v-text-field
                 v-model="programOwn.social.twitter"
@@ -219,12 +226,9 @@
                 <i slot="append-outer" class="icon-instagram"></i>
               </v-text-field>
             </v-flex>
+            <!--@ social inputs -->
 
-            <!--<v-flex xs12 class="mt-4">
-              <form-program-own v-if="program.type == 'propio'" :submit="stateSubmit"></form-program-own>
-              <form-program-group v-if="program.type == 'convenio'"></form-program-group>
-            </v-flex>-->
-            <!--@ formulario de programa-->
+            <!--@ program form-->
           </v-layout>
         </v-container>
       </v-card-text>
@@ -242,11 +246,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import formProgramGroup from './formProgramGroup'
-import formProgramOwn from './formProgramOwn'
 
 export default {
-  components: { formProgramOwn, formProgramGroup },
   computed: {
     ...mapState(['userSesion']),
     entityFullName () {
@@ -257,7 +258,7 @@ export default {
   data () {
     return {
       stateSubmit: false,
-      type_program: 'convenio',
+      type_program: 'propio',
       programOwn: {
         name: '',
         type_program: null,
@@ -314,8 +315,15 @@ export default {
       console.log(response)
     },
     submit() {
-      this.stateSubmit = !this.stateSubmit
-      console.log(this.stateSubmit)
+      this.$validator.validateAll()
+        .then(result => {
+          if(result){
+            console.log('hello')
+            console.log(this.programOwn)
+          } else {
+            console.log('bye')
+          }
+        })
     },
     updateLocal () {
       console.log(this.$refs.myFiles.files[0])
