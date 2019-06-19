@@ -29,6 +29,20 @@ const entitiesService = {
           reject(error)
         })
     })
+  },
+  put: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.put(`entities/${payload.id}`, payload)
+        .then(response => {
+          // enruta correctamente la entidad a la respuesta
+          response = response.body.data.entity
+
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }
 

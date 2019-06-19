@@ -9,7 +9,8 @@ import partakersService from './services/partakers'
 // import ubigeo service
 import ubigeoService from './services/ubigeo'
 import linesService from './services/lines'
-import typeEntities from './services/typeEntities'
+import typeEntitiesService from './services/typeEntities'
+import contactsService from './services/contacts'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
       entity: {},
       partaker: {}
     },
+    contacts: [],
     alert: {},
     recaptchaCode: '6LcPVqkUAAAAAGsjs7Vcn5iE5Z4uulpiFSXverbi',
     ubigeo: {
@@ -137,6 +139,12 @@ const store = new Vuex.Store({
     },
     getTypeEntities (state, payload) {
       state.typeEntities = payload
+    },
+    setContact (state, payload) {
+      state.contacts.push(payload)
+    },
+    getContactsByEntity (state, payload) {
+      state.contacts = payload
     }
   },
   actions: {
@@ -296,9 +304,58 @@ const store = new Vuex.Store({
     },
     getTypeEntities (context) {
       return new Promise((resolve, reject) => {
-        typeEntities.get()
+        typeEntitiesService.get()
           .then(response => {
             context.commit('getTypeEntities', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    putEntity (context, payload) {
+      return new Promise((resolve, reject) => {
+        entitiesService.put(payload)
+          .then(response => {
+            context.commit('getEntity', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getContactsByEntity (context, payload) {
+      return new Promise((resolve, reject) => {
+        contactsService.getByEntity(payload)
+          .then(response => {
+            context.commit('getContactsByEntity', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    saveContact (context, payload) {
+      return new Promise((resolve, reject) => {
+        contactsService.save(payload)
+          .then(response => {
+            context.commit('setContact', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    putContact (context, payload) {
+      // debemos crear una funcion para limpiar antes los campos porque aqui estoy agregando y se duplican
+      return new Promise((resolve, reject) => {
+        contactsService.put(payload)
+          .then(response => {
+            context.commit('setContact', response)
             resolve(response)
           })
           .catch(error => {

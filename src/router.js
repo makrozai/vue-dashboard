@@ -142,6 +142,7 @@ router.beforeEach((to, from, next) => {
             case 1 :
               // administrador
               console.log('es administrador')
+              next()
               break
             case 2 :
               // entidad
@@ -155,11 +156,16 @@ router.beforeEach((to, from, next) => {
                       type: 'error'
                     })
                   }
+                }).then(() => {
+                  next()
                 })
               break
             case 3 :
               // participante
               store.dispatch('getPartaker', response.decode.partaker_id)
+                .then(() => {
+                  next()
+                })
               break
           }
         })
@@ -169,8 +175,9 @@ router.beforeEach((to, from, next) => {
             next({ name: 'login' })
           }
         })
+    } else {
+      next()
     }
-    next()
   }
 })
 

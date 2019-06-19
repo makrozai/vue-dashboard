@@ -15,7 +15,7 @@
       <div class="c-verify-entity__row mb-5">
         <div class="c-verify-entity__row-small">
           <label class="c-verify-entity__upload">
-            <img :src="entity.image" alt="">
+            <img :src="imageProfile" alt="">
             <p>Formato válido (jpg, png), máximo 20MB</p>
             <input
               required
@@ -209,7 +209,7 @@
             </v-flex>
             <v-flex xs12 md5>
               <v-text-field
-                v-model="perfil.lastName"
+                v-model="perfil.lastname"
                 v-validate="'required'"
                 :error-messages="errors.collect(getNameSpace('apellido',index))"
                 label="Apellido"
@@ -231,7 +231,7 @@
             </v-flex>
             <v-flex xs12 md5>
               <v-text-field
-                v-model="perfil.dni"
+                v-model="perfil.nro_doc"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('dni',index))"
                 label="DNI"
@@ -245,7 +245,7 @@
             </v-flex>
             <v-flex xs12>
               <v-text-field
-                v-model="perfil.mail"
+                v-model="perfil.email"
                 v-validate="'required|email'"
                 :error-messages="errors.collect(getNameSpace('email',index))"
                 label="Correo electrónico"
@@ -256,7 +256,7 @@
             </v-flex>
             <v-flex xs12>
               <v-text-field
-                v-model="perfil.phone"
+                v-model="perfil.cellphone"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('celular',index))"
                 label="Nº Celular"
@@ -267,7 +267,7 @@
             </v-flex>
             <v-flex xs12 md7>
               <v-text-field
-                v-model="perfil.telephone"
+                v-model="perfil.phone"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('teléfono',index))"
                 label="Nº Fijo"
@@ -278,7 +278,7 @@
             </v-flex>
             <v-flex xs12 md5>
               <v-text-field
-                v-model="perfil.annexed"
+                v-model="perfil.anexo"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('anexo',index))"
                 label="Anexo"
@@ -392,14 +392,15 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha, formProgram },
   computed: {
-    ...mapState(['ubigeo', 'lines', 'typeEntities']),
+    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
     return {
+      // eslint-disable-next-line
+      imageProfile: require('../assets/default-img.svg'),
       entity: {
-        // eslint-disable-next-line
-        image: require('../assets/default-img.svg'),
+        image: null,
         name: '',
         ruc: null,
         social_reason: '',
@@ -413,21 +414,20 @@ export default {
       },
       ubigeoPrepare: {
         districts: [],
-        provinces: [],
-        lines: ['a', 'b', 'c', 'd'],
-        typeEntities: ['a', 'b', 'c', 'd']
+        provinces: []
       },
       dialog: false,
       perfilContact: [
         {
           name: '',
-          lastName: '',
+          lastname: '',
           position: '',
-          dni: null,
-          mail: '',
+          nro_doc: null,
+          email: '',
+          cellphone: null,
           phone: null,
-          telephone: null,
-          annexed: null
+          anexo: null,
+          entity_id: null
         }
 
       ],
@@ -452,29 +452,45 @@ export default {
       conditions: false
     }
   },
+  created () {
+    if (this.userSesion.entity) {
+      // this.entity = this.userSesion.entity
+      Object.assign(this.entity, this.userSesion.entity)
+
+      this.getContactsByEntity(this.entity.id)
+        .then(response => {
+          this.perfilContact = response
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
   methods: {
-    ...mapActions([]),
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity']),
     updateLocal () {
-      console.log(this.$refs.myFiles.files[0])
+      // console.log(this.$refs.myFiles.files[0])
       const file = this.$refs.myFiles.files[0]
-      this.entity.image = URL.createObjectURL(file)
+      this.imageProfile = URL.createObjectURL(file)
 
       let imageData = new FormData()
       imageData.append('name', 'my-file')
       imageData.append('file', file)
+      this.entity.image = imageData
 
-      console.log('imagen formateada', imageData)
+      // console.log('imagen formateada', imageData)
     },
     addContact () {
       let contact = {
         name: '',
-        lastName: '',
+        lastname: '',
         position: '',
-        dni: null,
-        mail: '',
+        nro_doc: null,
+        email: '',
+        cellphone: null,
         phone: null,
-        telephone: null,
-        annexed: null
+        anexo: null,
+        entity_id: null
       }
       this.perfilContact.push(contact)
     },
@@ -506,6 +522,19 @@ export default {
     },
     submit () {
       this.$validator.validateAll()
+        .then(result => {
+          if (result) {
+            this.putEntity(this.entity).catch(error => { console.log(error) })
+            this.perfilContact.forEach(contact => {
+              contact.entity_id = this.entity.id
+              if (contact.id) {
+                this.putContact(contact).catch(error => { console.log(error) })
+              } else {
+                this.saveContact(contact).catch(error => { console.log(error) })
+              }
+            })
+          }
+        })
     },
     valuesObject (obj, key) {
       let arrayObj = []
