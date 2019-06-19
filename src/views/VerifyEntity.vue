@@ -467,7 +467,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity']),
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts']),
     updateLocal () {
       // console.log(this.$refs.myFiles.files[0])
       const file = this.$refs.myFiles.files[0]
@@ -525,6 +525,16 @@ export default {
         .then(result => {
           if (result) {
             this.putEntity(this.entity).catch(error => { console.log(error) })
+            let stateContacts = false
+            this.perfilContact.forEach(contact => {
+              if(contact.id) {
+                stateContacts = true
+              }
+            })
+            if (stateContacts) {
+              this.resetContacts([])
+              console.log('reset de campos')
+            }
             this.perfilContact.forEach(contact => {
               contact.entity_id = this.entity.id
               if (contact.id) {

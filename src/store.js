@@ -350,6 +350,9 @@ const store = new Vuex.Store({
           })
       })
     },
+    resetContacts (context, payload) {
+      context.commit('getContactsByEntity', payload)
+    },
     putContact (context, payload) {
       // debemos crear una funcion para limpiar antes los campos porque aqui estoy agregando y se duplican
       return new Promise((resolve, reject) => {
