@@ -1,37 +1,54 @@
 <template>
-  <label class="c-verify-entity__upload">
+  <label class="c-upload">
     <img :src="imageProfile" alt="">
     <p>Formato válido (jpg, png), máximo 20MB</p>
     <input
-      required
+      :disabled="disabledUpload"
       type="file"
       name=""
-      @change="updateLocal"
+      @change="updateImage"
       ref="myFiles"
       accept="image/gif, image/jpeg, image/png"
     >
-
+    <v-btn
+      fab
+      small
+      color="error"
+      v-if="disabledUpload"
+      @click="removeImage"
+    >
+      <i class="icon-trash"></i>
+    </v-btn>
   </label>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
+  props: ['image'],
   computed: {
-    ...mapState(['image'])
+    // ...mapState(['image'])
   },
   data () {
     return {
+      imageId: null,
       // eslint-disable-next-line
-      imageProfile: require('../assets/default-img.svg')
+      imageProfile: require('../assets/default-img.svg'),
+      disabledUpload: false
+    }
+  },
+  created () {
+    if (this.image && this.image.id) {
+      this.imageId = this.image.id
+      this.disabledUpload = true
+      this.imageProfile = this.image.url
     }
   },
   methods: {
-    ...mapActions(['saveImage']),
-    updateLocal () {
+    ...mapActions(['saveImage', 'deleleImage']),
+    updateImage () {
       if (this.$refs.myFiles.files[0]) {
         let file = this.$refs.myFiles.files[0]
-        this.imageProfile = URL.createObjectURL(file)
 
         let imageData = new FormData()
         imageData.append('type', 'entity_logo')
@@ -39,7 +56,10 @@ export default {
 
         this.saveImage(imageData)
           .then(response => {
-            console.log(response)
+            this.imageProfile = response.link
+            this.imageId = response.id
+            this.disabledUpload = true
+            this.$emit('image-resolve', this.imageId)
           })
           .catch(error => {
             console.log(error)
@@ -47,6 +67,22 @@ export default {
       } else {
         console.log('la imagen no se cambio')
       }
+    },
+    removeImage () {
+      this.deleleImage(this.imageId)
+        .then(response => {
+          // eslint-disable-next-line
+          this.imageProfile= require('../assets/default-img.svg')
+          console.log(response)
+          this.disabledUpload = false
+          this.$emit('image-resolve', null)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getImage () {
+
     }
   }
 }

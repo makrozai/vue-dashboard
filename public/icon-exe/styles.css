@@ -86,3 +86,6 @@
 .icon-instagram:before {
   content: "\70";
 }
+.icon-trash:before {
+  content: "\71";
+}

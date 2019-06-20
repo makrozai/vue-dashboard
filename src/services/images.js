@@ -15,9 +15,23 @@ const imagesService = {
         })
     })
   },
-  get: (payload) => {
+  delete: (id) => {
     return new Promise((resolve, reject) => {
-      Vue.http.get(`images/${payload}`)
+      Vue.http.delete(`images/${id}`)
+        .then(response => {
+          // enruta correctamente la entidad a la respuesta
+          response = response.body
+
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  get: (id) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(`images/${id}`)
         .then(response => {
           // enruta correctamente el usuario a la respuesta
           response = response.body.data.partaker

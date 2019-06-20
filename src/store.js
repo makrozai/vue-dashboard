@@ -150,6 +150,9 @@ const store = new Vuex.Store({
     },
     saveImage (state, payload) {
       state.image = payload
+    },
+    deleteImage (state, payload) {
+      state.image = null
     }
   },
   actions: {
@@ -376,6 +379,18 @@ const store = new Vuex.Store({
         imagesService.set(payload)
           .then(response => {
             context.commit('saveImage', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    deleleImage (context, payload) {
+      return new Promise((resolve, reject) => {
+        imagesService.delete(payload)
+          .then(response => {
+            context.commit('deleteImage', response)
             resolve(response)
           })
           .catch(error => {

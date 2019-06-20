@@ -14,7 +14,10 @@
     <form class="c-verify-entity">
       <div class="c-verify-entity__row mb-5">
         <div class="c-verify-entity__row-small">
-          <upload-image></upload-image>
+          <upload-image
+            @image-resolve="uploadImage"
+            :image="{url: entity.logo_image_link, id: entity.logo_image_id}"
+          ></upload-image>
         </div>
         <div class="c-verify-entity__row-large">
           <v-layout wrap>
@@ -138,7 +141,7 @@
                   box
                 ></v-select>
                 <v-select
-                  v-if="ubigeo.provinces"
+                  v-if="ubigeoPrepare.provinces"
                   v-model="entity.provinces_id"
                   :items="ubigeoPrepare.provinces"
                   item-text="name"
@@ -152,7 +155,7 @@
                   box
                 ></v-select>
                 <v-select
-                  v-if="ubigeo.districts"
+                  v-if="ubigeoPrepare.districts && ubigeo.districts"
                   v-model="entity.districts_id"
                   :items="ubigeoPrepare.districts"
                   item-text="name"
@@ -390,7 +393,8 @@ export default {
     return {
       // eslint-disable-next-line
       entity: {
-        image: null,
+        id: null,
+        logo_image_id: null,
         name: '',
         ruc: null,
         social_reason: '',
@@ -443,18 +447,19 @@ export default {
     }
   },
   created () {
-    if (this.userSesion.entity) {
-      // this.entity = this.userSesion.entity
-      Object.assign(this.entity, this.userSesion.entity)
+    // this.entity = this.userSesion.entity
+    Object.assign(this.entity, this.userSesion.entity)
 
-      this.getContactsByEntity(this.entity.id)
-        .then(response => {
-          this.perfilContact = response
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
+    this.getContactsByEntity(this.entity.id)
+      .then(response => {
+        this.perfilContact = response
+
+        this.ubigeoPrepare.provinces = this.getTypeProvinces(this.entity.regions_id)
+        this.ubigeoPrepare.districts = this.getTypeDistricts(this.entity.provinces_id)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image']),
@@ -501,8 +506,7 @@ export default {
     submit () {
       this.$validator.validateAll()
         .then(result => {
-          if (result && this.image) {
-            this.entity = this.image
+          if (result) {
             this.putEntity(this.entity).catch(error => { console.log(error) })
             let stateContacts = false
             this.perfilContact.forEach(contact => {
@@ -537,6 +541,10 @@ export default {
     },
     selectProvince (value) {
       this.ubigeoPrepare.districts = this.getTypeDistricts(value)
+    },
+    uploadImage (image) {
+      this.entity.logo_image_id = image
+      this.putEntity({ id: this.entity.id, logo_image_id: this.entity.logo_image_id }).catch(error => { console.log(error) })
     }
   }
 }

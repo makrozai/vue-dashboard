@@ -619,3 +619,49 @@
   }
 
 }
+.c-upload{
+  display: block;
+  position: relative;
+  max-width: 160px;
+  margin: 0 auto;
+
+  i{
+    display: flex;
+    align-items: center;
+    font-size: 1.4em;
+  }
+  .v-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  img{
+    display: block;
+    height: 160px;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center center;
+  }
+  p{
+    text-align: center;
+    font-size: .9em;
+    padding: .5em 0;
+    margin-bottom: 0;
+  }
+  input{
+    display: none;
+  }
+
+
+  &--large{
+    img{
+      width: 85%;
+      height: 160px;
+    }
+    p{
+      max-width: 100%;
+      margin-top: .7em;
+    }
+  }
+}
