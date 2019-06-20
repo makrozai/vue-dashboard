@@ -544,7 +544,6 @@ export default {
     },
     uploadImage (image) {
       this.entity.logo_image_id = image
-      this.putEntity({ id: this.entity.id, logo_image_id: this.entity.logo_image_id }).catch(error => { console.log(error) })
     }
   }
 }
