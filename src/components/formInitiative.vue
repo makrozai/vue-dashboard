@@ -4,17 +4,26 @@
         <v-container class="py-0">
           <h2>PROGRAMA</h2>
 
-          <v-text-field
-            disabled
-            v-model="entityFullName"
-            v-validate="'required'"
-            :error-messages="errors.collect('empresa creadora')"
-            label="Empresa u operador (creadora de la iniciativa)"
-            data-vv-name="empresa creadora"
-            required
-            box
-            class="none-errors pt-2"
-          ></v-text-field>
+          <v-layout>
+            <v-flex xs10>
+              <v-text-field
+                disabled
+                v-model="entityFullName"
+                v-validate="'required'"
+                :error-messages="errors.collect('empresa creadora')"
+                label="Empresa u operador (creadora de la iniciativa)"
+                data-vv-name="empresa creadora"
+                required
+                box
+                class="none-errors pt-2"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs2 class="text-xs-center pt-2">
+              <v-btn fab small color="primary">
+                <v-icon dark>add</v-icon>
+              </v-btn>
+            </v-flex>
+          </v-layout>
         </v-container>
       </v-card-title>
 
@@ -131,33 +140,15 @@
                 required
                 box
               ></v-select>
-
-              <v-dialog
-                ref="dialog"
-                v-model="dateStartModal"
-                :return-value.sync="date"
-                lazy
-                full-width
-                width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    v-model="programOwn.year_start"
-                    v-validate="'required'"
-                    :error-messages="errors.collect('año de inicio')"
-                    label="Año de inicio"
-                    data-vv-name="año de inicio"
-                    readonly
-                    box
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="date" type="month" locale="es" scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-                </v-date-picker>
-              </v-dialog>
+              <v-text-field
+                v-model="programOwn.year_start"
+                v-validate="'required'"
+                :error-messages="errors.collect('año de inicio')"
+                label="Año de inicio"
+                data-vv-name="año de inicio"
+                required
+                box
+              ></v-text-field>
             </v-flex>
             <v-flex xs4>
               <label class="c-verify-entity__upload c-verify-entity__upload--large">
@@ -275,8 +266,6 @@ export default {
   },
   data () {
     return {
-      date: new Date().toISOString().substr(0, 7),
-      dateStartModal: false,
       stateSubmit: false,
       type_program: 'propio',
       programOwn: {

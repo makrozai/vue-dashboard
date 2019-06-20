@@ -14,17 +14,7 @@
     <form class="c-verify-entity">
       <div class="c-verify-entity__row mb-5">
         <div class="c-verify-entity__row-small">
-          <label class="c-verify-entity__upload">
-            <img :src="imageProfile" alt="">
-            <p>Formato válido (jpg, png), máximo 20MB</p>
-            <input
-              required
-              type="file"
-              name=""
-              @change="updateLocal"
-              ref="myFiles"
-            >
-          </label>
+          <upload-image></upload-image>
         </div>
         <div class="c-verify-entity__row-large">
           <v-layout wrap>
@@ -387,10 +377,11 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import FormProgram from '../components/formProgram'
+import UploadImage from '../components/uploadImage'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  components: { VueRecaptcha, FormProgram },
+  components: { VueRecaptcha, FormProgram, UploadImage },
   computed: {
     ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
@@ -398,7 +389,6 @@ export default {
   data () {
     return {
       // eslint-disable-next-line
-      imageProfile: require('../assets/default-img.svg'),
       entity: {
         image: null,
         name: '',
@@ -467,19 +457,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts']),
-    updateLocal () {
-      // console.log(this.$refs.myFiles.files[0])
-      const file = this.$refs.myFiles.files[0]
-      this.imageProfile = URL.createObjectURL(file)
-
-      let imageData = new FormData()
-      imageData.append('name', 'my-file')
-      imageData.append('file', file)
-      this.entity.image = imageData
-
-      // console.log('imagen formateada', imageData)
-    },
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image']),
     addContact () {
       let contact = {
         name: '',
@@ -523,11 +501,12 @@ export default {
     submit () {
       this.$validator.validateAll()
         .then(result => {
-          if (result) {
+          if (result && this.image) {
+            this.entity = this.image
             this.putEntity(this.entity).catch(error => { console.log(error) })
             let stateContacts = false
             this.perfilContact.forEach(contact => {
-              if(contact.id) {
+              if (contact.id) {
                 stateContacts = true
               }
             })

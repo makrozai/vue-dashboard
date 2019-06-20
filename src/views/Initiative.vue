@@ -8,7 +8,7 @@
         xs12 md6 lg8
         class="c-dashboard-title"
       >
-        <h2>programa</h2>
+        <h2>iniciativa</h2>
       </v-flex>
       <v-flex
         xs12 md6 lg4
@@ -43,18 +43,18 @@
         fixed
         width="550"
       >
-        <form-program></form-program>
+        <form-initiative></form-initiative>
       </v-navigation-drawer>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import FormProgram from '../components/formProgram'
+import FormInitiative from '../components/formInitiative'
 import MProgramaTable from '../components/programaTable'
 
 export default {
-  components: { MProgramaTable, FormProgram },
+  components: { MProgramaTable, FormInitiative },
   data () {
     return {
       formDrawner: null

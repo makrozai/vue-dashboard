@@ -6,6 +6,7 @@ import dashboard from './pages/Dashboard.vue'
 import entity from './views/Entidad.vue'
 import program from './views/Program.vue'
 import perfil from './views/Perfil.vue'
+import initiative from './views/Initiative.vue'
 import verifyEntity from './views/VerifyEntity'
 import acceptEntity from './views/AcceptEntity'
 import recoverPassword from './views/RecoverPassword'
@@ -93,6 +94,15 @@ const router = new Router({
           meta: {
             Auth: true,
             title: 'Programas'
+          }
+        },
+        {
+          path: 'iniciativa',
+          name: 'iniciativa',
+          component: initiative,
+          meta: {
+            Auth: true,
+            title: 'Iniciativa'
           }
         },
         {

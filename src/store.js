@@ -11,6 +11,7 @@ import ubigeoService from './services/ubigeo'
 import linesService from './services/lines'
 import typeEntitiesService from './services/typeEntities'
 import contactsService from './services/contacts'
+import imagesService from './services/images'
 
 Vue.use(Vuex)
 
@@ -31,6 +32,7 @@ const store = new Vuex.Store({
     },
     lines: [],
     typeEntities: [],
+    image: null,
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
@@ -51,7 +53,7 @@ const store = new Vuex.Store({
         {
           title: 'Iniciativas',
           icon: 'init',
-          link: 'perfil'
+          link: 'iniciativa'
         }
       ],
       reports: [
@@ -145,6 +147,9 @@ const store = new Vuex.Store({
     },
     getContactsByEntity (state, payload) {
       state.contacts = payload
+    },
+    saveImage (state, payload) {
+      state.image = payload
     }
   },
   actions: {
@@ -359,6 +364,18 @@ const store = new Vuex.Store({
         contactsService.put(payload)
           .then(response => {
             context.commit('setContact', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    saveImage (context, payload) {
+      return new Promise((resolve, reject) => {
+        imagesService.set(payload)
+          .then(response => {
+            context.commit('saveImage', response)
             resolve(response)
           })
           .catch(error => {
