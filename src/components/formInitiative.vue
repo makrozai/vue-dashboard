@@ -90,6 +90,7 @@
             <v-flex xs12 class="mb-2">
               <h3>Entidad(es) comprometida(s)</h3>
             </v-flex>
+            <!--autocompletado-->
             <v-flex xs12>
               <v-combobox
                 v-model="entityModel"
@@ -111,67 +112,52 @@
                 </template>
               </v-combobox>
             </v-flex>
-
+            <!--autocompletado-->
             <v-flex xs12>
-              <div class="c-card-entity">
-                <div class="c-card-entity__header">
-                  <v-btn fab small color="primary">
-                    <v-icon>remove</v-icon>
-                  </v-btn>
-                  <div class="c-card-entity__title">
-                    <img src="../assets/default-img.svg" alt="">
-                    <div>
-                      <h3><b>RUC: </b>13200214</h3>
-                      <p>Grupo Graña y Montero <v-icon dark class="c-card-entity__badge">check</v-icon></p>
-                    </div>
-                  </div>
-                  <v-btn fab small color="primary">
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </div>
-                <div class="c-card-entity__body">
-                  <ul>
-                    <li>
-                      <b>Donación o auspicio</b>
-                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.</p>
-                      <b>S/ 95 552.00</b>
-                    </li>
-                    <li>
-                      <b>Bienes y servicios</b>
-                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.</p>
-                      <b>S/ 95 552.00</b>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              <div class="c-card-entity">
-                <div class="c-card-entity__header">
-                  <v-btn fab small color="primary">
-                    <v-icon>remove</v-icon>
-                  </v-btn>
-                  <div class="c-card-entity__title">
-                    <img src="../assets/default-img.svg" alt="">
-                    <div>
-                      <h3><b>RUC: </b>13200214</h3>
-                      <p>Combativa SAC <v-icon dark class="c-card-entity__badge">check</v-icon></p>
-                    </div>
-                  </div>
-                  <v-btn fab small color="primary">
-                    <v-icon>add</v-icon>
-                  </v-btn>
-                </div>
-                <div class="c-card-entity__body">
-                  <ul>
-                    <li>
-                      <b>Convenios</b>
-                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                      <b>S/ 95 552.00</b>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
+              <card-entity :entities="entitiesParticipans"></card-entity>
+            </v-flex>
+            <v-flex xs12 class="mb-2">
+              <h3>Beneficiados</h3>
+            </v-flex>
+            <!--autocompletado-->
+            <v-flex xs12>
+              <v-combobox
+                v-model="entityModel"
+                :items="people"
+                label="Buscar entidad propietaria del programa"
+                item-text="name"
+                item-value="name"
+                prepend-inner-icon="search"
+                box
+              >
+                <template v-slot:item="data">
+                  <v-list-tile-avatar>
+                    <img :src="data.item.avatar">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </template>
+              </v-combobox>
+            </v-flex>
+            <!--autocompletado-->
+            <v-flex xs12>
+              <card-benefit :entities="benefitiesParticipans"></card-benefit>
+            </v-flex>
+            <v-flex xs7>
+              <p>Indicar el monto en soles de la inversión generada en la iniciativa</p>
+            </v-flex>
+            <v-flex xs5>
+              <v-text-field
+                v-model="programOwn.name"
+                v-validate="'required'"
+                :error-messages="errors.collect('Inversión')"
+                label="Inversión"
+                data-vv-name="Inversión"
+                required
+                box
+              ></v-text-field>
             </v-flex>
 
           </v-layout>
@@ -191,8 +177,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import CardEntity from './cardEntity'
+import CardBenefit from './cardBenefit'
 
 export default {
+  components: { CardEntity, CardBenefit },
   computed: {
     ...mapState(['userSesion']),
     entityFullName () {
@@ -221,6 +210,66 @@ export default {
         }
       },
       // placeholder
+      entitiesParticipans: [
+        {
+          ruc: '13200214',
+          name: 'Grupo Graña y Montero',
+          status: 'verify',
+          participations: [
+            {
+              title: 'Donación o auspicio',
+              description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.',
+              price: '95 552.00'
+            },
+            {
+              title: 'Bienes y servicios',
+              description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.',
+              price: '95 552.00'
+            }
+          ]
+        },
+        {
+          ruc: '13200214',
+          name: 'Combativa SAC',
+          status: 'verify',
+          participations: [
+            {
+              title: 'Convenio',
+              description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
+              price: '95 552.00'
+            }
+          ]
+        }
+      ],
+      benefitiesParticipans: [
+        {
+          type: 'Institución educativa',
+          name: 'Colegio educativo San Nicolas',
+          address: {
+            region: 'La Libertad',
+            province: 'Trujillo',
+            district: 'Trujillo'
+          }
+        },
+        {
+          type: 'Docente',
+          name: 'Colegio Inicial 203 San Martín',
+          address: {
+            region: 'Lima',
+            province: 'Lima',
+            district: 'Santiago de Surco'
+          }
+        },
+        {
+          type: 'Zona geográfica-comunidad',
+          name: 'Santa Rosa de Lima',
+          address: {
+            region: 'La Libertad',
+            province: 'Trujillo',
+            district: 'Trujillo'
+          }
+        }
+      ],
       // eslint-disable-next-line
       fileImage: require('../assets/default-img.svg'),
       typeLines: ['Foo', 'Bar', 'Fizz', 'Buzz'],
