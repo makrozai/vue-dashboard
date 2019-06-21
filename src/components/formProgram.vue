@@ -30,8 +30,8 @@
             <v-flex xs6>
               <div
                 class="c-program-type"
-                :class="type_program == 'propio' ? 'active':''"
-                @click="changeTypeProgram('propio')"
+                :class="programOwn.category == 1 ? 'active':''"
+                @click="programOwn.category = 1"
               >
                 <i class="icon-huella"></i>
                 <p>
@@ -43,8 +43,8 @@
             <v-flex xs6 class="mb-4">
               <div
                 class="c-program-type"
-                :class="type_program == 'convenio' ? 'active':''"
-                @click="changeTypeProgram('convenio')"
+                :class="programOwn.category == 2 ? 'active':''"
+                @click="programOwn.category = 2"
               >
                 <i class="icon-archivo"></i>
                 <p>
@@ -58,14 +58,15 @@
             <!--@ program form-->
 
             <!--@ select entities in group program-->
-            <template v-if="type_program == 'convenio'">
-              <v-flex xs10>
+            <template v-if="programOwn.category == 2">
+              <v-flex xs12 class="c-input__button-action">
                 <v-combobox
                   v-model="entityModel"
                   :items="people"
                   label="Buscar entidad propietaria del programa"
                   item-text="name"
                   item-value="name"
+                  class="pt-2"
                   box
                 >
                   <template v-slot:item="data">
@@ -78,33 +79,14 @@
                     </v-list-tile-content>
                   </template>
                 </v-combobox>
-
-              </v-flex>
-              <v-flex xs2 class="text-xs-center pt-2">
                 <v-btn fab small color="primary" @click="addEntityGroup">
                   <v-icon dark>add</v-icon>
                 </v-btn>
               </v-flex>
+
               <v-flex xs12>
                 <!--@ contenedor de programas-->
-                  <div class="c-verify-entity__add-program">
-                    <div class="c-verify-entity__add-program__item" v-for="(entity, index) in entitiesPlaceholder" :key="index">
-                      <img :src="entity.image" alt="">
-                      <div class="information">
-                        <p>{{ entity.name }} {{ index }}</p>
-                        <span>{{ entity.from.day }} {{ entity.from.mounth }} {{ entity.from.year }} hasta la actualidad</span>
-                      </div>
-                      <v-btn
-                        fab
-                        small
-                        outline
-                        color="error"
-                        @click="removeProgram(index)"
-                      >
-                        <v-icon dark>remove</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
+                  <card-entity :entities="programOwn.entities" only-remove class="mb-4"></card-entity>
                   <!--@ contenedor de programas-->
               </v-flex>
             </template>
@@ -122,8 +104,10 @@
                 box
               ></v-text-field>
               <v-select
-                v-model="programOwn.type_program"
-                :items="typeLines"
+                v-model="programOwn.type_program_id"
+                :items="typePrograms"
+                item-text="name"
+                item-value="id"
                 v-validate="'required'"
                 :error-messages="errors.collect('tipo de programa')"
                 label="Seleccionar el tipo de programa"
@@ -135,14 +119,14 @@
               <v-dialog
                 ref="dialog"
                 v-model="dateStartModal"
-                :return-value.sync="programOwn.year_start"
+                :return-value.sync="programOwn.start_date"
                 lazy
                 full-width
                 width="290px"
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="programOwn.year_start"
+                    v-model="programOwn.start_date"
                     v-validate="'required'"
                     :error-messages="errors.collect('año de inicio')"
                     label="Año de inicio"
@@ -155,7 +139,7 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  v-model="programOwn.year_start"
+                  v-model="programOwn.start_date"
                   type="month"
                   locale="es"
                   :max="new Date().toISOString().substr(0, 10)"
@@ -163,7 +147,7 @@
                 >
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dialog.save(programOwn.year_start)">OK</v-btn>
+                  <v-btn flat color="primary" @click="$refs.dialog.save(programOwn.start_date)">OK</v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-flex>
@@ -203,7 +187,7 @@
             <!--@ social inputs -->
             <v-flex xs6>
               <v-text-field
-                v-model="programOwn.social.twitter"
+                v-model="programOwn.twitter"
                 v-validate="'required'"
                 :error-messages="errors.collect('twitter')"
                 data-vv-name="twitter"
@@ -216,7 +200,7 @@
             <v-flex xs6>
               <v-text-field
 
-                v-model="programOwn.social.facebook"
+                v-model="programOwn.facebook"
                 v-validate="'required'"
                 :error-messages="errors.collect('facebook')"
                 data-vv-name="facebook"
@@ -228,7 +212,7 @@
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                v-model="programOwn.social.youtube"
+                v-model="programOwn.youtube"
                 v-validate="'required'"
                 :error-messages="errors.collect('youtube')"
                 data-vv-name="youtube"
@@ -240,7 +224,7 @@
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                v-model="programOwn.social.instagram"
+                v-model="programOwn.instagram"
                 v-validate="'required'"
                 :error-messages="errors.collect('instagram')"
                 data-vv-name="instagram"
@@ -270,12 +254,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import UploadImage from '../components/uploadImage'
+import UploadImage from './uploadImage'
+import CardEntity from './cardEntity'
 
 export default {
-  components: { UploadImage },
+  components: { UploadImage, CardEntity },
   computed: {
-    ...mapState(['userSesion']),
+    ...mapState(['userSesion','typePrograms']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -284,20 +269,27 @@ export default {
   data () {
     return {
       dateStartModal: false,
-      type_program: 'propio',
       programOwn: {
+        category: 1,
         image: null,
         name: '',
-        type_program: null,
-        year_start: new Date().toISOString().substr(0, 7),
+        type_program_id: null,
+        start_date: new Date().toISOString().substr(0, 7),
         description: null,
         website: '',
-        social: {
-          twitter: '',
-          facebook: '',
-          youtube: '',
-          instagram: ''
-        }
+        twitter: '',
+        facebook: '',
+        youtube: '',
+        instagram: '',
+        entities: [
+          {
+            id: 1,
+            // eslint-disable-next-line
+            image: require('../assets/default-img.svg'),
+            name: 'Proyecto de educación APC',
+            ruc: 13213123211
+          }
+        ]
       },
       // placeholder
       // eslint-disable-next-line
@@ -341,9 +333,6 @@ export default {
     }
   },
   methods: {
-    changeTypeProgram (type) {
-      this.type_program = type
-    },
     formData (response) {
       console.log(response)
     },

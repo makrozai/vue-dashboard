@@ -767,6 +767,16 @@
       }
     }
   }
+
+  &--only-remove &__title{
+    width: 80%;
+    margin-left: 0;
+  }
+  &--only-remove &__header{
+    .v-btn{
+      order: 1;
+    }
+  }
 }
 .c-card-benefit{
   &__entity{

@@ -352,7 +352,7 @@ export default {
         { name: 'PROGRAMA 1', group: 'Año de inicio', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
         { name: 'PROGRAMA 2', group: 'Año de inicio', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
         { name: 'PROGRAMA 3', group: 'Año de inicio', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
-      ],
+      ]
     }
   },
   methods: {

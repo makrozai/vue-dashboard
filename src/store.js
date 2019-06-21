@@ -10,6 +10,7 @@ import partakersService from './services/partakers'
 import ubigeoService from './services/ubigeo'
 import linesService from './services/lines'
 import typeEntitiesService from './services/typeEntities'
+import typeProgramsService from './services/typePrograms'
 import contactsService from './services/contacts'
 import imagesService from './services/images'
 
@@ -32,6 +33,7 @@ const store = new Vuex.Store({
     },
     lines: [],
     typeEntities: [],
+    typePrograms: [],
     image: null,
     placeholderUser: {},
     placeholderEntity: {},
@@ -141,6 +143,9 @@ const store = new Vuex.Store({
     },
     getTypeEntities (state, payload) {
       state.typeEntities = payload
+    },
+    getTypePrograms (state, payload) {
+      state.typePrograms = payload
     },
     setContact (state, payload) {
       state.contacts.push(payload)
@@ -315,6 +320,18 @@ const store = new Vuex.Store({
         typeEntitiesService.get()
           .then(response => {
             context.commit('getTypeEntities', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getTypePrograms (context) {
+      return new Promise((resolve, reject) => {
+        typeProgramsService.get()
+          .then(response => {
+            context.commit('getTypePrograms', response)
             resolve(response)
           })
           .catch(error => {
