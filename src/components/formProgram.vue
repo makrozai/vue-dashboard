@@ -152,7 +152,7 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="date" type="month" locale="es" scrollable>
+                <v-date-picker v-model="programOwn.year_start" type="month" locale="es" scrollable>
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
                   <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
@@ -282,7 +282,7 @@ export default {
       programOwn: {
         name: '',
         type_program: null,
-        year_start: null,
+        year_start: new Date().toISOString().substr(0, 7),
         description: null,
         website: '',
         social: {

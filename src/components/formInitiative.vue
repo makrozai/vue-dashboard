@@ -1,135 +1,11 @@
 <template>
     <v-card class="c-form-program">
-      <v-card-title>
-        <v-container class="py-0">
-          <h2>PROGRAMA</h2>
-
-          <v-layout>
-            <v-flex xs10>
-              <v-text-field
-                disabled
-                v-model="entityFullName"
-                v-validate="'required'"
-                :error-messages="errors.collect('empresa creadora')"
-                label="Empresa u operador (creadora de la iniciativa)"
-                data-vv-name="empresa creadora"
-                required
-                box
-                class="none-errors pt-2"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs2 class="text-xs-center pt-2">
-              <v-btn fab small color="primary">
-                <v-icon dark>add</v-icon>
-              </v-btn>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card-title>
-
-      <v-divider></v-divider>
-
       <v-card-text>
         <v-container grid-list-md >
           <v-layout wrap>
-            <!--@ tab select type program-->
-            <v-flex xs12>
-              <h3>¿El programa es propio?</h3>
-            </v-flex>
-            <v-flex xs6>
-              <div
-                class="c-program-type"
-                :class="type_program == 'propio' ? 'active':''"
-                @click="changeTypeProgram('propio')"
-              >
-                <i class="icon-huella"></i>
-                <p>
-                  Propia<br>
-                  El programa es de mi propia autoria como Entidad y esta registrada
-                </p>
-              </div>
-            </v-flex>
-            <v-flex xs6 class="mb-4">
-              <div
-                class="c-program-type"
-                :class="type_program == 'convenio' ? 'active':''"
-                @click="changeTypeProgram('convenio')"
-              >
-                <i class="icon-archivo"></i>
-                <p>
-                  En convenio<br>
-                  El programa le pertenece a un grupo de Entidades
-                </p>
-              </div>
-            </v-flex>
-            <!--@ tab select type program-->
+            <h2>INICIATIVA</h2>
 
-            <!--@ program form-->
-
-            <!--@ select entities in group program-->
-            <template v-if="type_program == 'convenio'">
-              <v-flex xs10>
-                <v-combobox
-                  v-model="entityModel"
-                  :items="people"
-                  label="Buscar entidad propietaria del programa"
-                  item-text="name"
-                  item-value="name"
-                  box
-                >
-                  <template v-slot:item="data">
-                    <v-list-tile-avatar>
-                      <img :src="data.item.avatar">
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                      <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                  </template>
-                </v-combobox>
-
-              </v-flex>
-              <v-flex xs2 class="text-xs-center pt-2">
-                <v-btn fab small color="primary" @click="addEntityGroup">
-                  <v-icon dark>add</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex xs12>
-                <!--@ contenedor de programas-->
-                  <div class="c-verify-entity__add-program">
-                    <div class="c-verify-entity__add-program__item" v-for="(entity, index) in entitiesPlaceholder" :key="index">
-                      <img :src="entity.image" alt="">
-                      <div class="information">
-                        <p>{{ entity.name }} {{ index }}</p>
-                        <span>{{ entity.from.day }} {{ entity.from.mounth }} {{ entity.from.year }} hasta la actualidad</span>
-                      </div>
-                      <v-btn
-                        fab
-                        small
-                        outline
-                        color="error"
-                        @click="removeProgram(index)"
-                      >
-                        <v-icon dark>remove</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
-                  <!--@ contenedor de programas-->
-              </v-flex>
-            </template>
-            <!--@ select entities in group program-->
-
-            <!--@ program information-->
-            <v-flex xs8>
-              <v-text-field
-                v-model="programOwn.name"
-                v-validate="'required'"
-                :error-messages="errors.collect('nombre de programa')"
-                label="Nombre de programa"
-                data-vv-name="nombre de programa"
-                required
-                box
-              ></v-text-field>
+            <v-flex xs10>
               <v-select
                 v-model="programOwn.type_program"
                 :items="typeLines"
@@ -137,107 +13,167 @@
                 :error-messages="errors.collect('tipo de programa')"
                 label="Seleccionar el tipo de programa"
                 data-vv-name="tipo de programa"
+                class="pt-2"
                 required
                 box
               ></v-select>
+            </v-flex>
+            <v-flex xs2 class="text-xs-center pt-3">
+              <v-btn fab small color="primary">
+                <i class="icon-dots"></i>
+              </v-btn>
+            </v-flex>
+            <v-flex xs12>
+              <div class="c-card-program">
+                <div class="c-card-program__image">
+                  <img src="../assets/default-img.svg" alt="">
+                  <div class="c-card-program__image__icon">
+                    <img src="../assets/icons/user.svg" alt="">
+                  </div>
+                </div>
+                <p class="c-card-project__description">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia omnis nostrum, natus ipsam quo quidem fugit dignissimos dicta doloribus modi neque sunt ex provident. Porro enim tempora modi labore mollitia?
+                </p>
+              </div>
+            </v-flex>
+            <v-flex xs12>
               <v-text-field
-                v-model="programOwn.year_start"
+                v-model="programOwn.name"
                 v-validate="'required'"
-                :error-messages="errors.collect('año de inicio')"
-                label="Año de inicio"
-                data-vv-name="año de inicio"
+                :error-messages="errors.collect('nombre de iniciativa')"
+                label="Nombre de iniciativa"
+                data-vv-name="nombre de iniciativa"
                 required
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs4>
-              <label class="c-verify-entity__upload c-verify-entity__upload--large">
-                <img :src="fileImage" alt="">
-                <p>Formato válido (jpg, png), máximo 20MB</p>
-                <input type="file" name="" @change="updateLocal" ref="myFiles">
-              </label>
+            <v-flex xs6>
+              <v-dialog
+                ref="dialog"
+                v-model="dateStartModal"
+                :return-value.sync="date"
+                lazy
+                full-width
+                width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="programOwn.year_start"
+                    v-validate="'required'"
+                    :error-messages="errors.collect('año de inicio')"
+                    label="Año de inicio"
+                    data-vv-name="año de inicio"
+                    readonly
+                    box
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="programOwn.year_start" type="month" locale="es" scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
+                  <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                </v-date-picker>
+              </v-dialog>
+            </v-flex>
+            <v-flex xs6>
+              <v-select
+                v-model="programOwn.type_program"
+                :items="typeLines"
+                v-validate="'required'"
+                :error-messages="errors.collect('periodo de intervención')"
+                label="Periodo de intervención"
+                data-vv-name="periodo de intervención"
+                required
+                box
+              ></v-select>
+            </v-flex>
+            <v-flex xs12 class="mb-2">
+              <h3>Entidad(es) comprometida(s)</h3>
             </v-flex>
             <v-flex xs12>
-              <v-textarea
-                v-model="programOwn.description"
-                v-validate="'required'"
-                :error-messages="errors.collect('descripción  del programa')"
-                label="Descripción del programa"
-                data-vv-name="descripción  del programa"
+              <v-combobox
+                v-model="entityModel"
+                :items="people"
+                label="Buscar entidad propietaria del programa"
+                item-text="name"
+                item-value="name"
+                prepend-inner-icon="search"
                 box
-              ></v-textarea>
+              >
+                <template v-slot:item="data">
+                  <v-list-tile-avatar>
+                    <img :src="data.item.avatar">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </template>
+              </v-combobox>
             </v-flex>
+
             <v-flex xs12>
-              <h3>Tipo de servicio :</h3>
-              <p>formación para el trabajo</p>
-            </v-flex>
-            <v-flex xs12>
-              <v-text-field
-                v-model="programOwn.website"
-                v-validate="'required'"
-                :error-messages="errors.collect('sitio web')"
-                data-vv-name="sitio web"
-                label="Pagina web"
-                box
-              >
-                <i slot="append-outer" class="icon-home"></i>
-              </v-text-field>
-            </v-flex>
-            <!--@ program information-->
+              <div class="c-card-entity">
+                <div class="c-card-entity__header">
+                  <v-btn fab small color="primary">
+                    <v-icon>remove</v-icon>
+                  </v-btn>
+                  <div class="c-card-entity__title">
+                    <img src="../assets/default-img.svg" alt="">
+                    <div>
+                      <h3><b>RUC: </b>13200214</h3>
+                      <p>Grupo Graña y Montero <v-icon dark class="c-card-entity__badge">check</v-icon></p>
+                    </div>
+                  </div>
+                  <v-btn fab small color="primary">
+                    <v-icon>add</v-icon>
+                  </v-btn>
+                </div>
+                <div class="c-card-entity__body">
+                  <ul>
+                    <li>
+                      <b>Donación o auspicio</b>
+                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.</p>
+                      <b>S/ 95 552.00</b>
+                    </li>
+                    <li>
+                      <b>Bienes y servicios</b>
+                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.</p>
+                      <b>S/ 95 552.00</b>
+                    </li>
+                  </ul>
+                </div>
 
-            <!--@ social inputs -->
-            <v-flex xs6>
-              <v-text-field
-                v-model="programOwn.social.twitter"
-                v-validate="'required'"
-                :error-messages="errors.collect('twitter')"
-                data-vv-name="twitter"
-                label="Twitter"
-                box
-              >
-                <i slot="append-outer" class="icon-twitter"></i>
-              </v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
+              </div>
+              <div class="c-card-entity">
+                <div class="c-card-entity__header">
+                  <v-btn fab small color="primary">
+                    <v-icon>remove</v-icon>
+                  </v-btn>
+                  <div class="c-card-entity__title">
+                    <img src="../assets/default-img.svg" alt="">
+                    <div>
+                      <h3><b>RUC: </b>13200214</h3>
+                      <p>Combativa SAC <v-icon dark class="c-card-entity__badge">check</v-icon></p>
+                    </div>
+                  </div>
+                  <v-btn fab small color="primary">
+                    <v-icon>add</v-icon>
+                  </v-btn>
+                </div>
+                <div class="c-card-entity__body">
+                  <ul>
+                    <li>
+                      <b>Convenios</b>
+                      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                      <b>S/ 95 552.00</b>
+                    </li>
+                  </ul>
+                </div>
 
-                v-model="programOwn.social.facebook"
-                v-validate="'required'"
-                :error-messages="errors.collect('facebook')"
-                data-vv-name="facebook"
-                label="Facebook"
-                box
-              >
-                <i slot="append-outer" class="icon-facebook"></i>
-              </v-text-field>
+              </div>
             </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                v-model="programOwn.social.youtube"
-                v-validate="'required'"
-                :error-messages="errors.collect('youtube')"
-                data-vv-name="youtube"
-                label="Youtube"
-                box
-              >
-                <i slot="append-outer" class="icon-youtube"></i>
-              </v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                v-model="programOwn.social.instagram"
-                v-validate="'required'"
-                :error-messages="errors.collect('instagram')"
-                data-vv-name="instagram"
-                label="Intagram"
-                box
-              >
-                <i slot="append-outer" class="icon-instagram"></i>
-              </v-text-field>
-            </v-flex>
-            <!--@ social inputs -->
 
-            <!--@ program form-->
           </v-layout>
         </v-container>
       </v-card-text>
@@ -266,6 +202,9 @@ export default {
   },
   data () {
     return {
+      date: new Date().toISOString().substr(0, 7),
+      dateStartModal: false,
+
       stateSubmit: false,
       type_program: 'propio',
       programOwn: {

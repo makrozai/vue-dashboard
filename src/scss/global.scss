@@ -665,3 +665,91 @@
     }
   }
 }
+.c-card-program{
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5em;
+
+  img{
+    display: block;
+    width: 100%;
+  }
+
+  &__image{
+
+    width: 30%;
+    position: relative;
+
+    &__icon{
+      width: 40%;
+      border: 1px solid var(--v-primary-base);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%,50%)
+    }
+  }
+  p{
+    padding-left: 1em;
+    width: 70%;
+    margin-bottom: 0;
+  }
+}
+.c-card-entity{
+  &__header{
+    display: flex;
+    align-items: center;
+
+    .v-btn{
+      margin: 0;
+    }
+  }
+  &__title{
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+
+    > div{
+      padding-left: .5em;
+    }
+    img{
+      max-height: 5em;
+    }
+
+    h3{
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    p{
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+  &__badge{
+    background: var(--v-success-base);
+    font-size: 1rem !important;
+    padding: .1em .3em;
+    margin-left: .5em;
+    border-radius: 1em;
+  }
+  &__body{
+    padding: 1em 0;
+    ul{
+      width: 75%;
+      margin: 0 auto;
+
+      b{
+        display: block;
+        margin-bottom: .5em;
+      }
+
+      p{
+        color: darken(#9B9B9B, 15);
+      }
+    }
+  }
+}
