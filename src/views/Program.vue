@@ -43,7 +43,7 @@
         fixed
         width="550"
       >
-        <form-program></form-program>
+        <form-program class="u-form--white"></form-program>
       </v-navigation-drawer>
     </v-layout>
   </v-container>

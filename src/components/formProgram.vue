@@ -135,7 +135,7 @@
               <v-dialog
                 ref="dialog"
                 v-model="dateStartModal"
-                :return-value.sync="date"
+                :return-value.sync="programOwn.year_start"
                 lazy
                 full-width
                 width="290px"
@@ -147,24 +147,30 @@
                     :error-messages="errors.collect('año de inicio')"
                     label="Año de inicio"
                     data-vv-name="año de inicio"
+                    required
                     readonly
                     box
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="programOwn.year_start" type="month" locale="es" scrollable>
+                <v-date-picker
+                  ref="picker"
+                  v-model="programOwn.year_start"
+                  type="month"
+                  locale="es"
+                  :max="new Date().toISOString().substr(0, 10)"
+                  scrollable
+                >
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                  <v-btn flat color="primary" @click="$refs.dialog.save(programOwn.year_start)">OK</v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-flex>
             <v-flex xs4>
-              <label class="c-verify-entity__upload c-verify-entity__upload--large">
-                <img :src="fileImage" alt="">
-                <p>Formato válido (jpg, png), máximo 20MB</p>
-                <input type="file" name="" @change="updateLocal" ref="myFiles">
-              </label>
+              <upload-image
+                @image-resolve="uploadImage"
+              ></upload-image>
             </v-flex>
             <v-flex xs12>
               <v-textarea
@@ -264,8 +270,10 @@
 
 <script>
 import { mapState } from 'vuex'
+import UploadImage from '../components/uploadImage'
 
 export default {
+  components: { UploadImage },
   computed: {
     ...mapState(['userSesion']),
     entityFullName () {
@@ -275,11 +283,10 @@ export default {
   },
   data () {
     return {
-      date: new Date().toISOString().substr(0, 7),
       dateStartModal: false,
-      stateSubmit: false,
       type_program: 'propio',
       programOwn: {
+        image: null,
         name: '',
         type_program: null,
         year_start: new Date().toISOString().substr(0, 7),
@@ -328,6 +335,11 @@ export default {
       isEditing: true
     }
   },
+  watch: {
+    dateStartModal (value) {
+      value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+    }
+  },
   methods: {
     changeTypeProgram (type) {
       this.type_program = type
@@ -354,6 +366,9 @@ export default {
     addEntityGroup () {
       console.log(this.entityModel)
       // this.programs.push(entityModel)
+    },
+    uploadImage (image) {
+      this.programOwn.image = image
     }
   }
 }

@@ -43,7 +43,7 @@
         fixed
         width="550"
       >
-        <form-initiative></form-initiative>
+        <form-initiative class="u-form--white"></form-initiative>
       </v-navigation-drawer>
     </v-layout>
   </v-container>
