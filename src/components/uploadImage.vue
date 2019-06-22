@@ -25,7 +25,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-  props: ['image'],
+  props: ['image', 'type'],
   computed: {
     // ...mapState(['image'])
   },
@@ -51,7 +51,7 @@ export default {
         let file = this.$refs.myFiles.files[0]
 
         let imageData = new FormData()
-        imageData.append('type', 'entity_logo')
+        imageData.append('type', this.type)
         imageData.append('photo', file)
 
         this.saveImage(imageData)

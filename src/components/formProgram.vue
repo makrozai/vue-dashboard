@@ -154,6 +154,7 @@
             <v-flex xs4>
               <upload-image
                 @image-resolve="uploadImage"
+                type="program_logo"
               ></upload-image>
             </v-flex>
             <v-flex xs12>
@@ -253,14 +254,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import UploadImage from './uploadImage'
 import CardEntity from './cardEntity'
 
 export default {
   components: { UploadImage, CardEntity },
   computed: {
-    ...mapState(['userSesion','typePrograms']),
+    ...mapState(['userSesion', 'typePrograms']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -270,8 +271,9 @@ export default {
     return {
       dateStartModal: false,
       programOwn: {
+        owner_id: null,
         category: 1,
-        image: null,
+        logo_image_id: null,
         name: '',
         type_program_id: null,
         start_date: new Date().toISOString().substr(0, 7),
@@ -281,20 +283,11 @@ export default {
         facebook: '',
         youtube: '',
         instagram: '',
-        entities: [
-          {
-            id: 1,
-            // eslint-disable-next-line
-            image: require('../assets/default-img.svg'),
-            name: 'Proyecto de educación APC',
-            ruc: 13213123211
-          }
-        ]
+        entities: []
       },
       // placeholder
       // eslint-disable-next-line
       fileImage: require('../assets/default-img.svg'),
-      typeLines: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       people: [
         { name: 'Sandra Adams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
         { name: 'Ali Connors', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
@@ -305,24 +298,6 @@ export default {
         { name: 'John Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
         { name: 'Sandra Williams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
       ],
-      entitiesPlaceholder: [
-        {
-          id: 1,
-          // eslint-disable-next-line
-          image: require('../assets/default-img.svg'),
-          name: 'Proyecto de educación APC',
-          from: {
-            day: 3,
-            mounth: 'Febrero',
-            year: 2017
-          },
-          to: {
-            day: 3,
-            mounth: 'Febrero',
-            year: 2017
-          }
-        }
-      ],
       entityModel: null,
       isEditing: true
     }
@@ -332,7 +307,11 @@ export default {
       value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     }
   },
+  created () {
+    this.programOwn.owner_id = this.userSesion.entity.id
+  },
   methods: {
+    ...mapActions(['saveProgram']),
     formData (response) {
       console.log(response)
     },
@@ -340,10 +319,23 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            console.log('hello')
+            console.log('formulario enviado correctamente')
+            if (this.programOwn.entities.length > 1) {
+              this.programOwn.entities = this.getArrayByObjs(this.programOwn.entities)
+            }
+            this.programOwn.entities.push(this.userSesion.entity.id)
+
             console.log(this.programOwn)
+            this.saveProgram(this.programOwn)
+              .then(response => {
+                this.resetFields()
+                this.$emit('modal-state', false)
+              })
+              .catch(error => {
+                console.log(error)
+              })
           } else {
-            console.log('bye')
+            console.log('formulario invalido revise los campos')
           }
         })
     },
@@ -357,7 +349,30 @@ export default {
       // this.programs.push(entityModel)
     },
     uploadImage (image) {
-      this.programOwn.image = image
+      this.programOwn.logo_image_id = image
+    },
+    getArrayByObjs (objResolve) {
+      let arrayIds = []
+      objResolve.forEach(item => {
+        console.log(item)
+        arrayIds.push(item.id)
+      })
+      return arrayIds
+    },
+    resetFields () {
+      this.owner_id = null
+      this.category = 1
+      this.logo_image_id = null
+      this.name = ''
+      this.type_program_id = null
+      this.start_date = new Date().toISOString().substr(0, 7)
+      this.description = null
+      this.website = ''
+      this.twitter = ''
+      this.facebook = ''
+      this.youtube = ''
+      this.instagram = ''
+      this.entities = []
     }
   }
 }

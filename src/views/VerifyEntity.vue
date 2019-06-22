@@ -17,6 +17,7 @@
           <upload-image
             @image-resolve="uploadImage"
             :image="{url: entity.logo_image_link, id: entity.logo_image_id}"
+            type="entity_logo"
           ></upload-image>
         </div>
         <div class="c-verify-entity__row-large">
@@ -307,10 +308,10 @@
           <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-program">
             <div class="c-verify-entity__add-program__item" v-for="(program, index) in programs" :key="index">
-              <img :src="program.image" alt="">
+              <img :src="program.image || require('../assets/default-img.svg')" alt="">
               <div class="information">
                 <p>{{ program.name }} {{ index }}</p>
-                <span>{{ program.from.day }} {{ program.from.mounth }} {{ program.from.year }} hasta la actualidad</span>
+                <span>{{ program.start_date }} hasta la actualidad</span>
               </div>
               <v-btn
                 fab
@@ -325,7 +326,7 @@
           </div>
           <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-contact">
-            <v-btn fab color="primary" @click="addProgram">
+            <v-btn fab color="primary" @click="dialog = true">
               <v-icon>add</v-icon>
             </v-btn>
             <span>Agregar otro contacto</span>
@@ -335,7 +336,7 @@
       </div>
 
       <v-dialog v-model="dialog" max-width="600px" scrollable>
-        <form-program></form-program>
+        <form-program @modal-state="changeActivityModal"></form-program>
       </v-dialog>
       <!--@ registro de programa-->
 
@@ -386,7 +387,7 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha, FormProgram, UploadImage },
   computed: {
-    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities']),
+    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities', 'programs']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
@@ -425,24 +426,6 @@ export default {
         }
 
       ],
-      programs: [
-        {
-          id: 1,
-          // eslint-disable-next-line
-          image: require('../assets/default-img.svg'),
-          name: 'Proyecto de educación APC',
-          from: {
-            day: 3,
-            mounth: 'Febrero',
-            year: 2017
-          },
-          to: {
-            day: 3,
-            mounth: 'Febrero',
-            year: 2017
-          }
-        }
-      ],
       conditions: false
     }
   },
@@ -476,26 +459,6 @@ export default {
         entity_id: null
       }
       this.perfilContact.push(contact)
-    },
-    addProgram () {
-      this.dialog = true
-      let program = {
-        id: null,
-        // eslint-disable-next-line
-        image: require('../assets/default-img.svg'),
-        name: 'Proyecto de educación APC',
-        from: {
-          day: 3,
-          mounth: 'Febrero',
-          year: 2017
-        },
-        to: {
-          day: 3,
-          mounth: 'Febrero',
-          year: 2017
-        }
-      }
-      this.programs.push(program)
     },
     removeProgram (index) {
       this.programs.splice(index, 1)
@@ -544,6 +507,9 @@ export default {
     },
     uploadImage (image) {
       this.entity.logo_image_id = image
+    },
+    changeActivityModal (value) {
+      this.dialog = value
     }
   }
 }

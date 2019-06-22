@@ -12,6 +12,7 @@ import linesService from './services/lines'
 import typeEntitiesService from './services/typeEntities'
 import typeProgramsService from './services/typePrograms'
 import contactsService from './services/contacts'
+import programsService from './services/programs'
 import imagesService from './services/images'
 
 Vue.use(Vuex)
@@ -35,6 +36,7 @@ const store = new Vuex.Store({
     typeEntities: [],
     typePrograms: [],
     image: null,
+    programs: [],
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
@@ -158,7 +160,11 @@ const store = new Vuex.Store({
     },
     deleteImage (state, payload) {
       state.image = null
+    },
+    setProgram (state, payload) {
+      state.programs.push(payload)
     }
+
   },
   actions: {
     getUser (context, payload) {
@@ -408,6 +414,19 @@ const store = new Vuex.Store({
         imagesService.delete(payload)
           .then(response => {
             context.commit('deleteImage', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    saveProgram (context, payload) {
+      payload.start_date += '-01'
+      return new Promise((resolve, reject) => {
+        programsService.save(payload)
+          .then(response => {
+            context.commit('setProgram', response)
             resolve(response)
           })
           .catch(error => {
