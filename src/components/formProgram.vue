@@ -62,7 +62,7 @@
               <v-flex xs12 class="c-input__button-action">
                 <v-combobox
                   v-model="entityModel"
-                  :items="people"
+                  :items="allEntities"
                   label="Buscar entidad propietaria del programa"
                   item-text="name"
                   item-value="name"
@@ -71,11 +71,11 @@
                 >
                   <template v-slot:item="data">
                     <v-list-tile-avatar>
-                      <img :src="data.item.avatar">
+                      <img :src="data.item.logo_image_link || require('./../assets/default-img.svg')">
                     </v-list-tile-avatar>
                     <v-list-tile-content>
                       <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                      <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                      <v-list-tile-sub-title v-html="data.item.ruc"></v-list-tile-sub-title>
                     </v-list-tile-content>
                   </template>
                 </v-combobox>
@@ -86,7 +86,7 @@
 
               <v-flex xs12>
                 <!--@ contenedor de programas-->
-                  <card-entity :entities="programOwn.entities" only-remove class="mb-4"></card-entity>
+                  <card-entity :entities="programOwn.entities" only-remove ></card-entity>
                   <!--@ contenedor de programas-->
               </v-flex>
             </template>
@@ -248,8 +248,11 @@
         <v-container class="py-0">
           <v-btn large color="primary" @click="submit">Guardar</v-btn>
         </v-container>
-
       </v-card-actions>
+
+      <v-dialog v-model="dialog" max-width="500px" scrollable>
+        <form-register-contact @entity="addOtherEntity"></form-register-contact>
+      </v-dialog>
     </v-card>
 </template>
 
@@ -257,11 +260,12 @@
 import { mapState, mapActions } from 'vuex'
 import UploadImage from './uploadImage'
 import CardEntity from './cardEntity'
+import FormRegisterContact from './formRegisterContact'
 
 export default {
-  components: { UploadImage, CardEntity },
+  components: { UploadImage, CardEntity, FormRegisterContact },
   computed: {
-    ...mapState(['userSesion', 'typePrograms']),
+    ...mapState(['userSesion', 'typePrograms', 'allEntities']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -286,20 +290,8 @@ export default {
         entities: []
       },
       // placeholder
-      // eslint-disable-next-line
-      fileImage: require('../assets/default-img.svg'),
-      people: [
-        { name: 'Sandra Adams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-        { name: 'Ali Connors', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-        { name: 'Trevor Hansen', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-        { name: 'Tucker Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-        { name: 'Britta Holt', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { name: 'Jane Smith ', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' },
-        { name: 'John Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-        { name: 'Sandra Williams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
-      ],
       entityModel: null,
-      isEditing: true
+      dialog: false
     }
   },
   watch: {
@@ -309,12 +301,13 @@ export default {
   },
   created () {
     this.programOwn.owner_id = this.userSesion.entity.id
+
+    if (this.allEntities.length === 0) {
+      this.getAllEntities()
+    }
   },
   methods: {
-    ...mapActions(['saveProgram']),
-    formData (response) {
-      console.log(response)
-    },
+    ...mapActions(['saveProgram', 'getAllEntities']),
     submit () {
       this.$validator.validateAll()
         .then(result => {
@@ -324,6 +317,7 @@ export default {
               this.programOwn.entities = this.getArrayByObjs(this.programOwn.entities)
             }
             this.programOwn.entities.push(this.userSesion.entity.id)
+            this.programOwn.entities = [...new Set(this.programOwn.entities)]
 
             console.log(this.programOwn)
             this.saveProgram(this.programOwn)
@@ -339,14 +333,22 @@ export default {
           }
         })
     },
-    updateLocal () {
-      console.log(this.$refs.myFiles.files[0])
-      const file = this.$refs.myFiles.files[0]
-      this.fileImage = URL.createObjectURL(file)
-    },
     addEntityGroup () {
       console.log(this.entityModel)
+      if (typeof this.entityModel === 'object' && this.entityModel) {
+        this.programOwn.entities.push(this.entityModel)
+        console.log('se guardo')
+        this.entityModel = null
+      } else {
+        console.log('se abrira el modal')
+        this.dialog = true
+      }
+
       // this.programs.push(entityModel)
+    },
+    addOtherEntity (value) {
+      this.programOwn.entities.push(value)
+      this.dialog = false
     },
     uploadImage (image) {
       this.programOwn.logo_image_id = image
@@ -360,19 +362,20 @@ export default {
       return arrayIds
     },
     resetFields () {
-      this.owner_id = null
-      this.category = 1
-      this.logo_image_id = null
-      this.name = ''
-      this.type_program_id = null
-      this.start_date = new Date().toISOString().substr(0, 7)
-      this.description = null
-      this.website = ''
-      this.twitter = ''
-      this.facebook = ''
-      this.youtube = ''
-      this.instagram = ''
-      this.entities = []
+      this.programOwn.owner_id = null
+      this.programOwn.category = 1
+      this.programOwn.logo_image_id = null
+      this.programOwn.name = ''
+      this.programOwn.type_program_id = null
+      this.programOwn.start_date = new Date().toISOString().substr(0, 7)
+      this.programOwn.description = null
+      this.programOwn.website = ''
+      this.programOwn.twitter = ''
+      this.programOwn.facebook = ''
+      this.programOwn.youtube = ''
+      this.programOwn.instagram = ''
+      this.programOwn.entities = []
+      this.$validator.reset()
     }
   }
 }

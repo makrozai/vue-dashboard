@@ -43,6 +43,21 @@ const entitiesService = {
           reject(error)
         })
     })
+  },
+  getAll: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('entities')
+        .then(response => {
+          // enruta correctamente el usuario a la respuesta
+          response = response.body.data.entities
+          // retornna respuesta del usuario
+          resolve(response)
+        })
+        .catch(error => {
+          // retorna error de usuario
+          reject(error)
+        })
+    })
   }
 }
 

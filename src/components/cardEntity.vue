@@ -18,7 +18,7 @@
           <v-icon>remove</v-icon>
         </v-btn>
         <div class="c-card-entity__title">
-          <img src="../assets/default-img.svg" alt="">
+          <img :src="item.logo_image_link || require('../assets/default-img.svg')" alt="">
           <div>
             <h3><b>RUC: </b>{{ item.ruc }}</h3>
             <p>{{ item.name }} <v-icon dark class="c-card-entity__badge">check</v-icon></p>

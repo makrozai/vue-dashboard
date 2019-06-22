@@ -88,18 +88,23 @@
         </v-flex>
         <v-flex xs12>
           <v-checkbox
-            v-model="autorization"
+            v-model="entityInfo.autorization"
             v-validate="'required'"
             :error-messages="errors.collect('autorización')"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
             data-vv-name="autorización"
+            required
             color="primary"
             class="mt-0"
           ></v-checkbox>
         </v-flex>
         <v-flex xs12>
-          <div class="c-recaptcha">
-            <vue-recaptcha :sitekey="recaptchaCode"  @verify="onVerify"></vue-recaptcha>
+          <div
+            class="c-recaptcha mb-4"
+            :class="alertRecaptcha ? '': 'c-recaptcha--error'"
+          >
+            <vue-recaptcha :sitekey="recaptchaCode" @verify="onVerify" ></vue-recaptcha>
+            <span>Necesita verificar el codigo captcha</span>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -146,13 +151,14 @@ export default {
         ruc: null,
         main_phone: null,
         state: 2,
-        user_id: null
+        user_id: null,
+        autorization: false
       },
       loadingSubmit: false,
       statusSubmit: 'primary',
-      autorization: false,
       show1: false,
-      verifyRecaptcha: null
+      verifyRecaptcha: null,
+      alertRecaptcha: true
     }
   },
   methods: {
@@ -161,8 +167,8 @@ export default {
       this.loadingSubmit = true
 
       this.$validator.validateAll()
-        .then(response => {
-          if (this.verifyRecaptcha && response) {
+        .then(result => {
+          if (this.verifyRecaptcha && result && this.entityInfo.autorization) {
             // save information in state and database
             this.authRegister({ user: this.userInfo, entity: this.entityInfo })
               .then(response => {
@@ -187,6 +193,10 @@ export default {
                 this.loadingSubmit = false
               })
             // change state of button
+          } else if (!this.verifyRecaptcha) {
+            this.alertRecaptcha = false
+            this.loadingSubmit = false
+            this.statusSubmit = 'error'
           } else {
             this.loadingSubmit = false
             this.statusSubmit = 'error'
@@ -206,5 +216,6 @@ export default {
     justify-content: center;
     padding-bottom: 2em;
     width: 100%;
+    flex-wrap: wrap;
   }
 </style>

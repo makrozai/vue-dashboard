@@ -773,6 +773,8 @@
     margin-left: 0;
   }
   &--only-remove &__header{
+    margin-bottom: 1.5em;
+
     .v-btn{
       order: 1;
     }
@@ -836,6 +838,19 @@
     i[class*="icon-"] {
       display: flex;
       align-items: center;
+    }
+  }
+}
+.c-recaptcha{
+  span{
+    display: none;
+    color: var(--v-error-base);
+    font-size: 12px;
+    width: 100%;
+  }
+  &--error{
+    span{
+      display: block;
     }
   }
 }

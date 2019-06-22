@@ -307,8 +307,8 @@
           <span class="c-verify-entity__span">Entidades beneficiadas</span>
           <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-program">
-            <div class="c-verify-entity__add-program__item" v-for="(program, index) in programs" :key="index">
-              <img :src="program.image || require('../assets/default-img.svg')" alt="">
+            <div class="c-verify-entity__add-program__item" v-for="(program, index) in userSesion.entity.programs" :key="index">
+              <img :src="program.logo_image_link || require('../assets/default-img.svg')" alt="">
               <div class="information">
                 <p>{{ program.name }} {{ index }}</p>
                 <span>{{ program.start_date }} hasta la actualidad</span>
@@ -351,7 +351,7 @@
           <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
 
           <v-radio-group
-            v-model="conditions"
+            v-model="entity.conditions"
             class="c-verify-entity__radios"
             v-validate="'required'"
             :error-messages="errors.collect('terminos y condiciones')"
@@ -368,7 +368,13 @@
 
           </v-radio-group>
 
-          <vue-recaptcha sitekey="6LcIM6cUAAAAAFuysxLaVyFwlzCQjqmLcXo8a0W2" class="mb-4"></vue-recaptcha>
+          <div
+            class="c-recaptcha mb-4"
+            :class="alertRecaptcha ? '': 'c-recaptcha--error'"
+          >
+            <vue-recaptcha :sitekey="recaptchaCode" @verify="onVerify" ></vue-recaptcha>
+            <span>Necesita verificar el codigo captcha</span>
+          </div>
 
           <v-btn color="primary" large class="c-verify-entity__submit" @click="submit">Registrate</v-btn>
         </div>
@@ -387,7 +393,7 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha, FormProgram, UploadImage },
   computed: {
-    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities', 'programs']),
+    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities', 'recaptchaCode']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
@@ -405,7 +411,8 @@ export default {
         regions_id: '',
         provinces_id: '',
         districts_id: '',
-        website: ''
+        website: '',
+        conditions: null
       },
       ubigeoPrepare: {
         districts: [],
@@ -424,9 +431,9 @@ export default {
           anexo: null,
           entity_id: null
         }
-
       ],
-      conditions: false
+      verifyRecaptcha: null,
+      alertRecaptcha: true
     }
   },
   created () {
@@ -469,7 +476,7 @@ export default {
     submit () {
       this.$validator.validateAll()
         .then(result => {
-          if (result) {
+          if (result && this.verifyRecaptcha) {
             this.putEntity(this.entity).catch(error => { console.log(error) })
             let stateContacts = false
             this.perfilContact.forEach(contact => {
@@ -488,6 +495,9 @@ export default {
                 this.saveContact(contact).catch(error => { console.log(error) })
               }
             })
+          } else if (!this.verifyRecaptcha) {
+            this.alertRecaptcha = false
+            console.log('falta validar el recaptcha')
           }
         })
     },
@@ -510,6 +520,9 @@ export default {
     },
     changeActivityModal (value) {
       this.dialog = value
+    },
+    onVerify (response) {
+      this.verifyRecaptcha = response
     }
   }
 }

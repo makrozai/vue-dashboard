@@ -35,8 +35,8 @@ const store = new Vuex.Store({
     lines: [],
     typeEntities: [],
     typePrograms: [],
+    otherContact: {},
     image: null,
-    programs: [],
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
@@ -77,7 +77,8 @@ const store = new Vuex.Store({
           link: 'perfil'
         }
       ]
-    }
+    },
+    allEntities: []
   },
   getters: {
     getTypeProvinces: (state) => (id) => {
@@ -162,7 +163,13 @@ const store = new Vuex.Store({
       state.image = null
     },
     setProgram (state, payload) {
-      state.programs.push(payload)
+      state.userSesion.entity.programs.push(payload)
+    },
+    setAllEntities (state, payload) {
+      state.allEntities = payload
+    },
+    setOtherContact (state, payload) {
+      state.otherContact = payload
     }
 
   },
@@ -427,6 +434,30 @@ const store = new Vuex.Store({
         programsService.save(payload)
           .then(response => {
             context.commit('setProgram', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getAllEntities (context, payload) {
+      return new Promise((resolve, reject) => {
+        entitiesService.getAll()
+          .then(response => {
+            this.commit('setAllEntities', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    saveOtherContact (context, payload) {
+      return new Promise((resolve, reject) => {
+        contactsService.save(payload)
+          .then(response => {
+            context.commit('setOtherContact', response)
             resolve(response)
           })
           .catch(error => {
