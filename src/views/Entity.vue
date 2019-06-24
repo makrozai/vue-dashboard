@@ -113,13 +113,12 @@ export default {
           value: 'state',
           align: 'center'
         }
-      ],
+      ]
     }
   },
   created () {
-    if(this.allEntities.length > 0) {
-    }
-    else{
+    if (this.allEntities.length > 0) {
+    } else {
       this.getAllEntities()
     }
   },

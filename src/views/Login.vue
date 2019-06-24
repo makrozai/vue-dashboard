@@ -43,6 +43,7 @@
                 :error-messages="errors.collect('Correo electronico')"
                 label="Correo electronico"
                 data-vv-name="Correo electronico"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -57,6 +58,7 @@
                 :error-messages="errors.collect('Contraseña')"
                 label="Contraseña"
                 data-vv-name="Contraseña"
+                @keyup.enter="submit"
                 required
                 box
                 @click:append="show1 = !show1"

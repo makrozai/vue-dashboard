@@ -136,10 +136,8 @@ export default {
       switch (type) {
         case 1:
           return 'Administrador'
-          break
         case 2:
           return this.userSesion.entity.name
-          break
         case 3:
           return this.userSesion.partaker.name
       }

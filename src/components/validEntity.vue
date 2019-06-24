@@ -37,23 +37,23 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
-  props:['entity'],
+  props: ['entity'],
   computed: {
     ...mapState(['allEntities']),
-    fullName (){
+    fullName () {
       var namePlaceholder = 'RUC ' + this.entity.ruc + ' ' + this.entity.name
       return namePlaceholder.toUpperCase()
     }
   },
-  /*created () {
+  /* created () {
     console.log(this.entity)
     console.log(this.allEntities.filter(item => item.id === this.entity))
-  },*/
+  }, */
   data () {
     return {
-      valueEntity : {}
+      valueEntity: {}
     }
   }
 }
