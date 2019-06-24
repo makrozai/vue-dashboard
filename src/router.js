@@ -10,6 +10,7 @@ import initiative from './views/Initiative.vue'
 import verifyEntity from './views/VerifyEntity'
 import acceptEntity from './views/AcceptEntity'
 import recoverPassword from './views/RecoverPassword'
+import changePassword from './views/ChangePassword'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -64,7 +65,23 @@ const router = new Router({
       component: recoverPassword,
       meta: {
         Auth: false,
-        title: 'Aprovación de Entidad'
+        title: 'Recuperar Contraaseña'
+      },
+      beforeEnter: (to, from, next) => {
+        if (store.state.logged) {
+          next({ name: 'ficha-de-verificacion' })
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: 'cambiar-contrasena',
+      name: 'cambiar-contrasena',
+      component: changePassword,
+      meta: {
+        Auth: false,
+        title: 'Cambiar Contraseña'
       },
       beforeEnter: (to, from, next) => {
         if (store.state.logged) {

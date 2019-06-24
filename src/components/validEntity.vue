@@ -103,12 +103,7 @@ export default {
   computed: {
     ...mapState(['allEntities', 'ubigeo']),
     fullName () {
-      let namePlaceholder
-      if(this.entity.ruc && this. entity.name) {
-        namePlaceholder = 'RUC ' + this.entity.ruc + ' ' + this.entity.name
-      } else {
-        namePlaceholder = ''
-      }
+      let namePlaceholder = 'RUC ' + this.entity.ruc + ' ' + this.entity.name
 
       return namePlaceholder.toUpperCase()
     },
@@ -117,14 +112,14 @@ export default {
       let provinceLabel = this.ubigeo.provinces.filter(item => item.id === this.entity.provinces_id)[0]
       let regionLabel = this.ubigeo.regions.filter(item => item.id === this.entity.regions_id)[0]
 
-      return this.entity.address + " - " + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
+      return this.entity.address + ' - ' + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
     }
   },
   methods: {
     ...mapActions(['putEntity']),
     submit () {
       console.log('validado', this.entity.id)
-      this.putEntity({id: this.entity.id, state: 1})
+      this.putEntity({ id: this.entity.id, state: 1 })
         .then(response => {
           console.log(response)
         })
