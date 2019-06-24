@@ -1,7 +1,7 @@
 <template>
   <v-container class="c-container-dashboard">
     <v-layout
-      wrap="true"
+      wrap
       justify-space-between
     >
       <v-flex

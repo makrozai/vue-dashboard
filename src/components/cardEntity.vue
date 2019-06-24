@@ -1,7 +1,7 @@
 <template>
   <div
     class="c-card-entity"
-    :class="[onlyRemove != null ? 'c-card-entity--only-remove px-4' : '']"
+    :class="[onlyRemove != null || onlyEdit != null ? 'c-card-entity--only-remove' : '']"
   >
     <div
       class="c-card-entity__item"
@@ -14,6 +14,7 @@
           small
           :color="colorButton"
           :outline="colorButton == 'error' ? true : false"
+          v-if="onlyEdit == null"
         >
           <v-icon>remove</v-icon>
         </v-btn>
@@ -53,7 +54,7 @@
 
 <script>
 export default {
-  props: ['entities', 'onlyRemove'],
+  props: ['entities', 'onlyRemove', 'onlyEdit'],
   data () {
     return {
       colorButton: 'primary'
