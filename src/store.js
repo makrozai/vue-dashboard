@@ -79,7 +79,8 @@ const store = new Vuex.Store({
       ]
     },
     allEntities: [],
-    recoverPass: null
+    recoverPass: null,
+    website: 'https://www.youtube.com/watch?v=MLciApf2WTc'
   },
   getters: {
     getTypeProvinces: (state) => (id) => {

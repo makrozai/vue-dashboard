@@ -11,7 +11,6 @@
   justify-content: center;
   flex-direction: column;
   padding: 1em 3em;
-  position: relative;
   
   &__container{
     width: 100%;
@@ -28,6 +27,8 @@
     top: 1em;
     left: 1em;
     width: 56px !important;
+    z-index: 100;
+    cursor: pointer;
 
     i{
       display: inherit;
@@ -113,11 +114,26 @@
   }
 }
 .c-logo__intro{
-  position: absolute;
+  position: fixed;
   top: 2em;
   left: 5%;
   z-index: 10;
   width: 90%;
+
+  @media (max-width: 960px){
+    position: static;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin-bottom: auto;
+    padding: 1.5em 0 ;
+    
+    a{
+      display: inline-block;
+    }
+  }
 
   img{
     display: block;

@@ -1,7 +1,7 @@
 <template>
   <v-layout wrap fill-height>
     <div class="c-logo__intro">
-      <a href="#!">
+      <a :href="website">
         <img src="../assets/logo-principal.svg" alt="" class="hidden-sm-and-down">
         <img src="../assets/exe.svg" alt="" class="hidden-md-and-up">
       </a>
@@ -91,10 +91,11 @@
 <script>
 import SliderHome from '../components/sliderHome'
 
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   components: { SliderHome },
   computed: {
+    ...mapState(['website'])
   },
   data () {
     return {

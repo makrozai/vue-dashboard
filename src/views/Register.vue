@@ -1,7 +1,7 @@
 <template>
   <v-layout wrap fill-height>
     <div class="c-logo__intro">
-      <a href="#!">
+      <a :href="website">
         <img src="../assets/logo-principal.svg" alt="" class="hidden-sm-and-down">
         <img src="../assets/exe.svg" alt="" class="hidden-md-and-up">
       </a>
@@ -46,8 +46,13 @@
 import SliderHome from '../components/sliderHome'
 import formRegisterEntity from '../components/formRegisterEntity'
 import formRegisterParticular from '../components/formRegisterParticular'
+
+import { mapState } from 'vuex'
 export default {
   components: { formRegisterEntity, formRegisterParticular, SliderHome },
+  computed: {
+    ...mapState(['website'])
+  },
   data () {
     return {
       registerPage: 'home'
