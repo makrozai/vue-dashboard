@@ -24,10 +24,6 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'login' }
-    },
-    {
-      path: '/login',
       name: 'login',
       component: login,
       meta: {
@@ -43,7 +39,7 @@ const router = new Router({
       }
     },
     {
-      path: '/register',
+      path: '/registrar',
       name: 'register',
       component: register,
       meta: {

@@ -101,9 +101,9 @@ export default {
                 // - estado del boton
                 this.statusSubmit = 'success'
 
-                setTimeout((() => {
+                setTimeout(function () {
                   this.$router.push({ name: 'login' })
-                }), 3000)
+                }, 3000)
               })
               .catch(error => {
                 console.log(error)
