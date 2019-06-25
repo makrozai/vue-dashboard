@@ -1,5 +1,13 @@
 <template>
   <v-app>
+    <div class="c-page-preload" v-if="preloadIframe">
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </div>
     <v-content>
       <v-alert
         v-model="alert.state"
@@ -27,7 +35,11 @@ export default {
   },
   data () {
     return {
+      preloadIframe : true
     }
+  },
+  mounted () {
+    this.preloadIframe = false
   },
   watch: {
     alert: function (val) {
