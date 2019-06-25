@@ -11,7 +11,7 @@
         {{ alert.text }}
       </v-alert>
       <transition>
-        <router-view/>
+        <router-view></router-view>
       </transition>
     </v-content>
   </v-app>

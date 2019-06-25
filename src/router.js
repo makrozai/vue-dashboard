@@ -25,7 +25,8 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: home
+      redirect: { name: 'login' }
+      // component: home
     },
     {
       path: '/login',
@@ -60,7 +61,7 @@ const router = new Router({
       }
     },
     {
-      path: 'recuperar-contrasena',
+      path: '/recuperar-contrasena',
       name: 'recuperar-contrasena',
       component: recoverPassword,
       meta: {
@@ -76,7 +77,7 @@ const router = new Router({
       }
     },
     {
-      path: 'cambiar-contrasena',
+      path: '/cambiar-contrasena',
       name: 'cambiar-contrasena',
       component: changePassword,
       meta: {
