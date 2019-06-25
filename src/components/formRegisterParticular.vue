@@ -12,7 +12,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.email"
-            v-validate="'required|email'"
+            v-validate="'required|email|max:50'"
             :error-messages="errors.collect('Correo electronico')"
             label="Correo electronico"
             data-vv-name="Correo electronico"
@@ -25,7 +25,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.password"
-            v-validate="'required|min:8'"
+            v-validate="'required|min:8|max:30'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
             :error-messages="errors.collect('Contraseña')"
@@ -44,7 +44,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.name"
-            v-validate="'required|alpha_spaces|max:90'"
+            v-validate="'required|alpha_spaces|max:60'"
             :error-messages="errors.collect('nombre')"
             label="Nombre"
             data-vv-name="nombre"
@@ -57,7 +57,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.lastname"
-            v-validate="'required|alpha_spaces|max:90'"
+            v-validate="'required|alpha_spaces|max:60'"
             :error-messages="errors.collect('apellidos')"
             label="Apellidos"
             data-vv-name="apellidos"

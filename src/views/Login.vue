@@ -25,7 +25,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="email"
-                v-validate="'required|email'"
+                v-validate="'required|email|max:50'"
                 :error-messages="errors.collect('Correo electronico')"
                 label="Correo electronico"
                 data-vv-name="Correo electronico"

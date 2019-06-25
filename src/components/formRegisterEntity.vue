@@ -51,7 +51,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.email"
-            v-validate="'required|email'"
+            v-validate="'required|email|max:50'"
             :error-messages="errors.collect('correo electronico')"
             label="Correo electronico"
             data-vv-name="correo electronico"
@@ -64,7 +64,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.password"
-            v-validate="'required|min:8'"
+            v-validate="'required|min:8|max:30'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
             :error-messages="errors.collect('contraseña')"
