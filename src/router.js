@@ -175,7 +175,8 @@ router.beforeEach((to, from, next) => {
                       text: 'Su entidad aun no esta validada',
                       state: true,
                       dismissible: true,
-                      type: 'error'
+                      type: 'error',
+                      time: 1000000000
                     })
                   }
                 }).then(() => {

@@ -131,7 +131,7 @@ export default {
                   state: true,
                   dismissible: false,
                   type: 'error',
-                  time: 4000
+                  time: 60000
                 })
                 // - stado del boton
                 this.loadingSubmit = false

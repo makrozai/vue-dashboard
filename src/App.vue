@@ -9,15 +9,24 @@
       ></v-progress-circular>
     </div>
     <v-content>
-      <v-alert
+
+      <v-snackbar
         v-model="alert.state"
-        :dismissible="alert.dismissible"
-        :type="alert.type"
-        transition="scale-transition"
-        class="c-global-alert"
+        :color="alert.type"
+        :timeout="alert.time"
+        right
+        top
       >
         {{ alert.text }}
-      </v-alert>
+        <v-btn
+          dark
+          flat
+          @click="setTimeVisible"
+        >
+          cerrar
+        </v-btn>
+      </v-snackbar>
+
       <transition>
         <router-view></router-view>
       </transition>
@@ -35,25 +44,17 @@ export default {
   },
   data () {
     return {
-      preloadIframe : true
+      preloadIframe: true,
+      alerTime: true
     }
   },
   mounted () {
     this.preloadIframe = false
   },
-  watch: {
-    alert: function (val) {
-      if (val.time) {
-        this.setTimeVisible(val.time)
-      }
-    }
-  },
   methods: {
     ...mapActions(['setAlert']),
-    setTimeVisible (time) {
-      setTimeout(() => {
-        this.setAlert({})
-      }, time)
+    setTimeVisible () {
+      this.setAlert({})
     }
   }
 }
