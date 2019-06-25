@@ -26,7 +26,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="entity.name"
-                v-validate="'required'"
+                v-validate="'required|max:180'"
                 :error-messages="errors.collect('razón comercial')"
                 label="Razón comercial o nombre de la organización"
                 data-vv-name="razón comercial"
@@ -38,7 +38,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="entity.ruc"
-                v-validate="'required|integer'"
+                v-validate="'required|integer|length:11'"
                 :error-messages="errors.collect('ruc')"
                 label="Ruc"
                 data-vv-name="ruc"
@@ -50,7 +50,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="entity.social_reason"
-                v-validate="'required'"
+                v-validate="'required|max:180'"
                 :error-messages="errors.collect('razón social')"
                 label="Razón social"
                 data-vv-name="razón social"
@@ -112,7 +112,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="entity.website"
-                v-validate="'required'"
+                v-validate="'required|max:90'"
                 :error-messages="errors.collect('sitio web')"
                 label="Sitio web"
                 data-vv-name="sitio web"

@@ -25,7 +25,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.password"
-            v-validate="'required|alpha_dash|min:6'"
+            v-validate="'required|min:8'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
             :error-messages="errors.collect('Contraseña')"
@@ -44,7 +44,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.name"
-            v-validate="'required|alpha_spaces'"
+            v-validate="'required|alpha_spaces|max:90'"
             :error-messages="errors.collect('nombre')"
             label="Nombre"
             data-vv-name="nombre"
@@ -57,7 +57,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.lastname"
-            v-validate="'required|alpha_spaces'"
+            v-validate="'required|alpha_spaces|max:90'"
             :error-messages="errors.collect('apellidos')"
             label="Apellidos"
             data-vv-name="apellidos"
@@ -85,7 +85,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.nro_doc"
-            v-validate="'required|integer'"
+            v-validate="'required|integer|max:12'"
             :error-messages="errors.collect('Documento de identidad')"
             label="Nº Documento de identidad"
             data-vv-name="Documento de identidad"
@@ -99,7 +99,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.phone"
-            v-validate="'required|integer|min:9'"
+            v-validate="'required|integer|max:12'"
             :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
             data-vv-name="Nº Celular"

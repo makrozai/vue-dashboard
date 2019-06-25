@@ -25,7 +25,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="password"
-                v-validate="'required|length:6'"
+                v-validate="'required|min:8'"
                 :append-icon="show1 ? 'visibility' : 'visibility_off'"
                 :type="show1 ? 'text' : 'password'"
                 :error-messages="errors.collect('Contraseña')"
@@ -41,7 +41,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="passwordComfirmed"
-                v-validate="'required|length:6|confirmed:password'"
+                v-validate="'required|min:8|confirmed:password'"
                 :append-icon="show2 ? 'visibility' : 'visibility_off'"
                 :type="show2 ? 'text' : 'password'"
                 :error-messages="errors.collect('Confirma Contraseña')"

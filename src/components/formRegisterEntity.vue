@@ -9,7 +9,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="entityInfo.name"
-            v-validate="'required|alpha_spaces'"
+            v-validate="'required|max:180'"
             :error-messages="errors.collect('razón comercial')"
             label="Razón comercial o nombre de la organización"
             data-vv-name="razón comercial"
@@ -35,7 +35,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="entityInfo.social_reason"
-            v-validate="'required|alpha_spaces'"
+            v-validate="'required|max:180'"
             :error-messages="errors.collect('razón social')"
             label="Razón social"
             data-vv-name="razón social"
@@ -64,7 +64,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.password"
-            v-validate="'required|alpha_dash|min:6'"
+            v-validate="'required|min:8'"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
             :error-messages="errors.collect('contraseña')"
@@ -83,7 +83,7 @@
           <v-text-field
             :disabled="loadingSubmit"
             v-model="entityInfo.main_phone"
-            v-validate="'required|integer'"
+            v-validate="'required|integer|max:15'"
             :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
             data-vv-name="Nº Celular"
