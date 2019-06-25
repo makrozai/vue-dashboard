@@ -1,5 +1,5 @@
 // VIEWS IMPORT
-import home from './views/Home.vue'
+// import home from './views/Home.vue'
 import login from './views/Login.vue'
 import register from './views/Register.vue'
 import dashboard from './pages/Dashboard.vue'
@@ -24,7 +24,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      // name: 'home',
       redirect: { name: 'login' }
       // component: home
     },
