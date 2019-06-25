@@ -16,6 +16,7 @@
             :error-messages="errors.collect('Correo electronico')"
             label="Correo electronico"
             data-vv-name="Correo electronico"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -30,6 +31,7 @@
             :error-messages="errors.collect('Contraseña')"
             label="Contraseña"
             data-vv-name="Contraseña"
+            @keyup.enter="submit"
             required
             box
             @click:append="show1 = !show1"
@@ -46,6 +48,7 @@
             :error-messages="errors.collect('nombre')"
             label="Nombre"
             data-vv-name="nombre"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -58,6 +61,7 @@
             :error-messages="errors.collect('apellidos')"
             label="Apellidos"
             data-vv-name="apellidos"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -67,6 +71,7 @@
             v-validate="'required'"
             :error-messages="errors.collect('Tipo de identidad')"
             data-vv-name="Tipo de identidad"
+            @keyup.enter="submit"
             v-model="partakerInfo.type_doc"
             :mandatory="false"
             required
@@ -84,6 +89,7 @@
             :error-messages="errors.collect('Documento de identidad')"
             label="Nº Documento de identidad"
             data-vv-name="Documento de identidad"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -97,6 +103,7 @@
             :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
             data-vv-name="Nº Celular"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -106,6 +113,7 @@
             v-validate="'required'"
             :error-messages="errors.collect('autorizacion')"
             data-vv-name="autorizacion"
+            @keyup.enter="submit"
             v-model="autorization"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
             class="mt-0"
@@ -201,7 +209,7 @@ export default {
                 })
               })
               .finally(() => {
-                this.loadingSubmit = false
+                // this.loadingSubmit = false
               })
             // change state of button
           } else {

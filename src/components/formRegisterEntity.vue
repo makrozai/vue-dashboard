@@ -13,6 +13,7 @@
             :error-messages="errors.collect('razón comercial')"
             label="Razón comercial o nombre de la organización"
             data-vv-name="razón comercial"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -25,6 +26,7 @@
             :error-messages="errors.collect('ruc')"
             label="Ruc"
             data-vv-name="ruc"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -37,6 +39,7 @@
             :error-messages="errors.collect('razón social')"
             label="Razón social"
             data-vv-name="razón social"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -52,6 +55,7 @@
             :error-messages="errors.collect('correo electronico')"
             label="Correo electronico"
             data-vv-name="correo electronico"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -66,6 +70,7 @@
             :error-messages="errors.collect('contraseña')"
             label="Contraseña"
             data-vv-name="contraseña"
+            @keyup.enter="submit"
             required
             box
             @click:append="show1 = !show1"
@@ -82,6 +87,7 @@
             :error-messages="errors.collect('Nº Celular')"
             label="Nº Celular"
             data-vv-name="Nº Celular"
+            @keyup.enter="submit"
             required
             box
           ></v-text-field>
@@ -93,6 +99,7 @@
             :error-messages="errors.collect('autorización')"
             label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
             data-vv-name="autorización"
+            @keyup.enter="submit"
             required
             color="primary"
             class="mt-0"
@@ -190,7 +197,7 @@ export default {
                 })
               })
               .finally(() => {
-                this.loadingSubmit = false
+                // this.loadingSubmit = false
               })
             // change state of button
           } else if (!this.verifyRecaptcha) {

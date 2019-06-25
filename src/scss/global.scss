@@ -220,6 +220,11 @@
       a{
         height: 60px !important;
 
+        img{
+          display: block;
+          border-radius: 50%;
+        }
+
         &:hover{
           background: transparent !important;
         }

@@ -39,13 +39,13 @@
         :to="{name: 'ficha-de-verificacion'}"
       >
         <v-list-tile-action>
-          <img src="../assets/icons/user.svg" alt="">
+          <img :src="imageUser" alt="">
         </v-list-tile-action>
 
         <v-list-tile-content>
           <v-list-tile-title>
-            <p>{{ getName(userSesion.user.type_user_id) }}</p>
-            <span>{{ userSesion.user ? userSesion.user.state : 'Error' }}</span>
+            <p>{{ getName(userSesion.user.type_user_id).toUpperCase() }}</p>
+            <span >{{ stateUser }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -113,7 +113,27 @@
 import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapState(['navbarDrawer', 'userSesion'])
+    ...mapState(['navbarDrawer', 'userSesion']),
+    imageUser () {
+      if (this.userSesion.user.type_user_id === 2) {
+        if (this.userSesion.entity.logo_image_link) {
+          return this.userSesion.entity.logo_image_link
+        }
+      }
+      return require('../assets/icons/user.svg')
+    },
+    stateUser () {
+      if (this.userSesion.user.type_user_id === 2) {
+        switch (this.userSesion.entity.state) {
+          case 1:
+            return 'Aceptado'
+          case 2:
+            return 'Pendiente'
+          case 3:
+            return 'Rechazado'
+        }
+      }
+    }
   },
   data () {
     return {
