@@ -78,7 +78,8 @@ const store = new Vuex.Store({
         }
       ]
     },
-    allEntities: []
+    allEntities: [],
+    recoverPass: null
   },
   getters: {
     getTypeProvinces: (state) => (id) => {
@@ -131,6 +132,12 @@ const store = new Vuex.Store({
     },
     authRegister (state, payload) {
       state.userSesion = payload
+    },
+    authRecover (state, payload) {
+      state.recoverPass = payload
+    },
+    authChange (state, payload) {
+      state.recoverPass = payload
     },
     getRegions (state, payload) {
       state.ubigeo.regions = payload
@@ -273,6 +280,30 @@ const store = new Vuex.Store({
         authService.register(payload)
           .then(response => {
             context.commit('authRegister', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    authRecover (context, payload) {
+      return new Promise((resolve, reject) => {
+        authService.recover(payload)
+          .then(response => {
+            context.commit('authRecover', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    authChange (context, payload) {
+      return new Promise((resolve, reject) => {
+        authService.change(payload)
+          .then(response => {
+            context.commit('authChange', payload)
             resolve(response)
           })
           .catch(error => {

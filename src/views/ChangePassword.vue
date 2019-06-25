@@ -25,25 +25,26 @@
         fab
         color="primary"
         class="c-btn-return elevation-0 hidden-sm-and-up"
-        :to="{name:'home'}"
+        :to="{name:'login'}"
       >
         <v-icon>navigate_before</v-icon>
       </v-btn>
       <div class="c-form-home__container">
-        <h2>Recuperar contraseña</h2>
-        <p class="c-form-home__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum error voluptatum officiis ad porro temporibus vel voluptatibus non odio? Similique ratione aliquam nostrum? Ducimus deserunt sed a harum, optio perspiciatis.</p>
+        <h2>Cambiar contraseña</h2>
+        <p class="c-form-home__description" v-if="!mailSuccess">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
         <!--@FORM LAYOUT START-->
-        <form class="c-form-home__inputs">
+        <form class="c-form-home__inputs" v-if="!mailSuccess">
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="password"
-                v-validate="'required|alpha_dash|min:6'"
+                v-validate="'required|length:6'"
                 :append-icon="show1 ? 'visibility' : 'visibility_off'"
                 :type="show1 ? 'text' : 'password'"
                 :error-messages="errors.collect('Contraseña')"
                 label="Contraseña"
+                ref="password"
                 data-vv-name="Contraseña"
                 @keyup.enter="submit"
                 required
@@ -52,6 +53,22 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
+              <v-text-field
+                :disabled="loadingSubmit"
+                v-model="passwordComfirmed"
+                v-validate="'required|length:6|confirmed:password'"
+                :append-icon="show2 ? 'visibility' : 'visibility_off'"
+                :type="show2 ? 'text' : 'password'"
+                :error-messages="errors.collect('Confirma Contraseña')"
+                label="Confirma Contraseña"
+                data-vv-name="Confirma Contraseña"
+                @keyup.enter="submit"
+                required
+                box
+                @click:append="show2 = !show2"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12 class="mt-4">
               <v-btn
                 :disabled="loadingSubmit"
                 large
@@ -59,7 +76,7 @@
                 class="elevation-0"
                 @click="submit"
               >
-                Recuperar
+                cambiar
                 <v-progress-circular
                   indeterminate
                   color="gray"
@@ -71,6 +88,12 @@
           </v-layout>
         </form>
         <!--@FORM LAYOUT END-->
+        <div v-if="mailSuccess" class="c-accept-entity">
+          <span class="c-check-entity">
+            <v-icon>done</v-icon>
+          </span>
+          <span>actualizado correctamente</span>
+        </div>
       </div>
     </v-flex>
   </v-layout>
@@ -107,13 +130,21 @@ export default {
           src: require('../assets/slider-4.jpg')
         }
       ],
+      show1: false,
+      show2: false,
       password: '',
-      passwordComfirmed: ''
+      passwordComfirmed: '',
+      token: '',
+      mailSuccess: false
     }
   },
-
+  created () {
+    let routeParam = window.location.href
+    routeParam = new URL(routeParam)
+    this.token = routeParam.searchParams.get('rpt')
+  },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['authChange', 'setAlert']),
     submit () {
       // - bloquea el boton
       this.loadingSubmit = true
@@ -125,7 +156,33 @@ export default {
             this.loadingSubmit = false
             this.statusSubmit = 'error'
           } else {
+            this.authChange({ token: this.token, newpassword: this.password })
+              .then(response => {
+                if (response.body.code === 'password_updated') {
+                  this.mailSuccess = true
+                }
+                // - estado del boton
+                this.statusSubmit = 'success'
 
+                setTimeout((() => {
+                  this.$router.push({ name: 'login' })
+                }), 3000)
+              })
+              .catch(error => {
+                console.log(error)
+                this.setAlert({
+                  text: error.body.message,
+                  state: true,
+                  dismissible: false,
+                  type: 'error',
+                  time: 4000
+                })
+                // - estado del boton
+                this.statusSubmit = 'error'
+              })
+              .finally(() => {
+                this.loadingSubmit = false
+              })
           }
         })
     }

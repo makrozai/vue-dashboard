@@ -26,7 +26,7 @@
         fab
         color="primary"
         class="c-btn-return elevation-0 hidden-md-and-up"
-        :to="{name:'home'}"
+        :to="{name:'login'}"
       >
         <v-icon>navigate_before</v-icon>
       </v-btn>

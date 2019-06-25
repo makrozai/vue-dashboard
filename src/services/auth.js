@@ -24,6 +24,28 @@ const authService = {
           reject(error)
         })
     })
+  },
+  recover: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.post('auth/recover-password', payload)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  change: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.post('auth/recover-password/change-password', payload)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }
 

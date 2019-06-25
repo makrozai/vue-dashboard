@@ -25,28 +25,30 @@
         fab
         color="primary"
         class="c-btn-return elevation-0 hidden-sm-and-up"
-        :to="{name:'home'}"
+        :to="{name:'login'}"
       >
         <v-icon>navigate_before</v-icon>
       </v-btn>
       <div class="c-form-home__container">
         <h2>Recuperar contraseña</h2>
-        <p class="c-form-home__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum error voluptatum officiis ad porro temporibus vel voluptatibus non odio? Similique ratione aliquam nostrum? Ducimus deserunt sed a harum, optio perspiciatis.</p>
+        <p class="c-form-home__description" v-if="!mailSuccess">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum error voluptatum officiis ad porro temporibus vel voluptatibus non odio? Similique ratione aliquam nostrum?</p>
         <!--@FORM LAYOUT START-->
-        <form class="c-form-home__inputs">
+        <form class="c-form-home__inputs" v-if="!mailSuccess">
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="email"
                 v-validate="'required|email'"
                 :error-messages="errors.collect('Correo electronico')"
                 label="Correo electronico"
                 data-vv-name="Correo electronico"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs12 class="mt-4">
               <v-btn
                 :disabled="loadingSubmit"
                 large
@@ -66,6 +68,12 @@
           </v-layout>
         </form>
         <!--@FORM LAYOUT END-->
+        <div v-if="mailSuccess" class="c-accept-entity">
+          <span class="c-check-entity">
+            <v-icon>done</v-icon>
+          </span>
+          <span>actualizado correctamente</span>
+        </div>
       </div>
     </v-flex>
   </v-layout>
@@ -102,12 +110,13 @@ export default {
           src: require('../assets/slider-4.jpg')
         }
       ],
-      email: ''
+      email: '',
+      mailSuccess: false
     }
   },
 
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['authRecover', 'setAlert']),
     submit () {
       // - bloquea el boton
       this.loadingSubmit = true
@@ -119,7 +128,33 @@ export default {
             this.loadingSubmit = false
             this.statusSubmit = 'error'
           } else {
+            this.authRecover({ email: this.email })
+              .then(response => {
+                if (response.body.code === 'request_sent_correctly') {
+                  this.mailSuccess = true
+                }
+                // - estado del boton
+                this.statusSubmit = 'success'
 
+                setTimeout((() => {
+                  this.$router.push({ name: 'login' })
+                }), 3000)
+              })
+              .catch(error => {
+                console.log(error)
+                this.setAlert({
+                  text: error.body.message,
+                  state: true,
+                  dismissible: false,
+                  type: 'error',
+                  time: 4000
+                })
+                // - estado del boton
+                this.statusSubmit = 'error'
+              })
+              .finally(() => {
+                this.loadingSubmit = false
+              })
           }
         })
     }
