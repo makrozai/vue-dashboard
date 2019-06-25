@@ -37,13 +37,18 @@
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
-                v-model="email"
-                v-validate="'required|email'"
-                :error-messages="errors.collect('Correo electronico')"
-                label="Correo electronico"
-                data-vv-name="Correo electronico"
+                :disabled="loadingSubmit"
+                v-model="password"
+                v-validate="'required|alpha_dash|min:6'"
+                :append-icon="show1 ? 'visibility' : 'visibility_off'"
+                :type="show1 ? 'text' : 'password'"
+                :error-messages="errors.collect('Contraseña')"
+                label="Contraseña"
+                data-vv-name="Contraseña"
+                @keyup.enter="submit"
                 required
                 box
+                @click:append="show1 = !show1"
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
@@ -102,7 +107,8 @@ export default {
           src: require('../assets/slider-4.jpg')
         }
       ],
-      email: ''
+      password: '',
+      passwordComfirmed: ''
     }
   },
 

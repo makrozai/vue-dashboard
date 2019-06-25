@@ -65,7 +65,7 @@ const router = new Router({
       component: recoverPassword,
       meta: {
         Auth: false,
-        title: 'Recuperar Contraaseña'
+        title: 'Recuperar Contrasena'
       },
       beforeEnter: (to, from, next) => {
         if (store.state.logged) {
@@ -81,7 +81,7 @@ const router = new Router({
       component: changePassword,
       meta: {
         Auth: false,
-        title: 'Cambiar Contraseña'
+        title: 'Cambiar Contrasena'
       },
       beforeEnter: (to, from, next) => {
         if (store.state.logged) {
