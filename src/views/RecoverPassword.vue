@@ -33,7 +33,7 @@
         <h2>Recuperar contraseña</h2>
         <p class="c-form-home__description" v-if="!mailSuccess">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum error voluptatum officiis ad porro temporibus vel voluptatibus non odio? Similique ratione aliquam nostrum?</p>
         <!--@FORM LAYOUT START-->
-        <form class="c-form-home__inputs" v-if="!mailSuccess">
+        <form class="c-form-home__inputs" v-if="!mailSuccess" @submit.prevent="submit">
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
@@ -43,7 +43,6 @@
                 :error-messages="errors.collect('Correo electronico')"
                 label="Correo electronico"
                 data-vv-name="Correo electronico"
-                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>

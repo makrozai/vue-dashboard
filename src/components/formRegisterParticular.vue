@@ -3,7 +3,7 @@
     <h2>Registro</h2>
     <p class="mt-0">Para poder acceder a la plataforma por favor ingresar los campos solicitados en la plataforma para ingresar</p>
     <!--@FORM LAYOUT START-->
-    <form class="c-form-home__inputs">
+    <form class="c-form-home__inputs" @submit.prevent="submit">
       <v-layout wrap>
         <v-flex xs12>
           <p class="mt-0">Ingresa un contraseña legible y segura para la validación y contacto de la plataforma.</p>

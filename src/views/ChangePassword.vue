@@ -33,7 +33,7 @@
         <h2>Cambiar contraseña</h2>
         <p class="c-form-home__description" v-if="!mailSuccess">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
         <!--@FORM LAYOUT START-->
-        <form class="c-form-home__inputs" v-if="!mailSuccess">
+        <form class="c-form-home__inputs" v-if="!mailSuccess" @submit.prevent="submit">
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
@@ -46,7 +46,6 @@
                 label="Contraseña"
                 ref="password"
                 data-vv-name="Contraseña"
-                @keyup.enter="submit"
                 required
                 box
                 @click:append="show1 = !show1"
@@ -62,7 +61,6 @@
                 :error-messages="errors.collect('Confirma Contraseña')"
                 label="Confirma Contraseña"
                 data-vv-name="Confirma Contraseña"
-                @keyup.enter="submit"
                 required
                 box
                 @click:append="show2 = !show2"

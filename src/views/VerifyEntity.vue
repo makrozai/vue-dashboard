@@ -24,6 +24,7 @@
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="entity.name"
                 v-validate="'required'"
                 :error-messages="errors.collect('razón comercial')"
@@ -35,17 +36,19 @@
             </v-flex>
             <v-flex xs12 md4>
               <v-text-field
-                  v-model="entity.ruc"
-                  v-validate="'required|integer'"
-                  :error-messages="errors.collect('ruc')"
-                  label="Ruc"
-                  data-vv-name="ruc"
-                  required
-                  box
-                ></v-text-field>
+                :disabled="loadingSubmit"
+                v-model="entity.ruc"
+                v-validate="'required|integer'"
+                :error-messages="errors.collect('ruc')"
+                label="Ruc"
+                data-vv-name="ruc"
+                required
+                box
+              ></v-text-field>
             </v-flex>
             <v-flex xs12 md8>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="entity.social_reason"
                 v-validate="'required'"
                 :error-messages="errors.collect('razón social')"
@@ -75,6 +78,7 @@
             </v-flex>
             <v-flex xs12>
               <v-select
+                :disabled="loadingSubmit"
                 v-if="lines"
                 v-model="entity.line_id"
                 :items="lines"
@@ -90,6 +94,7 @@
             </v-flex>
             <v-flex xs12>
               <v-select
+                :disabled="loadingSubmit"
                 v-if="typeEntities"
                 v-model="entity.type_entity_id"
                 :items="typeEntities"
@@ -105,6 +110,7 @@
             </v-flex>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="entity.website"
                 v-validate="'required'"
                 :error-messages="errors.collect('sitio web')"
@@ -117,6 +123,7 @@
             <div class="c-verify-entity__inputs-equals">
               <v-flex xs6>
                 <v-textarea
+                  :disabled="loadingSubmit"
                   v-model="entity.address"
                   v-validate="'required'"
                   :error-messages="errors.collect('dirección')"
@@ -128,6 +135,7 @@
               </v-flex>
               <v-flex xs6>
                 <v-select
+                  :disabled="loadingSubmit"
                   v-if="ubigeo.regions"
                   v-model="entity.regions_id"
                   :items="ubigeo.regions"
@@ -142,6 +150,7 @@
                   box
                 ></v-select>
                 <v-select
+                  :disabled="loadingSubmit"
                   v-if="ubigeoPrepare.provinces"
                   v-model="entity.provinces_id"
                   :items="ubigeoPrepare.provinces"
@@ -156,6 +165,7 @@
                   box
                 ></v-select>
                 <v-select
+                  :disabled="loadingSubmit"
                   v-if="ubigeoPrepare.districts && ubigeo.districts"
                   v-model="entity.districts_id"
                   :items="ubigeoPrepare.districts"
@@ -192,6 +202,7 @@
             </v-flex>
             <v-flex xs12 md7>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.name"
                 v-validate="'required'"
                 :error-messages="errors.collect(getNameSpace('nombre',index))"
@@ -203,6 +214,7 @@
             </v-flex>
             <v-flex xs12 md5>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.lastname"
                 v-validate="'required'"
                 :error-messages="errors.collect(getNameSpace('apellido',index))"
@@ -214,6 +226,7 @@
             </v-flex>
             <v-flex xs12 md7>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.position"
                 v-validate="'required'"
                 :error-messages="errors.collect(getNameSpace('posición',index))"
@@ -225,6 +238,7 @@
             </v-flex>
             <v-flex xs12 md5>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.nro_doc"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('dni',index))"
@@ -239,6 +253,7 @@
             </v-flex>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.email"
                 v-validate="'required|email'"
                 :error-messages="errors.collect(getNameSpace('email',index))"
@@ -250,6 +265,7 @@
             </v-flex>
             <v-flex xs12>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.cellphone"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('celular',index))"
@@ -261,6 +277,7 @@
             </v-flex>
             <v-flex xs12 md7>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.phone"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('teléfono',index))"
@@ -272,6 +289,7 @@
             </v-flex>
             <v-flex xs12 md5>
               <v-text-field
+                :disabled="loadingSubmit"
                 v-model="perfil.anexo"
                 v-validate="'required|integer'"
                 :error-messages="errors.collect(getNameSpace('anexo',index))"
@@ -351,6 +369,7 @@
           <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
 
           <v-radio-group
+            :disabled="loadingSubmit"
             v-model="entity.conditions"
             class="c-verify-entity__radios"
             v-validate="'required'"
@@ -376,7 +395,21 @@
             <span>Necesita verificar el codigo captcha</span>
           </div>
 
-          <v-btn color="primary" large class="c-verify-entity__submit" @click="submit">Registrate</v-btn>
+          <v-btn
+            :disabled="loadingSubmit"
+            :color="statusSubmit"
+            large
+            class="c-verify-entity__submit"
+            @click="submit"
+          >
+            Registrate
+            <v-progress-circular
+              indeterminate
+              color="gray"
+              class="ml-4"
+              v-if="loadingSubmit"
+            ></v-progress-circular>
+          </v-btn>
         </div>
       </div>
       <!--@ terminos y condiciones-->
@@ -433,7 +466,9 @@ export default {
         }
       ],
       verifyRecaptcha: null,
-      alertRecaptcha: true
+      alertRecaptcha: true,
+      loadingSubmit: false,
+      statusSubmit: 'primary',
     }
   },
   created () {
@@ -474,30 +509,38 @@ export default {
       return name + ' ' + value
     },
     submit () {
+      this.loadingSubmit = true
+
       this.$validator.validateAll()
         .then(result => {
           if (result && this.verifyRecaptcha) {
-            this.putEntity(this.entity).catch(error => { console.log(error) })
-            let stateContacts = false
-            this.perfilContact.forEach(contact => {
-              if (contact.id) {
-                stateContacts = true
-              }
-            })
-            if (stateContacts) {
-              this.resetContacts([])
-            }
-            this.perfilContact.forEach(contact => {
-              contact.entity_id = this.entity.id
-              if (contact.id) {
-                this.putContact(contact).catch(error => { console.log(error) })
-              } else {
-                this.saveContact(contact).catch(error => { console.log(error) })
-              }
-            })
+            this.putEntity(this.entity)
+              .then(response => {
+                this.resetContacts([])
+                this.perfilContact.forEach(contact => {
+                  contact.entity_id = this.entity.id
+                  if (contact.id) {
+                    this.putContact(contact).catch(error => { this.statusSubmit = 'error' })
+                  } else {
+                    this.saveContact(contact).catch(error => { this.statusSubmit = 'error' })
+                  }
+                })
+                this.loadingSubmit = false
+                this.statusSubmit = 'success'
+              })
+              .then(() => {
+                this.$router.push({ name: 'ficha-aprobada' })
+              })
+              .catch(error => { this.statusSubmit = 'error' })
+
           } else if (!this.verifyRecaptcha) {
             this.alertRecaptcha = false
+            this.loadingSubmit = false
+            this.statusSubmit = 'error'
             console.log('falta validar el recaptcha')
+          } else {
+            this.loadingSubmit = false
+            this.statusSubmit = 'error'
           }
         })
     },

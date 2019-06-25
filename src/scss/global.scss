@@ -479,11 +479,12 @@
   flex-direction: column;
   align-items: center;
   max-width: 800px;
+  height: 100vh;
+  justify-content: center;
   margin: 0 auto;
 
   h2{
     font-size: 2.5em;
-    margin-top: 1em;
   }
   p{
     text-align: center;

@@ -3,7 +3,7 @@
     <h2>Registro de entidad</h2>
     <p class="mt-0">En el siguiente formulario ingresa los campos obligatorios que utilizaremos para la validación y contacto del sistema y de la entidad</p>
     <!--@FORM LAYOUT START-->
-    <form class="c-form-home__inputs">
+    <form class="c-form-home__inputs" @submit.prevent="submit">
       <v-layout wrap>
         <v-flex xs12>
           <v-text-field

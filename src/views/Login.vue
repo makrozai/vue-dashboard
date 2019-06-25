@@ -33,7 +33,7 @@
       <div class="c-form-home__container">
         <h2>Iniciar sesión</h2>
         <!--@FORM LAYOUT START-->
-        <form class="c-form-home__inputs">
+        <form class="c-form-home__inputs" @submit.prevent="submit">
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
@@ -154,8 +154,6 @@ export default {
           } else {
             this.login({ email: this.email, password: this.password })
               .then(logged => {
-                this.loadingSubmit = false
-                this.statusSubmit = 'success'
                 this.$router.push({ name: 'ficha-de-verificacion' })
               })
               .catch(error => {
