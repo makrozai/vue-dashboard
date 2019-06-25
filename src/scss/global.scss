@@ -83,6 +83,10 @@
 }
 .c-slider{
   background: #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 58.333333333333336%;
 
   &-dashboard.v-window{
     .v-carousel__controls{

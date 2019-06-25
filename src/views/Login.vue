@@ -6,22 +6,8 @@
         <img src="../assets/exe.svg" alt="" class="hidden-md-and-up">
       </a>
     </div>
-    <v-flex md7 xs12 class="hidden-sm-and-down c-slider">
-      <v-carousel
-        height="100vh"
-        hide-controls
-        class="elevation-0 c-slider-dashboard"
-      >
-        <v-carousel-item
-          v-for="(item,i) in items"
-          :key="i"
-          :src="item.src"
-        >
-          <h3>{{ item.title }}</h3>
-        </v-carousel-item>
-      </v-carousel>
-    </v-flex>
-    <v-flex md5 xs12 class="c-form-home">
+    <slider-home></slider-home>
+    <v-flex md5 xs12 offset-md7 class="c-form-home">
       <v-btn
         fab
         color="primary"
@@ -103,36 +89,17 @@
 </template>
 
 <script>
+import SliderHome from '../components/sliderHome'
+
 import { mapActions } from 'vuex'
 export default {
+  components: { SliderHome },
   computed: {
   },
   data () {
     return {
       loadingSubmit: false,
       statusSubmit: 'primary',
-      items: [
-        {
-          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y Cajamarca',
-          // eslint-disable-next-line
-          src: require('../assets/slider-1.jpg')
-        },
-        {
-          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-          // eslint-disable-next-line
-          src: require('../assets/slider-2.jpg')
-        },
-        {
-          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-          // eslint-disable-next-line
-          src: require('../assets/slider-5.jpg')
-        },
-        {
-          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-          // eslint-disable-next-line
-          src: require('../assets/slider-4.jpg')
-        }
-      ],
       show1: false,
       password: '',
       email: ''
