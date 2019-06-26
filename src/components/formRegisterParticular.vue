@@ -13,9 +13,9 @@
             :disabled="loadingSubmit"
             v-model="userInfo.email"
             v-validate="'required|email|max:50'"
-            :error-messages="errors.collect('Correo electronico')"
-            label="Correo electronico"
-            data-vv-name="Correo electronico"
+            :error-messages="errors.collect('Correo electrónico')"
+            label="Correo electrónico"
+            data-vv-name="Correo electrónico"
             @keyup.enter="submit"
             required
             box
@@ -39,7 +39,7 @@
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <p class="mt-0">Indicanos datos de contacto para la validacion y contacto de la cuenta</p>
+          <p class="mt-0">Indícanos datos de contacto para la validación y contacto de la cuenta</p>
         </v-flex>
         <v-flex xs4>
           <v-text-field

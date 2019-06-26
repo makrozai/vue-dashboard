@@ -66,6 +66,7 @@
                   label="Buscar entidad propietaria del programa"
                   item-text="name"
                   item-value="name"
+                  @keyup.enter="submit"
                   class="pt-2"
                   box
                 >
@@ -100,6 +101,7 @@
                 :error-messages="errors.collect('nombre de programa')"
                 label="Nombre de programa"
                 data-vv-name="nombre de programa"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -112,6 +114,7 @@
                 :error-messages="errors.collect('tipo de programa')"
                 label="Seleccionar el tipo de programa"
                 data-vv-name="tipo de programa"
+                @keyup.enter="submit"
                 required
                 box
               ></v-select>
@@ -131,6 +134,7 @@
                     :error-messages="errors.collect('año de inicio')"
                     label="Año de inicio"
                     data-vv-name="año de inicio"
+                    @keyup.enter="submit"
                     required
                     readonly
                     box
@@ -164,6 +168,7 @@
                 :error-messages="errors.collect('descripción  del programa')"
                 label="Descripción del programa"
                 data-vv-name="descripción  del programa"
+                @keyup.enter="submit"
                 box
               ></v-textarea>
             </v-flex>
@@ -177,6 +182,7 @@
                 v-validate="'required'"
                 :error-messages="errors.collect('sitio web')"
                 data-vv-name="sitio web"
+                @keyup.enter="submit"
                 label="Pagina web"
                 box
               >
@@ -189,9 +195,9 @@
             <v-flex xs6>
               <v-text-field
                 v-model="programOwn.twitter"
-                v-validate="'required'"
                 :error-messages="errors.collect('twitter')"
                 data-vv-name="twitter"
+                @keyup.enter="submit"
                 label="Twitter"
                 box
               >
@@ -202,9 +208,9 @@
               <v-text-field
 
                 v-model="programOwn.facebook"
-                v-validate="'required'"
                 :error-messages="errors.collect('facebook')"
                 data-vv-name="facebook"
+                @keyup.enter="submit"
                 label="Facebook"
                 box
               >
@@ -214,9 +220,9 @@
             <v-flex xs6>
               <v-text-field
                 v-model="programOwn.youtube"
-                v-validate="'required'"
                 :error-messages="errors.collect('youtube')"
                 data-vv-name="youtube"
+                @keyup.enter="submit"
                 label="Youtube"
                 box
               >
@@ -226,9 +232,9 @@
             <v-flex xs6>
               <v-text-field
                 v-model="programOwn.instagram"
-                v-validate="'required'"
                 :error-messages="errors.collect('instagram')"
                 data-vv-name="instagram"
+                @keyup.enter="submit"
                 label="Intagram"
                 box
               >

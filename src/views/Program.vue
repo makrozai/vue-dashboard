@@ -104,7 +104,7 @@
         fixed
         width="550"
       >
-        <form-program class="u-form--white"></form-program>
+        <form-program class="u-form--white" @modal-state="closeFormDrawner"></form-program>
       </v-navigation-drawer>
 
       <v-navigation-drawer
@@ -196,6 +196,9 @@ export default {
     openDetail (program) {
       this.formDrawnerEdit  = true
       this.programDetail = program
+    },
+    closeFormDrawner (state) {
+      this.formDrawner = false
     }
   }
 }

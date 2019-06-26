@@ -56,9 +56,9 @@
             v-model="userInfo.email"
             v-validate="'required|email|max:50'"
             maxlength="50"
-            :error-messages="errors.collect('correo electronico')"
-            label="Correo electronico"
-            data-vv-name="correo electronico"
+            :error-messages="errors.collect('correo electrónico')"
+            label="Correo electrónico"
+            data-vv-name="correo electrónico"
             @keyup.enter="submit"
             required
             box
@@ -82,7 +82,7 @@
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <p class="mt-0">Indicanos datos de contacto para la validacion y contacto de la cuenta</p>
+          <p class="mt-0">Indícanos datos de contacto para la validación y contacto de la cuenta</p>
         </v-flex>
         <v-flex xs12>
           <v-text-field

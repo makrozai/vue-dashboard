@@ -27,9 +27,9 @@
                 v-model="email"
                 v-validate="'required|email|max:50'"
                 maxlength="50"
-                :error-messages="errors.collect('Correo electronico')"
-                label="Correo electronico"
-                data-vv-name="Correo electronico"
+                :error-messages="errors.collect('Correo electrónico')"
+                label="Correo electrónico"
+                data-vv-name="Correo electrónico"
                 @keyup.enter="submit"
                 required
                 box

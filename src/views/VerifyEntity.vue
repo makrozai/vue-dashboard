@@ -265,7 +265,7 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12>
-              <p class="c-verify-entity__subtitle">Indicanos datos de contacto para la validación y contacto de la cuenta</p>
+              <p class="c-verify-entity__subtitle">Indícanos datos de contacto para la validación y contacto de la cuenta</p>
             </v-flex>
             <v-flex xs12>
               <v-text-field
@@ -344,7 +344,7 @@
         </div>
         <div class="c-verify-entity__row-large">
           <h3 class="c-verify-entity__title">Programas</h3>
-          <p class="c-verify-entity__subtitle">Ingresa minimo un programa</p>
+          <p class="c-verify-entity__subtitle">Ingresa mínimo un programa</p>
 
           <span class="c-verify-entity__span">Entidades beneficiadas</span>
           <!--@ contenedor de programas-->
@@ -403,9 +403,9 @@
           >
             <v-radio value="accept" color="primary">
               <template v-slot:label>
-                <p>Terminos y condiciones</p>
+                <p>Términos y condiciones</p>
                 <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
-                <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su politica de privacidad en y los terminos y condiciones.</p>
+                <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su política de privacidad en y los términos y condiciones.</p>
               </template>
             </v-radio>
 
