@@ -492,7 +492,7 @@ const store = new Vuex.Store({
 
     getAllPrograms (context, payload) {
       return new Promise((resolve, reject) => {
-        programsService.getAll({ page: 1, cant_per_page: 50, with_entities: true })
+        programsService.getAll(payload)
           .then(response => {
             this.commit('setAllPrograms', response)
             resolve(response)

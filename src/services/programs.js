@@ -18,7 +18,7 @@ const programsService = {
   },
   getAll: (payload) => {
     return new Promise((resolve, reject) => {
-      Vue.http.get('programs', payload)
+      Vue.http.get(`programs?owner_id=${payload.owner_id}`)
         .then(response => {
           // enruta correctamente a la respuesta
           response = response.body.data.programs

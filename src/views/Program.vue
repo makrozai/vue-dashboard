@@ -16,8 +16,10 @@
       >
         <v-text-field
           box
-          label=""
+          label="Busqueda de programa"
           prepend-inner-icon="search"
+          hide-details
+          v-model="search"
         ></v-text-field>
         <v-btn
           v-if="userSesion.user.type_user_id !== 3"
@@ -32,9 +34,66 @@
       </v-flex>
       <v-flex
         xs12
-        class="mt-2"
+        class="mt-5"
       >
-        <m-programa-table></m-programa-table>
+        <v-data-table
+          :headers="headers"
+          :items="allPrograms"
+          item-key="id"
+          class="c-data-table"
+          :search="search"
+          :pagination.sync="pagination"
+        >
+          <template v-slot:items="props">
+            <td>
+              <div class="c-data-table__entity" @click="openDetail(props.item)">
+                <img :src="props.item.logo_image_link || require('../assets/default-img.svg')" alt="">
+                {{ props.item.name }}
+              </div>
+            </td>
+            <td>{{ getnameEntity(props.item.entities[0]) }}</td>
+            <td>{{ props.item.start_date }}</td>
+            <td>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <a v-on="on" href="#!" class="mx-1">
+                    <v-icon color="black">web_asset</v-icon>
+                  </a>
+                </template>
+                <span>{{ props.item.website }}</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <a v-on="on" href="#!" class="mx-1">
+                    <i class="icon-facebook v-icon material-icons theme--light black--text"></i>
+                  </a>
+                </template>
+                <span>{{ props.item.facebook }}</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <a v-on="on" href="#!" class="mx-1">
+                    <div class="icon-twitter v-icon material-icons theme--light black--text"></div>
+                  </a>
+                </template>
+                <span>{{ props.item.twitter }}</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <a v-on="on" href="#!" class="mx-1">
+                    <div class="icon-instagram v-icon material-icons theme--light black--text"></div>
+                  </a>
+                </template>
+                <span>{{ props.item.instagram }}</span>
+              </v-tooltip>
+            </td>
+            <td>{{ props.item.type_program_name }}</td>
+            <td class="c-data-table__status">
+              <span>Validado</span>
+              <span>12/10/2019</span>
+            </td>
+          </template>
+        </v-data-table>
       </v-flex>
 
       <v-navigation-drawer
@@ -47,24 +106,96 @@
       >
         <form-program class="u-form--white"></form-program>
       </v-navigation-drawer>
+
+      <v-navigation-drawer
+        v-if="userSesion.user.type_user_id !== 3"
+        v-model="formDrawnerEdit"
+        temporary
+        right
+        fixed
+        width="550"
+      >
+        <form-program-edit class="u-form--white" :program="programDetail" v-if="programDetail"></form-program-edit>
+      </v-navigation-drawer>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import FormProgram from '../components/formProgram'
-import MProgramaTable from '../components/programaTable'
+import FormProgramEdit from '../components/formProgramEdit'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  components: { MProgramaTable, FormProgram },
+  components: { FormProgram, FormProgramEdit },
   computed: {
-    ...mapState(['userSesion'])
+    ...mapState(['userSesion', 'allPrograms'])
   },
   data () {
     return {
-      formDrawner: null
+      search: '',
+      formDrawner: null,
+      formDrawnerEdit: null,
+      programDetail: null,
+      pagination: {
+        rowsPerPage: 10
+      },
+      headers: [
+        {
+          text: 'Programa',
+          align: 'center',
+          sortable: true,
+          value: 'name'
+        },
+        {
+          text: 'Entidad',
+          value: 'fat',
+          align: 'center'
+        },
+        {
+          text: 'Inicio',
+          value: 'start_date',
+          align: 'center'
+        },
+        {
+          text: 'Contacto',
+          value: 'carbs',
+          align: 'center'
+        },
+        {
+          text: 'Línea Acción',
+          value: 'type_program_name',
+          align: 'center'
+        },
+        {
+          text: '',
+          value: 'iron',
+          align: 'center'
+        }
+      ]
+    }
+  },
+  created () {
+    if (this.allPrograms.length === 0) {
+      this.getAllPrograms({owner_id: this.userSesion.entity.id})
+    } else {
+
+    console.log(this.allPrograms)
+    }
+  },
+  methods: {
+    ...mapActions(['getAllPrograms']),
+    getnameEntity (value) {
+      if(value) {
+        return value.name
+      }
+
+      return 'Sin Entidad'
+    },
+    openDetail (program) {
+      this.formDrawnerEdit  = true
+      this.programDetail = program
     }
   }
 }

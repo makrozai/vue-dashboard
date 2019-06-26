@@ -4,32 +4,23 @@
     :headers="headers"
     :items="allPrograms"
     item-key="id"
-    select-all
     class="c-data-table"
     :pagination.sync="pagination"
   >
     <template v-slot:items="props">
       <td>
-        <v-checkbox
-          :input-value="props.selected"
-          primary
-          hide-details
-          color="primary"
-        ></v-checkbox>
-      </td>
-      <td>
         <div class="c-data-table__entity">
-          <img src="../assets/logotipo-entidad.svg" alt="">
+          <img src="../assets/default-img.svg" alt="">
           {{ props.item.name }}
         </div>
       </td>
-      <!--<td>{{ props.item.entities[0] }}</td>-->
+      <td>{{ getnameEntity(props.item.entities[0]) }}</td>
       <td>{{ props.item.start_date }}</td>
       <td>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <a v-on="on" href="#!" class="mx-1">
-              <v-icon color="black">email</v-icon>
+              <v-icon color="black">web_asset</v-icon>
             </a>
           </template>
           <span>{{ props.item.website }}</span>
@@ -37,7 +28,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <a v-on="on" href="#!" class="mx-1">
-              <v-icon color="black">call</v-icon>
+              <i class="icon-facebook v-icon material-icons theme--light black--text"></i>
             </a>
           </template>
           <span>{{ props.item.facebook }}</span>
@@ -45,7 +36,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <a v-on="on" href="#!" class="mx-1">
-              <v-icon color="black">home</v-icon>
+              <div class="icon-twitter v-icon material-icons theme--light black--text"></div>
             </a>
           </template>
           <span>{{ props.item.twitter }}</span>
@@ -53,7 +44,7 @@
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <a v-on="on" href="#!" class="mx-1">
-              <v-icon color="black">home</v-icon>
+              <div class="icon-instagram v-icon material-icons theme--light black--text"></div>
             </a>
           </template>
           <span>{{ props.item.instagram }}</span>
@@ -88,6 +79,11 @@ export default {
           value: 'name'
         },
         {
+          text: 'Entidad',
+          value: 'fat',
+          align: 'center'
+        },
+        {
           text: 'Inicio',
           value: 'fat',
           align: 'center'
@@ -111,10 +107,20 @@ export default {
     }
   },
   created () {
-    this.getAllPrograms()
+    if(this.allPrograms.length === 0) {
+      this.getAllPrograms()
+    }
+
   },
   methods: {
     ...mapActions(['getAllPrograms']),
+    getnameEntity (value) {
+      if(value) {
+        return value.name
+      }
+
+      return 'Sin Entidad'
+    }
   }
 }
 </script>

@@ -22,7 +22,7 @@
           <img :src="item.logo_image_link || require('../assets/default-img.svg')" alt="">
           <div>
             <h3><b>RUC: </b>{{ item.ruc }}</h3>
-            <p>{{ item.name }} <v-icon dark class="c-card-entity__badge">check</v-icon></p>
+            <p>{{ item.name }} <v-icon dark class="c-card-entity__badge" v-if="item.state === 1">check</v-icon></p>
           </div>
         </div>
         <v-btn

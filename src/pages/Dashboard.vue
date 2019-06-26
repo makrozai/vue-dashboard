@@ -21,9 +21,9 @@
       >
         Completa tu ficha: es necesario completar los campos que seran validados para tener acceso total
       </v-alert>
-      <transition>
-        <router-view/>
-      </transition>
+
+      <router-view/>
+
     </v-flex>
   </v-layout>
 </template>
