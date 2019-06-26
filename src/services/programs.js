@@ -15,6 +15,21 @@ const programsService = {
           reject(error)
         })
     })
+  },
+  getAll: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('programs', payload)
+        .then(response => {
+          // enruta correctamente a la respuesta
+          response = response.body.data.programs
+          // retorna respuesta
+          resolve(response)
+        })
+        .catch(error => {
+          // retornna error
+          reject(error)
+        })
+    })
   }
 }
 

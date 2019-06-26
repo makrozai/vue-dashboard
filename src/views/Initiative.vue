@@ -20,6 +20,7 @@
           prepend-inner-icon="search"
         ></v-text-field>
         <v-btn
+          v-if="userSesion.user.type_user_id !== 3"
           fab
           color="primary"
           class="my-0 mr-0"
@@ -53,8 +54,13 @@
 import FormInitiative from '../components/formInitiative'
 import MProgramaTable from '../components/programaTable'
 
+import { mapState } from 'vuex'
+
 export default {
   components: { MProgramaTable, FormInitiative },
+  computed: {
+    ...mapState(['userSesion'])
+  },
   data () {
     return {
       formDrawner: null

@@ -20,6 +20,7 @@
           prepend-inner-icon="search"
         ></v-text-field>
         <v-btn
+          v-if="userSesion.user.type_user_id !== 3"
           fab
           color="primary"
           class="my-0 mr-0"
@@ -37,6 +38,7 @@
       </v-flex>
 
       <v-navigation-drawer
+        v-if="userSesion.user.type_user_id !== 3"
         v-model="formDrawner"
         temporary
         right
@@ -53,8 +55,13 @@
 import FormProgram from '../components/formProgram'
 import MProgramaTable from '../components/programaTable'
 
+import { mapState } from 'vuex'
+
 export default {
   components: { MProgramaTable, FormProgram },
+  computed: {
+    ...mapState(['userSesion'])
+  },
   data () {
     return {
       formDrawner: null

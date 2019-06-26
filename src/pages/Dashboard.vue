@@ -13,6 +13,13 @@
     <v-flex
       xs12
     >
+      <v-alert
+        :value="true"
+        color="teal lighten-3"
+        class="mt-0"
+      >
+        Completa tu ficha: es necesario completar los campos que seran validados para tener acceso total
+      </v-alert>
       <transition>
         <router-view/>
       </transition>
@@ -26,7 +33,7 @@ import MNavigation from '../components/navigation'
 export default {
   components: { MNavigation },
   computed: {
-    ...mapState(['ubigeo'])
+    ...mapState(['ubigeo', 'usersSesion'])
   },
   data () {
     return {

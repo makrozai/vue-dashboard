@@ -64,17 +64,17 @@ const store = new Vuex.Store({
         {
           title: 'Indicadores',
           icon: 'indicators',
-          link: 'perfil'
+          link: 'indicadores'
         },
         {
           title: 'Inversión',
           icon: 'inversion',
-          link: 'perfil'
+          link: 'inversion'
         },
         {
           title: 'Tipo de inversión',
           icon: 'types',
-          link: 'perfil'
+          link: 'tipo-de-inversion'
         }
       ]
     },

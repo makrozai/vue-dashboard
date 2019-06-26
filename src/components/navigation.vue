@@ -54,7 +54,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense class=" c-navbar__list">
+    <v-list dense class=" c-navbar__list" v-if="userSesion.entity.state != 2">
       <v-list-tile
         v-for="item in navbarDrawer.items"
         :key="item.title"
@@ -74,7 +74,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense class=" c-navbar__list">
+    <v-list dense class=" c-navbar__list" v-if="userSesion.entity.state != 2">
       <v-list-tile
         v-for="item in navbarDrawer.reports"
         :key="item.title"

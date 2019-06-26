@@ -45,7 +45,8 @@
             </td>
             <td>
               <v-btn
-                :color="props.item.state == 1 ? 'success':'error'"
+                :disabled="userSesion.user.type_user_id !== 1 ? true : false"
+                :color="props.item.state == 1 ? 'success':'warning'"
                 fab
                 small
                 @click.stop="selectEntity(props.item)"
@@ -77,7 +78,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   components: { ValidEntity },
   computed: {
-    ...mapState(['allEntities'])
+    ...mapState(['allEntities', 'userSesion'])
   },
   data () {
     return {
