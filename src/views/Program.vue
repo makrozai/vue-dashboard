@@ -176,27 +176,29 @@ export default {
       ]
     }
   },
-  created () {
-    if(this.userSesion.user.type_user_id == 1) {
-      this.getAllPrograms({owner_id: ''})
-    } else if (this.allPrograms.length === 0) {
-      this.getAllPrograms({owner_id: this.userSesion.entity.id})
-    } else {
-
-    console.log(this.allPrograms)
+  mounted () {
+    if (this.allPrograms.length === 0) {
+      switch (this.userSesion.user.type_user_id) {
+        case 1:
+          this.getAllPrograms({ owner_id: '' })
+          break
+        case 2:
+          this.getAllPrograms({ owner_id: this.userSesion.entity.id })
+          break
+      }
     }
   },
   methods: {
     ...mapActions(['getAllPrograms']),
     getnameEntity (value) {
-      if(value) {
+      if (value) {
         return value.name
       }
 
       return 'Sin Entidad'
     },
     openDetail (program) {
-      this.formDrawnerEdit  = true
+      this.formDrawnerEdit = true
       this.programDetail = program
     },
     closeFormDrawner (state) {

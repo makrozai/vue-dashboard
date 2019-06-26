@@ -200,8 +200,7 @@ export default {
                 this.login({ email: this.userInfo.email, password: this.userInfo.password })
                   .then(logged => {
                     // - redireccion de pagina
-                    // this.$router.push({ name: 'home' })
-                    location.reload()
+                    this.$router.push({ name: 'home' })
                   })
               })
               .catch(error => {

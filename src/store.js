@@ -40,7 +40,6 @@ const store = new Vuex.Store({
     placeholderUser: {},
     placeholderEntity: {},
     placeholderPartaker: {},
-    user: null,
     logged: !!window.localStorage.getItem('_token'),
     navbarDrawer: {
       items: [

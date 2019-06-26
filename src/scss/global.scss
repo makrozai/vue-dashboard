@@ -1,5 +1,5 @@
 .c-container-dashboard{
-  max-width: 1700px;
+  max-width: 1600px;
 
   &--small{
     max-width: 1000px;
@@ -173,6 +173,7 @@
     font-weight: 700;
     display: flex;
     align-items: center;
+    text-align: left;
 
     img{
       display: block;
@@ -907,4 +908,10 @@
 }
 .error-text{
   color: var(--v-error-base) !important
+}
+.c-badge-status {
+  display: inline-block;
+  padding: .3em 1em;
+  border-radius: 1em;
+  color: white;
 }

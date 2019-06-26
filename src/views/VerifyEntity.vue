@@ -492,11 +492,11 @@ export default {
       verifyRecaptcha: null,
       alertRecaptcha: true,
       loadingSubmit: false,
-      statusSubmit: 'primary',
+      statusSubmit: 'primary'
     }
   },
   mounted () {
-    if(this.userSesion.entity.state === 1 || this.userSesion.user.type_user_id === 3 || this.userSesion.user.type_user_id === 1) {
+    if (this.userSesion.entity.state === 1 || this.userSesion.user.type_user_id === 3 || this.userSesion.user.type_user_id === 1) {
       this.$router.push({ name: 'home' })
     }
   },
@@ -514,8 +514,6 @@ export default {
       .catch(error => {
         console.log(error)
       })
-
-
   },
   methods: {
     ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image']),
@@ -551,9 +549,17 @@ export default {
                 this.perfilContact.forEach(contact => {
                   contact.entity_id = this.entity.id
                   if (contact.id) {
-                    this.putContact(contact).catch(error => { this.statusSubmit = 'error' })
+                    this.putContact(contact)
+                      .catch(error => {
+                        this.statusSubmit = 'error'
+                        console.log(error)
+                      })
                   } else {
-                    this.saveContact(contact).catch(error => { this.statusSubmit = 'error' })
+                    this.saveContact(contact)
+                      .catch(error => {
+                        this.statusSubmit = 'error'
+                        console.log(error)
+                      })
                   }
                 })
                 this.loadingSubmit = false
@@ -562,8 +568,11 @@ export default {
               .then(() => {
                 this.$router.push({ name: 'ficha-aprobada' })
               })
-              .catch(error => { this.statusSubmit = 'error' })
-
+              .catch(error => {
+                this.statusSubmit = 'error'
+                console.log(error)
+              })
+            // eslint-disable-next-line
           } else if (!this.verifyRecaptcha) {
             this.alertRecaptcha = false
             this.loadingSubmit = false

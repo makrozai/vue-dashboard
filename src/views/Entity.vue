@@ -14,6 +14,8 @@
           item-key="id"
           class="c-data-table"
           :pagination.sync="pagination"
+          disable-initial-sort
+
         >
           <template v-slot:items="props">
             <td>
@@ -61,15 +63,21 @@
               </v-tooltip>
             </td>
             <td>
+              <span
+                class="c-badge-status"
+                :class="badgeStatus(props.item.state).class"
+              >
+                {{ badgeStatus(props.item.state).text }}
+              </span>
+            </td>
+            <td>
               <v-btn
                 :disabled="userSesion.user.type_user_id !== 1 ? true : false"
-                :color="props.item.state == 1 ? 'success':'warning'"
                 fab
                 small
                 @click.stop="selectEntity(props.item)"
               >
-                <v-icon v-if="props.item.state == 2">visibility</v-icon>
-                <v-icon v-if="props.item.state == 1">check</v-icon>
+                <v-icon>edit</v-icon>
               </v-btn>
             </td>
           </template>
@@ -108,7 +116,6 @@ export default {
         {
           text: 'Entidad',
           align: 'center',
-          sortable: true,
           value: 'name'
         },
         {
@@ -130,13 +137,17 @@ export default {
           text: 'Estado',
           value: 'state',
           align: 'center'
+        },
+        {
+          text: '',
+          value: '',
+          align: 'center'
         }
       ]
     }
   },
-  created () {
-    if (this.allEntities.length > 0) {
-    } else {
+  mounted () {
+    if (!this.allEntities.length) {
       this.getAllEntities()
     }
   },
@@ -147,7 +158,7 @@ export default {
       this.formDrawner = !this.formDrawner
     },
     responseValid (response) {
-      if(response) {
+      if (response) {
         this.formDrawner = false
         this.setAlert({
           text: 'Entidad validada correctamente',
@@ -156,6 +167,15 @@ export default {
           type: 'success',
           time: 60000
         })
+      }
+    },
+    badgeStatus (value) {
+      if(value === 1) {
+        return {class: 'success', text: 'Validado'}
+      } else if (value === 2) {
+        return {class: 'warning', text: 'Pendiente'}
+      } else if (value === 3) {
+        return {class: 'error', text: 'Rechazado'}
       }
     }
   }

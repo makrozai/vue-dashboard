@@ -17,7 +17,7 @@
         :value="true"
         color="teal lighten-3"
         class="mt-0 center-align"
-        v-if="userSesion.entity.state === 2"
+        v-if="userSesion.user.type_user_id === 2 && userSesion.entity.state === 2"
       >
         Completa tu ficha: es necesario completar los campos que seran validados para tener acceso total
       </v-alert>
@@ -41,7 +41,7 @@ export default {
       navbarStatus: false
     }
   },
-  created () {
+  mounted () {
     if (!this.ubigeo.regions) {
       this.getRegions()
     }

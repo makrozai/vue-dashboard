@@ -203,7 +203,7 @@ router.beforeEach((to, from, next) => {
           switch (response.response.type_user_id) {
             case 1 :
               // administrador
-              console.log('es administrador')
+              console.log('administrador')
               next()
               break
             case 2 :

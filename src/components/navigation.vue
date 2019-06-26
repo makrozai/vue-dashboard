@@ -36,7 +36,7 @@
 
     <v-list dense class=" c-navbar__list c-navbar__list--user">
       <v-list-tile
-        :to="{name: 'ficha-de-verificacion'}"
+        @click="userRedirect"
       >
         <v-list-tile-action>
           <img :src="imageUser" alt="">
@@ -45,7 +45,7 @@
         <v-list-tile-content>
           <v-list-tile-title>
             <p>{{ getName(userSesion.user.type_user_id).toUpperCase() }}</p>
-            <span :class="userSesion.entity.state === 1 ? 'success-text': 'error-text'">{{ stateUser }}</span>
+            <span v-if="userSesion.user.type_user_id === 2" :class="userSesion.entity.state === 1 ? 'success-text': 'error-text'">{{ stateUser }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -120,6 +120,7 @@ export default {
           return this.userSesion.entity.logo_image_link
         }
       }
+      // eslint-disable-next-line
       return require('../assets/default-img.svg')
     },
     stateUser () {
@@ -133,12 +134,13 @@ export default {
             return 'Rechazado'
         }
       }
+      return ''
     },
     validMenu () {
-      if (this.userSesion.entity.state && this.userSesion.entity.state === 2) {
+      if (this.userSesion.user.type_user_id === 2 && this.userSesion.entity.state && this.userSesion.entity.state === 2) {
         return false
       }
-      if(this.userSesion.user.type_user_id === 3) {
+      if (this.userSesion.user.type_user_id === 3) {
         return false
       }
       return true
@@ -156,7 +158,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['logout', 'setAlert']),
     endSesion () {
       this.logout()
       this.$router.push({ name: 'login' })
@@ -169,6 +171,19 @@ export default {
           return this.userSesion.entity.name
         case 3:
           return this.userSesion.partaker.name
+      }
+    },
+    userRedirect () {
+      if (this.userSesion.entity && this.userSesion.entity.state === 2) {
+        this.$router.push({ name: 'ficha-de-verificacion' })
+      } else {
+        this.setAlert({
+          text: 'no se tiene acceso a esta pagina',
+          state: true,
+          dismissible: false,
+          type: 'warning',
+          time: 6000
+        })
       }
     }
   }

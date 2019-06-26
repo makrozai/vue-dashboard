@@ -153,13 +153,13 @@ import { mapState, mapActions } from 'vuex'
 import CardEntity from './cardEntity'
 
 export default {
-  props:['program'],
+  props: ['program'],
   components: { CardEntity },
   computed: {
     ...mapState(['userSesion', 'typePrograms', 'allEntities']),
     entityFullName () {
       let fullname = 'no existe entidad asociada'
-      if(this.program.entities[0]) {
+      if (this.program.entities[0]) {
         fullname = 'RUC ' + this.program.entities[0].ruc + ' ' + this.program.entities[0].name
       }
 
@@ -181,7 +181,7 @@ export default {
   created () {
   },
   methods: {
-    ...mapActions(['saveProgram', 'getAllEntities']),
+    ...mapActions(['saveProgram', 'getAllEntities'])
   }
 }
 </script>
