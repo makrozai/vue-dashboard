@@ -54,7 +54,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense class=" c-navbar__list" v-if="userSesion.entity.state != 2">
+    <v-list dense class=" c-navbar__list" v-if="validMenu">
       <v-list-tile
         v-for="item in navbarDrawer.items"
         :key="item.title"
@@ -133,6 +133,15 @@ export default {
             return 'Rechazado'
         }
       }
+    },
+    validMenu () {
+      if (this.userSesion.entity.state && this.userSesion.entity.state === 2) {
+        return false
+      }
+      if(this.userSesion.user.type_user_id === 3) {
+        return false
+      }
+      return true
     }
   },
   data () {

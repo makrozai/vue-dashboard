@@ -177,7 +177,9 @@ export default {
     }
   },
   created () {
-    if (this.allPrograms.length === 0) {
+    if(this.userSesion.user.type_user_id == 1) {
+      this.getAllPrograms({owner_id: ''})
+    } else if (this.allPrograms.length === 0) {
       this.getAllPrograms({owner_id: this.userSesion.entity.id})
     } else {
 
