@@ -19,7 +19,7 @@
       </v-btn>
       <div class="c-register" v-if="registerPage == 'home'">
         <h2>Registrate</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum dignissimos nostrum ea nisi assumenda error dolor quidem illo? Iure est autem provident laborum at. Enim dolorum consequatur earum facilis deserunt. <b>EXE Plataforma Interconexion</b></p>
+        <p>Indicanos que tipo de rol necesitas crear para ingresar a la plataforma, selecciona según las activiadades que realizaras en la plataforma <b>EXE Plataforma Interconexion</b></p>
 
         <div class="c-register__forms">
           <div class="c-register__forms__item">

@@ -16,7 +16,8 @@
       <v-alert
         :value="true"
         color="teal lighten-3"
-        class="mt-0"
+        class="mt-0 center-align"
+        v-if="userSesion.entity.state === 2"
       >
         Completa tu ficha: es necesario completar los campos que seran validados para tener acceso total
       </v-alert>
@@ -33,7 +34,7 @@ import MNavigation from '../components/navigation'
 export default {
   components: { MNavigation },
   computed: {
-    ...mapState(['ubigeo', 'usersSesion'])
+    ...mapState(['ubigeo', 'userSesion'])
   },
   data () {
     return {

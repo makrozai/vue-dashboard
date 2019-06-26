@@ -45,7 +45,7 @@
         <v-list-tile-content>
           <v-list-tile-title>
             <p>{{ getName(userSesion.user.type_user_id).toUpperCase() }}</p>
-            <span >{{ stateUser }}</span>
+            <span :class="userSesion.entity.state === 1 ? 'success-text': 'error-text'">{{ stateUser }}</span>
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -74,7 +74,7 @@
 
     <v-divider></v-divider>
 
-    <v-list dense class=" c-navbar__list" v-if="userSesion.entity.state != 2">
+    <v-list dense class=" c-navbar__list" >
       <v-list-tile
         v-for="item in navbarDrawer.reports"
         :key="item.title"
@@ -120,13 +120,13 @@ export default {
           return this.userSesion.entity.logo_image_link
         }
       }
-      return require('../assets/icons/user.svg')
+      return require('../assets/default-img.svg')
     },
     stateUser () {
       if (this.userSesion.user.type_user_id === 2) {
         switch (this.userSesion.entity.state) {
           case 1:
-            return 'Aceptado'
+            return 'Verificado'
           case 2:
             return 'Pendiente'
           case 3:

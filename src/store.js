@@ -79,8 +79,9 @@ const store = new Vuex.Store({
       ]
     },
     allEntities: [],
+    allPrograms: [],
     recoverPass: null,
-    website: 'https://www.youtube.com/watch?v=MLciApf2WTc'
+    website: 'https://exe.combativa.com/'
   },
   getters: {
     getTypeProvinces: (state) => (id) => {
@@ -175,6 +176,9 @@ const store = new Vuex.Store({
     },
     setAllEntities (state, payload) {
       state.allEntities = payload
+    },
+    setAllPrograms (state, payload) {
+      state.allPrograms = payload
     },
     setOtherContact (state, payload) {
       state.otherContact = payload
@@ -478,6 +482,19 @@ const store = new Vuex.Store({
         entitiesService.getAll()
           .then(response => {
             this.commit('setAllEntities', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+
+    getAllPrograms (context, payload) {
+      return new Promise((resolve, reject) => {
+        programsService.getAll({ page: 1, cant_per_page: 50, with_entities: true })
+          .then(response => {
+            this.commit('setAllPrograms', response)
             resolve(response)
           })
           .catch(error => {

@@ -1,7 +1,7 @@
 <template>
   <div class="c-form-home__container">
     <h2>Registro</h2>
-    <p class="mt-0">Para poder acceder a la plataforma por favor ingresar los campos solicitados en la plataforma para ingresar</p>
+    <p class="mt-0">Para tener acceso a la plataforma por favor ingresar los campos solicitados en la plataforma para ingresar.</p>
     <!--@FORM LAYOUT START-->
     <form class="c-form-home__inputs" @submit.prevent="submit">
       <v-layout wrap>

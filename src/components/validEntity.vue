@@ -31,7 +31,7 @@
             ></v-text-field>
             <v-text-field
               disabled
-              v-model="entity.line_id"
+              v-model="typeLine"
               label="Tipo de rubro"
               box
             ></v-text-field>
@@ -42,7 +42,7 @@
           <v-flex xs12>
             <v-text-field
               disabled
-              v-model="entity.type_entity_id"
+              v-model="typeEntity"
               label="Tipo de entidad"
               box
             ></v-text-field>
@@ -83,12 +83,12 @@
     <v-card-actions>
       <v-container class="py-0">
         <v-btn
+          :disabled="valid || entity.state == 1"
           large
           color="success"
           @click="submit"
-          :disabled="entity.state == 1"
         >
-          Validar
+          {{ textButton }}
         </v-btn>
       </v-container>
     </v-card-actions>
@@ -101,7 +101,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   props: ['entity'],
   computed: {
-    ...mapState(['allEntities', 'ubigeo']),
+    ...mapState(['allEntities', 'ubigeo','typeEntities', 'lines']),
     fullName () {
       let namePlaceholder = 'RUC ' + this.entity.ruc + ' ' + this.entity.name
 
@@ -113,15 +113,41 @@ export default {
       let regionLabel = this.ubigeo.regions.filter(item => item.id === this.entity.regions_id)[0]
 
       return this.entity.address + ' - ' + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
+    },
+    typeEntity () {
+      if(this.entity.line_id){
+        let nameEntity = this.typeEntities.filter(item => item.id === this.entity.type_entity_id)[0]
+        return nameEntity.name
+      }
+      return 'error al encontrar'
+    },
+    typeLine () {
+      if(this.entity.line_id){
+        let nameLine = this.lines.filter(item => item.id === this.entity.line_id)[0]
+        return nameLine.name
+      }
+      return 'error al encontrar'
+    }
+  },
+  data () {
+    return {
+      textButton : 'Validar',
+      valid: false
     }
   },
   methods: {
-    ...mapActions(['putEntity']),
+    ...mapActions(['putEntity','getAllEntities']),
     submit () {
       console.log('validado', this.entity.id)
       this.putEntity({ id: this.entity.id, state: 1 })
         .then(response => {
+          // esto de aca no se puede quedar asi
+          this.getAllEntities()
           console.log(response)
+          this.textButton = 'Validado'
+          this.valid = true
+
+          this.$emit('response-valid', true)
         })
         .catch(error => {
           console.log(error)

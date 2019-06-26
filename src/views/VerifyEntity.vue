@@ -27,9 +27,11 @@
                 :disabled="loadingSubmit"
                 v-model="entity.name"
                 v-validate="'required|max:180'"
+                maxlength="180"
                 :error-messages="errors.collect('razón comercial')"
                 label="Razón comercial o nombre de la organización"
                 data-vv-name="razón comercial"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -39,9 +41,11 @@
                 :disabled="loadingSubmit"
                 v-model="entity.ruc"
                 v-validate="'required|integer|length:11'"
+                maxlength="11"
                 :error-messages="errors.collect('ruc')"
                 label="Ruc"
                 data-vv-name="ruc"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -51,9 +55,11 @@
                 :disabled="loadingSubmit"
                 v-model="entity.social_reason"
                 v-validate="'required|max:180'"
+                maxlength="180"
                 :error-messages="errors.collect('razón social')"
                 label="Razón social"
                 data-vv-name="razón social"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -113,9 +119,11 @@
                 :disabled="loadingSubmit"
                 v-model="entity.website"
                 v-validate="'required|max:90'"
+                maxlength="90"
                 :error-messages="errors.collect('sitio web')"
                 label="Sitio web"
                 data-vv-name="sitio web"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -128,6 +136,7 @@
                   v-validate="'required'"
                   :error-messages="errors.collect('dirección')"
                   data-vv-name="dirección"
+                  @keyup.enter="submit"
                   label="Dirección de oficina"
                   required
                   box
@@ -205,9 +214,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.name"
                 v-validate="'required'"
+                maxlength="100"
                 :error-messages="errors.collect(getNameSpace('nombre',index))"
                 label="Nombre Completo"
                 :data-vv-name="getNameSpace('nombre',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -217,9 +228,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.lastname"
                 v-validate="'required'"
+                maxlength="100"
                 :error-messages="errors.collect(getNameSpace('apellido',index))"
                 label="Apellido"
                 :data-vv-name="getNameSpace('apellido',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -229,9 +242,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.position"
                 v-validate="'required'"
+                maxlength="150"
                 :error-messages="errors.collect(getNameSpace('posición',index))"
                 label="cargo"
                 :data-vv-name="getNameSpace('posición',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -241,6 +256,7 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.nro_doc"
                 v-validate="'required|integer'"
+                maxlength="12"
                 :error-messages="errors.collect(getNameSpace('dni',index))"
                 label="DNI"
                 :data-vv-name="getNameSpace('dni',index)"
@@ -256,9 +272,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.email"
                 v-validate="'required|email'"
+                maxlength="150"
                 :error-messages="errors.collect(getNameSpace('email',index))"
                 label="Correo electrónico"
                 :data-vv-name="getNameSpace('email',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -268,9 +286,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.cellphone"
                 v-validate="'required|integer'"
+                maxlength="11"
                 :error-messages="errors.collect(getNameSpace('celular',index))"
                 label="Nº Celular"
                 :data-vv-name="getNameSpace('celular',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -280,9 +300,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.phone"
                 v-validate="'required|integer'"
+                maxlength="11"
                 :error-messages="errors.collect(getNameSpace('teléfono',index))"
                 label="Nº Fijo"
                 :data-vv-name="getNameSpace('teléfono',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -292,9 +314,11 @@
                 :disabled="loadingSubmit"
                 v-model="perfil.anexo"
                 v-validate="'required|integer'"
+                maxlength="10"
                 :error-messages="errors.collect(getNameSpace('anexo',index))"
                 label="Anexo"
                 :data-vv-name="getNameSpace('anexo',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -485,6 +509,10 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    if(this.userSesion.entity.state === 1) {
+      this.$router.push({ name: 'home' })
+    }
+
   },
   methods: {
     ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image']),

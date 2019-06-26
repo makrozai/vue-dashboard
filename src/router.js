@@ -14,6 +14,7 @@ import changePassword from './views/ChangePassword'
 import indicators from './views/Indicators'
 import inversion from './views/Inversion'
 import typeInversion from './views/TypeInversion'
+import home from './views/Home'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -173,6 +174,15 @@ const router = new Router({
             Auth: true,
             title: 'Aprovación de Entidad'
           }
+        },
+        {
+          path: 'home',
+          name: 'home',
+          component: home,
+          meta: {
+            Auth: true,
+            title: 'Aprovación de Entidad'
+          }
         }
       ]
     }
@@ -201,13 +211,6 @@ router.beforeEach((to, from, next) => {
               store.dispatch('getEntity', response.decode.entity_id)
                 .then(response => {
                   if (response.state === 2) {
-                    /* store.dispatch('setAlert', {
-                      text: 'Su entidad aun no esta validada',
-                      state: true,
-                      dismissible: true,
-                      type: 'error',
-                      time: 1000000000
-                    }) */
                   }
                 }).then(() => {
                   next()

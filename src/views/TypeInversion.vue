@@ -1,7 +1,14 @@
 <template>
-  <div>
-    Tipo de inversión
-  </div>
+  <v-container class="c-container-dashboard">
+    <v-layout wrap>
+      <v-flex
+        xs12
+        class="c-dashboard-title mb-4"
+      >
+        <h2>Tipo de Inversión</h2>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

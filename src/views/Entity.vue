@@ -25,7 +25,7 @@
             <td>{{ props.item.social_reason }}</td>
             <td>{{ props.item.ruc }}</td>
             <td>
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.website">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">web_asset</v-icon>
@@ -34,13 +34,30 @@
                 <span>{{ props.item.website }}</span>
               </v-tooltip>
 
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.address">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">home</v-icon>
                   </a>
                 </template>
                 <span>{{ props.item.address }}</span>
+              </v-tooltip>
+
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <a v-on="on" href="#!" class="mx-1">
+                    <v-icon color="black">contact_mail</v-icon>
+                  </a>
+                </template>
+                <span>mail@localhost.com</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <a v-on="on" href="#!" class="mx-1">
+                    <v-icon color="black">phone</v-icon>
+                  </a>
+                </template>
+                <span>978 765 4532</span>
               </v-tooltip>
             </td>
             <td>
@@ -66,7 +83,7 @@
         fixed
         width="550"
       >
-        <valid-entity v-if="valueEntity" :entity="valueEntity"></valid-entity>
+        <valid-entity v-if="valueEntity" :entity="valueEntity" @response-valid="responseValid"></valid-entity>
       </v-navigation-drawer>
     </v-layout>
   </v-container>
@@ -124,10 +141,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getAllEntities']),
+    ...mapActions(['getAllEntities', 'setAlert']),
     selectEntity (value) {
       this.valueEntity = value
       this.formDrawner = !this.formDrawner
+    },
+    responseValid (response) {
+      if(response) {
+        this.formDrawner = false
+        this.setAlert({
+          text: 'Entidad validada correctamente',
+          state: true,
+          dismissible: false,
+          type: 'success',
+          time: 60000
+        })
+      }
     }
   }
 }
