@@ -200,10 +200,12 @@ export default {
                 this.login({ email: this.userInfo.email, password: this.userInfo.password })
                   .then(logged => {
                     // - redireccion de pagina
-                    this.$router.push({ name: 'home' })
+                    // this.$router.push({ name: 'home' })
+                    location.reload()
                   })
               })
               .catch(error => {
+                this.loadingSubmit = false
                 this.statusSubmit = 'error'
 
                 this.setAlert({
