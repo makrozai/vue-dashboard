@@ -495,6 +495,11 @@ export default {
       statusSubmit: 'primary',
     }
   },
+  mounted () {
+    if(this.userSesion.entity.state === 1 || this.userSesion.user.type_user_id === 3 || this.userSesion.user.type_user_id === 1) {
+      this.$router.push({ name: 'home' })
+    }
+  },
   created () {
     // this.entity = this.userSesion.entity
     Object.assign(this.entity, this.userSesion.entity)
@@ -509,9 +514,7 @@ export default {
       .catch(error => {
         console.log(error)
       })
-    if(this.userSesion.entity.state === 1) {
-      this.$router.push({ name: 'home' })
-    }
+
 
   },
   methods: {
