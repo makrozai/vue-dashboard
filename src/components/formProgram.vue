@@ -351,6 +351,7 @@ export default {
       // this.programs.push(entityModel)
     },
     validateDuplicateEntity (id) {
+      // evita agregar un elemento duplicado
       let duplicate = false
       this.programOwn.entities.forEach(item => {
         if (item.id === id.id) {

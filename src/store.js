@@ -80,7 +80,8 @@ const store = new Vuex.Store({
     allEntities: [],
     allPrograms: [],
     recoverPass: null,
-    website: 'https://exe.combativa.com/'
+    website: 'https://exe.combativa.com/',
+    preloadIframe: false
   },
   getters: {
     getTypeProvinces: (state) => (id) => {
@@ -91,6 +92,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    changePreload (state, payload) {
+      state.preloadIframe = payload
+    },
     login (state) {
       state.logged = true
     },

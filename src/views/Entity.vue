@@ -45,7 +45,7 @@
                 <span>{{ props.item.address }}</span>
               </v-tooltip>
 
-              <v-tooltip top v-if="props.item.contacts[0]">
+              <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">contact_mail</v-icon>
@@ -53,7 +53,7 @@
                 </template>
                 <span>{{ contact(props.item.contacts[0]).email }}</span>
               </v-tooltip>
-              <v-tooltip top v-if="props.item.contacts[0]">
+              <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">phone</v-icon>

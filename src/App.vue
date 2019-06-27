@@ -40,16 +40,14 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'App',
   computed: {
-    ...mapState(['alert'])
+    ...mapState(['alert', 'preloadIframe'])
   },
   data () {
     return {
-      preloadIframe: true,
       alerTime: true
     }
   },
   mounted () {
-    this.preloadIframe = false
   },
   methods: {
     ...mapActions(['setAlert']),

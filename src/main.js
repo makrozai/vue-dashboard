@@ -31,6 +31,13 @@ Vue.http.interceptors.push((request, next) => {
   next()
 })
 
+Vue.http.interceptors.push((request, next) => {
+  store.commit('changePreload', true)
+  next((response) => {
+    store.commit('changePreload', false)
+  })
+})
+
 new Vue({
   router,
   store,
