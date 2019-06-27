@@ -171,7 +171,7 @@ const store = new Vuex.Store({
       state.image = null
     },
     setProgram (state, payload) {
-      state.userSesion.entity.programs.push(payload)
+      state.allPrograms.push(payload)
     },
     setAllEntities (state, payload) {
       state.allEntities = payload

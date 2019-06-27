@@ -170,12 +170,14 @@ export default {
       }
     },
     badgeStatus (value) {
-      if(value === 1) {
-        return {class: 'success', text: 'Validado'}
+      if (value === 1) {
+        return { class: 'success', text: 'Validado' }
       } else if (value === 2) {
-        return {class: 'warning', text: 'Pendiente'}
+        return { class: 'warning', text: 'Registro incompleto' }
       } else if (value === 3) {
-        return {class: 'error', text: 'Rechazado'}
+        return { class: 'error', text: 'Rechazado' }
+      } else {
+        return { class : 'warning', text: 'Pendiente' }
       }
     }
   }

@@ -469,7 +469,8 @@ export default {
         provinces_id: '',
         districts_id: '',
         website: '',
-        conditions: null
+        conditions: null,
+        state: null
       },
       ubigeoPrepare: {
         districts: [],
@@ -495,17 +496,12 @@ export default {
       statusSubmit: 'primary'
     }
   },
-  mounted () {
-    if (this.userSesion.entity.state === 1 || this.userSesion.user.type_user_id === 3 || this.userSesion.user.type_user_id === 1) {
-      this.$router.push({ name: 'home' })
-    }
-  },
   created () {
     // this.entity = this.userSesion.entity
     Object.assign(this.entity, this.userSesion.entity)
 
-    if(this.userSesion.user.type_user_id && this.allPrograms) {
-      this.getAllPrograms({ owner_id: this.userSesion.entity.id })
+    if (this.userSesion.user.type_user_id && this.allPrograms) {
+      this.getAllPrograms({ entity_id: this.userSesion.entity.id })
     }
 
     this.getContactsByEntity(this.entity.id)
@@ -520,7 +516,7 @@ export default {
       })
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms']),
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms', 'setAlert']),
     addContact () {
       let contact = {
         name: '',
@@ -547,6 +543,8 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result && this.verifyRecaptcha) {
+            this.entity.state = 4
+
             this.putEntity(this.entity)
               .then(response => {
                 this.resetContacts([])
@@ -573,8 +571,16 @@ export default {
                 this.$router.push({ name: 'ficha-aprobada' })
               })
               .catch(error => {
+                this.loadingSubmit = false
                 this.statusSubmit = 'error'
-                console.log(error)
+
+                this.setAlert({
+                  text: error.body.message,
+                  state: true,
+                  dismissible: false,
+                  type: 'error',
+                  time: 60000
+                })
               })
             // eslint-disable-next-line
           } else if (!this.verifyRecaptcha) {

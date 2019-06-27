@@ -41,7 +41,7 @@ export default {
       navbarStatus: false
     }
   },
-  mounted () {
+  created () {
     if (!this.ubigeo.regions) {
       this.getRegions()
     }

@@ -44,6 +44,11 @@
           :search="search"
           :pagination.sync="pagination"
         >
+          <template v-slot:no-data>
+            <v-alert :value="true" color="error" icon="warning">
+              No existe informacion de programas
+            </v-alert>
+          </template>
           <template v-slot:items="props">
             <td>
               <div class="c-data-table__entity" @click="openDetail(props.item)">
@@ -176,14 +181,14 @@ export default {
       ]
     }
   },
-  mounted () {
+  created () {
     if (this.allPrograms.length === 0) {
       switch (this.userSesion.user.type_user_id) {
         case 1:
-          this.getAllPrograms({ owner_id: '' })
+          this.getAllPrograms({ entity_id: '' })
           break
         case 2:
-          this.getAllPrograms({ owner_id: this.userSesion.entity.id })
+          this.getAllPrograms({ entity_id: this.userSesion.entity.id })
           break
       }
     }
