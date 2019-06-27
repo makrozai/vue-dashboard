@@ -45,24 +45,26 @@
                 <span>{{ props.item.address }}</span>
               </v-tooltip>
 
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.contacts[0]">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">contact_mail</v-icon>
                   </a>
                 </template>
-                <span>mail@localhost.com</span>
+                <span>{{ contact(props.item.contacts[0]).email }}</span>
               </v-tooltip>
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.contacts[0]">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">phone</v-icon>
                   </a>
                 </template>
-                <span>978 765 4532</span>
+                <span>{{ contact(props.item.contacts[0]).phone }}</span>
               </v-tooltip>
             </td>
-            <td>
+            <td
+              v-if="userSesion.user.type_user_id == 1"
+            >
               <span
                 class="c-badge-status"
                 :class="badgeStatus(props.item.state).class"
@@ -75,7 +77,7 @@
                 :disabled="userSesion.user.type_user_id !== 1 ? true : false"
                 fab
                 small
-                @click.stop="selectEntity(props.item)"
+                @click.stop="selectEntity(props.item, props.index)"
               >
                 <v-icon>edit</v-icon>
               </v-btn>
@@ -146,15 +148,21 @@ export default {
       ]
     }
   },
-  mounted () {
-    if (!this.allEntities.length) {
-      this.getAllEntities()
+  created () {
+    if (this.userSesion.user.type_user_id === 1) {
+      this.getAllEntities({ with_contacts: true, state_in: '1,2,3,4' })
+    } else {
+      this.getAllEntities({ with_contacts: true })
+    }
+
+    if (this.userSesion.user.type_user_id !== 1) {
+      this.headers.splice(4, 1)
     }
   },
   methods: {
     ...mapActions(['getAllEntities', 'setAlert']),
-    selectEntity (value) {
-      this.valueEntity = value
+    selectEntity (value, index) {
+      this.valueEntity = { item: value, index: index }
       this.formDrawner = !this.formDrawner
     },
     responseValid (response) {
@@ -165,7 +173,7 @@ export default {
           state: true,
           dismissible: false,
           type: 'success',
-          time: 60000
+          time: 6000
         })
       }
     },
@@ -173,12 +181,18 @@ export default {
       if (value === 1) {
         return { class: 'success', text: 'Validado' }
       } else if (value === 2) {
-        return { class: 'warning', text: 'Registro incompleto' }
+        return { class: 'invalid', text: 'Incompleto' }
       } else if (value === 3) {
         return { class: 'error', text: 'Rechazado' }
       } else {
-        return { class : 'warning', text: 'Pendiente' }
+        return { class: 'warning', text: 'Pendiente' }
       }
+    },
+    contact (contact) {
+      if (contact) {
+        return { email: contact.email, phone: contact.cellphone }
+      }
+      return ''
     }
   }
 }

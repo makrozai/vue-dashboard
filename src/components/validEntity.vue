@@ -25,7 +25,7 @@
           <v-flex xs8>
             <v-text-field
               disabled
-              v-model="entity.social_reason"
+              v-model="entity.item.social_reason"
               label="Razón social"
               box
             ></v-text-field>
@@ -37,7 +37,7 @@
             ></v-text-field>
           </v-flex>
           <v-flex xs4>
-            <img :src="entity.logo_image_link || require('../assets/default-img.svg')" alt="">
+            <img :src="entity.item.logo_image_link || require('../assets/default-img.svg')" alt="">
           </v-flex>
           <v-flex xs12>
             <v-text-field
@@ -51,7 +51,7 @@
           <v-flex xs12>
             <v-text-field
               disabled
-              v-model="entity.website"
+              v-model="entity.item.website"
               label="Sitio web"
               box
             ></v-text-field>
@@ -71,7 +71,7 @@
           <v-flex xs12>
             <v-text-field
               disabled
-              v-model="entity.main_phone"
+              v-model="entity.item.main_phone"
               label="Numero de teléfono"
               box
             ></v-text-field>
@@ -83,12 +83,20 @@
     <v-card-actions>
       <v-container class="py-0">
         <v-btn
-          :disabled="valid || entity.state == 1"
+          :disabled="entity.item.state == 1"
           large
           color="success"
-          @click="submit"
+          @click="submit(1)"
         >
           {{ textButton }}
+        </v-btn>
+        <v-btn
+          :disabled="entity.item.state == 3"
+          large
+          color="error"
+          @click="submit(3)"
+        >
+          Rechazar
         </v-btn>
       </v-container>
     </v-card-actions>
@@ -101,29 +109,33 @@ import { mapState, mapActions } from 'vuex'
 export default {
   props: ['entity'],
   computed: {
-    ...mapState(['allEntities', 'ubigeo','typeEntities', 'lines']),
+    ...mapState(['allEntities', 'ubigeo', 'typeEntities', 'lines']),
     fullName () {
-      let namePlaceholder = 'RUC ' + this.entity.ruc + ' ' + this.entity.name
+      let namePlaceholder = 'RUC ' + this.entity.item.ruc + ' ' + this.entity.item.name
 
       return namePlaceholder.toUpperCase()
     },
     addressComplete () {
-      let districtLabel = this.ubigeo.districts.filter(item => item.id === this.entity.districts_id)[0]
-      let provinceLabel = this.ubigeo.provinces.filter(item => item.id === this.entity.provinces_id)[0]
-      let regionLabel = this.ubigeo.regions.filter(item => item.id === this.entity.regions_id)[0]
+      let districtLabel = this.ubigeo.districts.filter(item => item.id === this.entity.item.districts_id)[0] || ''
+      let provinceLabel = this.ubigeo.provinces.filter(item => item.id === this.entity.item.provinces_id)[0] || ''
+      let regionLabel = this.ubigeo.regions.filter(item => item.id === this.entity.item.regions_id)[0] || ''
 
-      return this.entity.address + ' - ' + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
+      if(this.entity.address) {
+        return this.entity.address  + ' - ' + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
+      }
+      return districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
+
     },
     typeEntity () {
-      if(this.entity.line_id){
-        let nameEntity = this.typeEntities.filter(item => item.id === this.entity.type_entity_id)[0]
+      if (this.entity.item.line_id) {
+        let nameEntity = this.typeEntities.filter(item => item.id === this.entity.item.type_entity_id)[0]
         return nameEntity.name
       }
       return 'error al encontrar'
     },
     typeLine () {
-      if(this.entity.line_id){
-        let nameLine = this.lines.filter(item => item.id === this.entity.line_id)[0]
+      if (this.entity.item.line_id) {
+        let nameLine = this.lines.filter(item => item.id === this.entity.item.line_id)[0]
         return nameLine.name
       }
       return 'error al encontrar'
@@ -131,21 +143,17 @@ export default {
   },
   data () {
     return {
-      textButton : 'Validar',
+      textButton: 'Validar',
       valid: false
     }
   },
   methods: {
-    ...mapActions(['putEntity','getAllEntities']),
-    submit () {
-      console.log('validado', this.entity.id)
-      this.putEntity({ id: this.entity.id, state: 1 })
+    ...mapActions(['validEntity', 'getAllEntities']),
+    submit (status) {
+      this.validEntity({ state: status, index: this.entity.index, item: this.entity.item })
         .then(response => {
           // esto de aca no se puede quedar asi
-          this.getAllEntities()
-          console.log(response)
           this.textButton = 'Validado'
-          this.valid = true
 
           this.$emit('response-valid', true)
         })

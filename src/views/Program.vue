@@ -185,7 +185,7 @@ export default {
     if (this.allPrograms.length === 0) {
       switch (this.userSesion.user.type_user_id) {
         case 1:
-          this.getAllPrograms({ entity_id: '' })
+          this.getAllPrograms()
           break
         case 2:
           this.getAllPrograms({ entity_id: this.userSesion.entity.id })

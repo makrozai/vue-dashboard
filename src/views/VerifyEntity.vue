@@ -348,7 +348,7 @@
 
           <span class="c-verify-entity__span">Entidades beneficiadas</span>
           <!--@ contenedor de programas-->
-          <div class="c-verify-entity__add-program">
+          <div class="c-verify-entity__add-program px-4">
             <div class="c-verify-entity__add-program__item" v-for="(program, index) in allPrograms" :key="index">
               <img :src="program.logo_image_link || require('../assets/default-img.svg')" alt="">
               <div class="information">
@@ -356,11 +356,12 @@
                 <span>{{ program.start_date }} hasta la actualidad</span>
               </div>
               <v-btn
+                :disabled="program.owner_id != userSesion.entity.id"
                 fab
                 small
                 outline
                 color="error"
-                @click="removeProgram(index)"
+                @click="removeProgram(index, program.id)"
               >
                 <v-icon dark>remove</v-icon>
               </v-btn>
@@ -497,6 +498,9 @@ export default {
     }
   },
   created () {
+    if (this.userSesion.entity.state !== 2) {
+      this.$router.push({ name: 'home' })
+    }
     // this.entity = this.userSesion.entity
     Object.assign(this.entity, this.userSesion.entity)
 
@@ -516,7 +520,7 @@ export default {
       })
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms', 'setAlert']),
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms', 'setAlert', 'deleteProgram']),
     addContact () {
       let contact = {
         name: '',
@@ -531,8 +535,21 @@ export default {
       }
       this.perfilContact.push(contact)
     },
-    removeProgram (index) {
-      this.programs.splice(index, 1)
+    removeProgram (indexParam, idParam) {
+      // this.programs.splice(index, 1)
+      this.deleteProgram({ index: indexParam, id: idParam })
+        .then(response => {
+          this.setAlert({
+            text: response.body.message,
+            state: true,
+            dismissible: false,
+            type: 'success',
+            time: 2000
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     getNameSpace (name, value) {
       return name + ' ' + value

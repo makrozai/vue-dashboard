@@ -914,4 +914,9 @@
   padding: .3em 1em;
   border-radius: 1em;
   color: white;
+
+  &.invalid {
+    background: darken(#f5f5f5,30);
+  }
+
 }

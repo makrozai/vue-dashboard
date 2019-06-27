@@ -18,7 +18,7 @@ const programsService = {
   },
   getAll: (payload) => {
     return new Promise((resolve, reject) => {
-      Vue.http.get(`programs?entity_id=${payload.entity_id}`)
+      Vue.http.get(`programs?${payload}`)
         .then(response => {
           // enruta correctamente a la respuesta
           response = response.body.data.programs
@@ -27,6 +27,17 @@ const programsService = {
         })
         .catch(error => {
           // retornna error
+          reject(error)
+        })
+    })
+  },
+  delete: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.delete(`programs/${payload}`)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
           reject(error)
         })
     })

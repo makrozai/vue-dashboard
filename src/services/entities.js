@@ -46,7 +46,7 @@ const entitiesService = {
   },
   getAll: (payload) => {
     return new Promise((resolve, reject) => {
-      Vue.http.get('entities')
+      Vue.http.get(`entities?${payload}`)
         .then(response => {
           // enruta correctamente el usuario a la respuesta
           response = response.body.data.entities

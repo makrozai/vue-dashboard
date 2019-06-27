@@ -125,6 +125,9 @@ const store = new Vuex.Store({
     setEntity (state, payload) {
       state.placeholderEntity = payload
     },
+    validEntity (state, payload) {
+      state.allEntities[payload.index] = payload.item
+    },
     setPartaker (state, payload) {
       state.placeholderPartaker = payload
     },
@@ -178,6 +181,9 @@ const store = new Vuex.Store({
     },
     setAllPrograms (state, payload) {
       state.allPrograms = payload
+    },
+    deleteProgram (state, payload) {
+      state.allPrograms.splice(payload, 1)
     },
     setOtherContact (state, payload) {
       state.otherContact = payload
@@ -399,6 +405,19 @@ const store = new Vuex.Store({
           })
       })
     },
+    validEntity (context, payload) {
+      return new Promise((resolve, reject) => {
+        entitiesService.put({ id: payload.item.id, state: payload.state })
+          .then(response => {
+            payload.item.state = payload.state
+            context.commit('validEntity', payload.item)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     getContactsByEntity (context, payload) {
       return new Promise((resolve, reject) => {
         contactsService.getByEntity(payload)
@@ -477,8 +496,15 @@ const store = new Vuex.Store({
       })
     },
     getAllEntities (context, payload) {
+      let dataFilters = ''
+      if (payload) {
+        dataFilters = Object.entries(payload)
+          .map(pair => pair.map(encodeURIComponent).join('='))
+          .join('&')
+      }
+
       return new Promise((resolve, reject) => {
-        entitiesService.getAll()
+        entitiesService.getAll(dataFilters)
           .then(response => {
             this.commit('setAllEntities', response)
             resolve(response)
@@ -488,12 +514,30 @@ const store = new Vuex.Store({
           })
       })
     },
-
     getAllPrograms (context, payload) {
+      let dataFilters = ''
+      if (payload) {
+        dataFilters = Object.entries(payload)
+          .map(pair => pair.map(encodeURIComponent).join('='))
+          .join('&')
+      }
+
       return new Promise((resolve, reject) => {
-        programsService.getAll(payload)
+        programsService.getAll(dataFilters)
           .then(response => {
             this.commit('setAllPrograms', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    deleteProgram (context, payload) {
+      return new Promise((resolve, reject) => {
+        programsService.delete(payload.id)
+          .then(response => {
+            this.commit('deleteProgram', payload.index)
             resolve(response)
           })
           .catch(error => {
