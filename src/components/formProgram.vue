@@ -87,7 +87,7 @@
 
               <v-flex xs12>
                 <!--@ contenedor de programas-->
-                  <card-entity :entities="programOwn.entities" only-remove ></card-entity>
+                  <card-entity :entities="programOwn.entities" only-remove @remove-item="removeEntity"></card-entity>
                   <!--@ contenedor de programas-->
               </v-flex>
             </template>
@@ -318,14 +318,13 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            console.log('formulario enviado correctamente')
             if (this.programOwn.entities.length > 1) {
               this.programOwn.entities = this.getArrayByObjs(this.programOwn.entities)
             }
+            // eliminar elementos replicados de entidades
             this.programOwn.entities.push(this.userSesion.entity.id)
             this.programOwn.entities = [...new Set(this.programOwn.entities)]
 
-            console.log(this.programOwn)
             this.saveProgram(this.programOwn)
               .then(response => {
                 this.resetFields()
@@ -340,17 +339,28 @@ export default {
         })
     },
     addEntityGroup () {
-      console.log(this.entityModel)
       if (typeof this.entityModel === 'object' && this.entityModel) {
-        this.programOwn.entities.push(this.entityModel)
-        console.log('se guardo')
+        // agrega entidad a la lista
+        this.validateDuplicateEntity(this.entityModel)
         this.entityModel = null
       } else {
-        console.log('se abrira el modal')
+        // se abre el modal para agregar otra entidad
         this.dialog = true
       }
 
       // this.programs.push(entityModel)
+    },
+    validateDuplicateEntity (id) {
+      let duplicate = false
+      this.programOwn.entities.forEach(item => {
+        if (item.id === id.id) {
+          console.log('elemento duplibado')
+          duplicate = true
+        }
+      })
+      if (!duplicate) {
+        this.programOwn.entities.push(this.entityModel)
+      }
     },
     addOtherEntity (value) {
       this.programOwn.entities.push(value)
@@ -382,6 +392,9 @@ export default {
       this.programOwn.instagram = ''
       this.programOwn.entities = []
       this.$validator.reset()
+    },
+    removeEntity (index) {
+      this.programOwn.entities.splice(index, 1)
     }
   }
 }

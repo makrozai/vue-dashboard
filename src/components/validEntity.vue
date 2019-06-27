@@ -120,25 +120,24 @@ export default {
       let provinceLabel = this.ubigeo.provinces.filter(item => item.id === this.entity.item.provinces_id)[0] || ''
       let regionLabel = this.ubigeo.regions.filter(item => item.id === this.entity.item.regions_id)[0] || ''
 
-      if(this.entity.address) {
-        return this.entity.address  + ' - ' + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
+      if (this.entity.address) {
+        return this.entity.address + ' - ' + districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
       }
       return districtLabel.name + ', ' + provinceLabel.name + ' | ' + regionLabel.name
-
     },
     typeEntity () {
       if (this.entity.item.line_id) {
         let nameEntity = this.typeEntities.filter(item => item.id === this.entity.item.type_entity_id)[0]
         return nameEntity.name
       }
-      return 'error al encontrar'
+      return 'no selecionó tipo de entidad'
     },
     typeLine () {
       if (this.entity.item.line_id) {
         let nameLine = this.lines.filter(item => item.id === this.entity.item.line_id)[0]
         return nameLine.name
       }
-      return 'error al encontrar'
+      return 'no seleccionó rubro'
     }
   },
   data () {

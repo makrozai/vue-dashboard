@@ -15,6 +15,7 @@
           :color="colorButton"
           :outline="colorButton == 'error' ? true : false"
           v-if="onlyEdit == null"
+          @click="removeItem(index)"
         >
           <v-icon>remove</v-icon>
         </v-btn>
@@ -61,9 +62,16 @@ export default {
     }
   },
   created () {
+    // modifica el boton en caso el componente sirva para solo eliminar
     if (this.onlyRemove != null) {
       this.colorButton = 'error'
     } else {
+    }
+  },
+  methods: {
+    removeItem (index) {
+      console.log(index)
+      this.$emit('remove-item', index)
     }
   }
 }
