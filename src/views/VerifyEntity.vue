@@ -349,10 +349,10 @@
           <span class="c-verify-entity__span">Entidades beneficiadas</span>
           <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-program">
-            <div class="c-verify-entity__add-program__item" v-for="(program, index) in userSesion.entity.programs" :key="index">
+            <div class="c-verify-entity__add-program__item" v-for="(program, index) in allPrograms" :key="index">
               <img :src="program.logo_image_link || require('../assets/default-img.svg')" alt="">
               <div class="information">
-                <p>{{ program.name }} {{ index }}</p>
+                <p>{{ program.name }}</p>
                 <span>{{ program.start_date }} hasta la actualidad</span>
               </div>
               <v-btn
@@ -450,7 +450,7 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha, FormProgram, UploadImage },
   computed: {
-    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities', 'recaptchaCode']),
+    ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities', 'recaptchaCode', 'allPrograms']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
@@ -504,6 +504,10 @@ export default {
     // this.entity = this.userSesion.entity
     Object.assign(this.entity, this.userSesion.entity)
 
+    if(this.userSesion.user.type_user_id && this.allPrograms) {
+      this.getAllPrograms({ owner_id: this.userSesion.entity.id })
+    }
+
     this.getContactsByEntity(this.entity.id)
       .then(response => {
         this.perfilContact = response
@@ -516,7 +520,7 @@ export default {
       })
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image']),
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms']),
     addContact () {
       let contact = {
         name: '',
