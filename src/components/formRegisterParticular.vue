@@ -6,9 +6,6 @@
     <form class="c-form-home__inputs" @submit.prevent="submit">
       <v-layout wrap>
         <v-flex xs12>
-          <p class="mt-0">Ingresa un contraseña legible y segura para la validación y contacto de la plataforma.</p>
-        </v-flex>
-        <v-flex xs12>
           <v-text-field
             :disabled="loadingSubmit"
             v-model="userInfo.email"
@@ -41,7 +38,7 @@
         <v-flex xs12>
           <p class="mt-0">Indícanos datos de contacto para la validación y contacto de la cuenta</p>
         </v-flex>
-        <v-flex xs4>
+        <v-flex xs6>
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.name"
@@ -55,7 +52,7 @@
             box
           ></v-text-field>
         </v-flex>
-        <v-flex xs8>
+        <v-flex xs6>
           <v-text-field
             :disabled="loadingSubmit"
             v-model="partakerInfo.lastname"
@@ -148,6 +145,9 @@
             ></v-progress-circular>
           </v-btn>
         </v-flex>
+        <p class="text-xs-center">¿Ya tienes una cuenta?
+          <router-link :to="{name:'login'}" class="red--text">Inicia sesión</router-link>
+        </p>
       </v-layout>
     </form>
     <!--@FORM LAYOUT END-->

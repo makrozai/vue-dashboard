@@ -145,7 +145,7 @@ const router = new Router({
           component: acceptEntity,
           meta: {
             Auth: true,
-            title: 'Aprovación de Entidad'
+            title: 'Aprobación de Entidad'
           }
         },
         {
@@ -154,7 +154,7 @@ const router = new Router({
           component: indicators,
           meta: {
             Auth: true,
-            title: 'Aprovación de Entidad'
+            title: 'Indicadores'
           }
         },
         {
@@ -163,7 +163,7 @@ const router = new Router({
           component: inversion,
           meta: {
             Auth: true,
-            title: 'Aprovación de Entidad'
+            title: 'Inversion'
           }
         },
         {
@@ -172,7 +172,7 @@ const router = new Router({
           component: typeInversion,
           meta: {
             Auth: true,
-            title: 'Aprovación de Entidad'
+            title: 'Tipo de Inversión'
           }
         },
         {
@@ -181,7 +181,7 @@ const router = new Router({
           component: home,
           meta: {
             Auth: true,
-            title: 'Aprovación de Entidad'
+            title: 'Inicio'
           }
         }
       ]

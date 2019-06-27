@@ -1,5 +1,5 @@
 <template>
-  <v-flex md7 xs12 class="hidden-sm-and-down c-slider">
+  <v-flex md6 lg7 xs12 class="hidden-sm-and-down c-slider">
     <v-carousel
       height="100vh"
       hide-controls

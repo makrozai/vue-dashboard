@@ -19,6 +19,15 @@
     >
       <i class="icon-trash"></i>
     </v-btn>
+
+    <div class="c-upload__loader" v-if="loaderImage">
+      <v-progress-circular
+        :size="40"
+        :width="5"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </div>
   </label>
 </template>
 
@@ -31,6 +40,7 @@ export default {
   },
   data () {
     return {
+      loaderImage: false,
       imageId: null,
       // eslint-disable-next-line
       imageProfile: require('../assets/default-img.svg'),
@@ -47,6 +57,7 @@ export default {
   methods: {
     ...mapActions(['saveImage', 'deleleImage']),
     updateImage () {
+      this.loaderImage = true
       if (this.$refs.myFiles.files[0]) {
         let file = this.$refs.myFiles.files[0]
 
@@ -59,9 +70,11 @@ export default {
             this.imageProfile = response.link
             this.imageId = response.id
             this.disabledUpload = true
+            this.loaderImage = false
             this.$emit('image-resolve', this.imageId)
           })
           .catch(error => {
+            this.loaderImage = false
             console.log(error)
           })
       } else {

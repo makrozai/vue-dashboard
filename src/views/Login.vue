@@ -7,7 +7,7 @@
       </a>
     </div>
     <slider-home></slider-home>
-    <v-flex md5 xs12 offset-md7 class="c-form-home">
+    <v-flex md6 lg5 xs12 offset-md6 offset-lg7 class="c-form-home">
       <v-btn
         fab
         color="primary"
