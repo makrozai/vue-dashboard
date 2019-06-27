@@ -190,7 +190,7 @@ const router = new Router({
 })
 // gestion de cambios de ruta
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title
+  document.title = to.meta.title + ' - EXE'
   if (to.meta.Auth && !store.state.logged) {
     next({ name: 'login' })
   } else {

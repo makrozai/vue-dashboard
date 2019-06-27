@@ -68,6 +68,14 @@
       max-width: 550px;
     }
   }
+  &--register{
+    p{
+      color: rgba(0,0,0,0.54);
+    }
+    .v-radio label, .v-input--checkbox label{
+      color: black;
+    }
+  }
 
 }
 .v-input, .v-label, .v-list__tile{
