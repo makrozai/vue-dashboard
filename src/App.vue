@@ -1,13 +1,15 @@
 <template>
   <v-app>
-    <div class="c-page-preload" v-if="preloadIframe">
-      <v-progress-circular
-        :size="70"
-        :width="7"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-    </div>
+    <transition>
+      <div class="c-page-preload" v-show="preloadIframe">
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </div>
+    </transition>
     <v-content>
 
       <v-snackbar
