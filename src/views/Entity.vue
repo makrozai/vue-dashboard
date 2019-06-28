@@ -2,15 +2,29 @@
   <v-container class="c-container-dashboard">
     <v-layout wrap>
       <v-flex
-        xs12
-        class="c-dashboard-title mb-4"
+        xs12 md6 lg8
+        class="c-dashboard-title"
       >
         <h2>Entidades</h2>
       </v-flex>
-      <v-flex xs12>
+      <v-flex
+        xs12 md6 lg4
+        class="c-dashboard-input"
+      >
+        <v-text-field
+          box
+          label="Busqueda de entidades"
+          prepend-inner-icon="search"
+          hide-details
+          v-model="search"
+        ></v-text-field>
+
+      </v-flex>
+      <v-flex xs12 class="mt-5">
         <v-data-table
           :headers="headers"
           :items="allEntities"
+          :search="search"
           item-key="id"
           class="c-data-table"
           :pagination.sync="pagination"
@@ -109,6 +123,7 @@ export default {
   },
   data () {
     return {
+      search: '',
       valueEntity: null,
       formDrawner: null,
       pagination: {
