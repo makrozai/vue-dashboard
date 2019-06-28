@@ -41,6 +41,19 @@ const programsService = {
           reject(error)
         })
     })
+  },
+  put: (payload) => {
+    console.log('ingresa al update service')
+    return new Promise((resolve, reject) => {
+      Vue.http.put(`programs/${payload.id}`, payload)
+        .then(response => {
+          response = response.body.data.program
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }
 

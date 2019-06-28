@@ -312,7 +312,7 @@ export default {
     this.programOwn.owner_id = this.userSesion.entity.id
 
     if (this.allEntities.length === 0) {
-      this.getAllEntities()
+      this.getAllEntities({ state_in: '1,2,4' })
     }
   },
   methods: {

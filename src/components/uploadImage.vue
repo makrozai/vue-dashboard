@@ -47,6 +47,19 @@ export default {
       disabledUpload: false
     }
   },
+  watch: {
+    image (value) {
+      if(!value.url) {
+        this.imageProfile = require('../assets/default-img.svg')
+        this.disabledUpload = false
+        this.imageId = null
+      } else {
+        this.imageId = this.image.id
+        this.disabledUpload = true
+        this.imageProfile = this.image.url
+      }
+    }
+  },
   created () {
     if (this.image && this.image.id) {
       this.imageId = this.image.id

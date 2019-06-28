@@ -14,6 +14,7 @@
           small
           :color="colorButton"
           :outline="colorButton == 'error' ? true : false"
+          :disabled="disabled"
           v-if="onlyEdit == null"
           @click="removeItem(index)"
         >
@@ -55,7 +56,7 @@
 
 <script>
 export default {
-  props: ['entities', 'onlyRemove', 'onlyEdit'],
+  props: ['entities', 'onlyRemove', 'onlyEdit','disabled'],
   data () {
     return {
       colorButton: 'primary'

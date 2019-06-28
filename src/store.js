@@ -186,6 +186,16 @@ const store = new Vuex.Store({
     setAllPrograms (state, payload) {
       state.allPrograms = payload
     },
+    updateProgram (state, payload) {
+      console.log('ingresa al update mutation')
+      let dataIndex
+      state.allPrograms.forEach((element, index) => {
+        if (element.id === payload) {
+          dataIndex = index
+        }
+      })
+      state.allPrograms[dataIndex] = payload
+    },
     deleteProgram (state, payload) {
       state.allPrograms.splice(payload, 1)
     },
@@ -492,6 +502,19 @@ const store = new Vuex.Store({
         programsService.save(payload)
           .then(response => {
             context.commit('setProgram', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    updateProgram (context, payload) {
+      console.log('ingresa al update action')
+      return new Promise((resolve, reject) => {
+        programsService.put(payload)
+          .then(response => {
+            context.commit('updateProgram', response)
             resolve(response)
           })
           .catch(error => {
