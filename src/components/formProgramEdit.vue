@@ -345,9 +345,7 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            if (this.programOwn.entities.length > 1) {
               this.programOwn.entities = this.getArrayByObjs(this.programOwn.entities)
-            }
             // eliminar elementos replicados de entidades
             this.programOwn.entities = [...new Set(this.programOwn.entities)]
 
