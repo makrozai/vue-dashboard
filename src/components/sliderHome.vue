@@ -17,34 +17,34 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        items: [
-          {
-            title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y Cajamarca',
-            // eslint-disable-next-line
-            src: require('../assets/slider-1.jpg')
-          },
-          {
-            title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-            // eslint-disable-next-line
-            src: require('../assets/slider-2.jpg')
-          },
-          {
-            title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-            // eslint-disable-next-line
-            src: require('../assets/slider-5.jpg')
-          },
-          {
-            title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
-            // eslint-disable-next-line
-            src: require('../assets/slider-4.jpg')
-          }
-        ],
-      }
+export default {
+  data () {
+    return {
+      items: [
+        {
+          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y Cajamarca',
+          // eslint-disable-next-line
+          src: require('../assets/slider-1.jpg')
+        },
+        {
+          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
+          // eslint-disable-next-line
+          src: require('../assets/slider-2.jpg')
+        },
+        {
+          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
+          // eslint-disable-next-line
+          src: require('../assets/slider-5.jpg')
+        },
+        {
+          title: 'Se beneficiaron un 11% de alumnos en Lima, La Libertad y',
+          // eslint-disable-next-line
+          src: require('../assets/slider-4.jpg')
+        }
+      ]
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

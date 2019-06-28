@@ -73,7 +73,7 @@
       <!--@ informacion de entidad-->
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
-          <div class="c-verify-entity__section complete">
+          <div class="c-verify-entity__section">
             <span>1</span>
           </div>
         </div>
@@ -118,7 +118,7 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="entity.website"
-                v-validate="'required|max:90'"
+                v-validate="{required: true,url: {require_protocol: true }}"
                 maxlength="90"
                 :error-messages="errors.collect('sitio web')"
                 label="Sitio web"
@@ -202,14 +202,14 @@
           </div>
         </div>
         <div class="c-verify-entity__row-large">
-          <h3 class="c-verify-entity__title">Información contacto directo con Empresarios por la educación</h3>
+          <h3 class="c-verify-entity__title">Información de contacto directo con Empresarios por la Educación</h3>
 
           <v-layout wrap v-for="(perfil, index) in perfilContact" :key="index">
             <v-flex xs12 class="mt-4" v-if="index > 0">
               <h3 class="c-verify-entity__subtitle">Información del contacto {{ index + 1 }}</h3>
               <v-divider class="mt-3 mb-4"></v-divider>
             </v-flex>
-            <v-flex xs12 md7>
+            <v-flex xs12 md6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.name"
@@ -223,7 +223,7 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12 md5>
+            <v-flex xs12 md6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.lastname"
@@ -237,7 +237,7 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12 md7>
+            <v-flex xs12 md6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.position"
@@ -251,7 +251,7 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12 md5>
+            <v-flex xs12 md6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.nro_doc"
@@ -325,7 +325,7 @@
             </v-flex>
           </v-layout>
           <div class="c-verify-entity__add-contact" v-if="perfilContact.length < 2">
-            <v-btn fab dark  color="primary" @click="addContact">
+            <v-btn fab dark small color="primary" @click="addContact">
               <v-icon dark>add</v-icon>
             </v-btn>
             <span>Agregar otro contacto</span>
@@ -346,7 +346,6 @@
           <h3 class="c-verify-entity__title">Programas</h3>
           <p class="c-verify-entity__subtitle">Ingresa mínimo un programa</p>
 
-          <span class="c-verify-entity__span">Entidades beneficiadas</span>
           <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-program px-4">
             <div class="c-verify-entity__add-program__item" v-for="(program, index) in allPrograms" :key="index">
@@ -369,10 +368,10 @@
           </div>
           <!--@ contenedor de programas-->
           <div class="c-verify-entity__add-contact">
-            <v-btn fab color="primary" @click="dialog = true">
+            <v-btn fab small color="primary" @click="dialog = true">
               <v-icon>add</v-icon>
             </v-btn>
-            <span>Agregar otro contacto</span>
+            <span>Agregar programa</span>
           </div>
 
         </div>
@@ -552,7 +551,7 @@ export default {
         })
     },
     getNameSpace (name, value) {
-      return name + ' ' + value
+      return name + ' ' + (value + 1)
     },
     submit () {
       this.loadingSubmit = true

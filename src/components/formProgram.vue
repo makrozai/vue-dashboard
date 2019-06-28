@@ -179,7 +179,7 @@
             <v-flex xs12>
               <v-text-field
                 v-model="programOwn.website"
-                v-validate="'required'"
+                v-validate="{required: true,url: {require_protocol: true }}"
                 :error-messages="errors.collect('sitio web')"
                 data-vv-name="sitio web"
                 @keyup.enter="submit"
@@ -197,6 +197,7 @@
                 v-model="programOwn.twitter"
                 :error-messages="errors.collect('twitter')"
                 data-vv-name="twitter"
+                v-validate="{url: {require_protocol: true }}"
                 @keyup.enter="submit"
                 label="Twitter"
                 box
@@ -206,10 +207,10 @@
             </v-flex>
             <v-flex xs6>
               <v-text-field
-
                 v-model="programOwn.facebook"
                 :error-messages="errors.collect('facebook')"
                 data-vv-name="facebook"
+                v-validate="{url: {require_protocol: true }}"
                 @keyup.enter="submit"
                 label="Facebook"
                 box
@@ -222,6 +223,7 @@
                 v-model="programOwn.youtube"
                 :error-messages="errors.collect('youtube')"
                 data-vv-name="youtube"
+                v-validate="{url: {require_protocol: true }}"
                 @keyup.enter="submit"
                 label="Youtube"
                 box
@@ -234,6 +236,7 @@
                 v-model="programOwn.instagram"
                 :error-messages="errors.collect('instagram')"
                 data-vv-name="instagram"
+                v-validate="{url: {require_protocol: true }}"
                 @keyup.enter="submit"
                 label="Intagram"
                 box
