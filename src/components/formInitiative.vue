@@ -7,11 +7,12 @@
 
             <v-flex xs12 class="c-input__button-action">
               <v-select
-                v-model="initiativeData.program"
-                :items="programs"
+                v-model="programSelected"
+                :items="allPrograms"
                 item-text="name"
-                item-value="name"
+                item-value="id"
                 v-validate="'required'"
+                return-object
                 :error-messages="errors.collect('programa')"
                 label="Seleccionar el programa"
                 data-vv-name="programa"
@@ -21,11 +22,11 @@
               >
                 <template v-slot:item="data">
                   <v-list-tile-avatar>
-                    <img :src="data.item.avatar">
+                    <img :src="data.item.logo_image_link || require('../assets/default-img.svg')">
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-html="data.item.type_program_name"></v-list-tile-sub-title>
                   </v-list-tile-content>
                 </template>
               </v-select>
@@ -35,15 +36,15 @@
             </v-flex>
 
             <v-flex xs12>
-              <div class="c-card-program">
+              <div class="c-card-program" v-if="programSelected">
                 <div class="c-card-program__image">
-                  <img src="../assets/default-img.svg" alt="">
-                  <div class="c-card-program__image__icon">
-                    <img src="../assets/icons/user.svg" alt="">
+                  <img :src="programSelected.logo_image_link || require('../assets/default-img.svg')" alt="">
+                  <div class="c-card-program__image__icon" v-if="programSelected.entities.length !== 0">
+                    <img  :src="programSelected.entities[0].logo_image_link || require('../assets/icons/user.svg')" alt="">
                   </div>
                 </div>
                 <p class="c-card-project__description">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia omnis nostrum, natus ipsam quo quidem fugit dignissimos dicta doloribus modi neque sunt ex provident. Porro enim tempora modi labore mollitia?
+                  {{ programSelected.description }}
                 </p>
               </div>
             </v-flex>
@@ -62,14 +63,14 @@
               <v-dialog
                 ref="dialog"
                 v-model="dateStartModal"
-                :return-value.sync="initiativeData.date"
+                :return-value.sync="initiativeData.program_id"
                 lazy
                 full-width
                 width="290px"
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="initiativeData.date"
+                    v-model="initiativeData.program_id"
                     v-validate="'required'"
                     :error-messages="errors.collect('año de inicio')"
                     label="Año de inicio"
@@ -79,16 +80,16 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="initiativeData.date" type="month" locale="es" scrollable>
+                <v-date-picker v-model="initiativeData.program_id" type="month" locale="es" scrollable>
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dialog.save(initiativeData.date)">OK</v-btn>
+                  <v-btn flat color="primary" @click="$refs.dialog.save(initiativeData.program_id)">OK</v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-flex>
             <v-flex xs6>
               <v-select
-                v-model="initiativeData.period"
+                v-model="initiativeData.intervention_period"
                 :items="typeLines"
                 item-text="name"
                 item-value="id"
@@ -104,26 +105,30 @@
               <h3>Entidad(es) comprometida(s)</h3>
             </v-flex>
             <!--autocompletado-->
-            <v-flex xs12>
+            <v-flex xs12 class="c-input__button-action">
               <v-combobox
                 v-model="entitySelect"
-                :items="people"
+                :items="allEntities"
                 label="Buscar entidad comprometida"
                 item-text="name"
-                item-value="name"
+                item-value="id"
                 prepend-inner-icon="search"
+                return-object
                 box
               >
                 <template v-slot:item="data">
                   <v-list-tile-avatar>
-                    <img :src="data.item.avatar">
+                    <img :src="data.item.logo_image_link || require('../assets/default-img.svg')">
                   </v-list-tile-avatar>
                   <v-list-tile-content>
                     <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-html="data.item.ruc"></v-list-tile-sub-title>
                   </v-list-tile-content>
                 </template>
               </v-combobox>
+              <v-btn fab small color="primary" class="mt-2">
+                <v-icon>add</v-icon>
+              </v-btn>
             </v-flex>
             <!--autocompletado-->
             <v-flex xs12>
@@ -189,14 +194,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import CardEntity from './cardEntity'
 import CardBenefit from './cardBenefit'
 
 export default {
   components: { CardEntity, CardBenefit },
   computed: {
-    ...mapState(['userSesion']),
+    ...mapState(['userSesion', 'allPrograms', 'allEntities']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -204,12 +209,13 @@ export default {
   },
   data () {
     return {
+      programSelected: null,
       dateStartModal: false,
       initiativeData: {
-        program: null,
+        program_id: null,
         name: '',
-        date: new Date().toISOString().substr(0, 7),
-        period: null,
+        program_id: new Date().toISOString().substr(0, 7),
+        intervention_period: null,
         inversion: null
       },
       // placeholder
@@ -355,7 +361,30 @@ export default {
       ]
     }
   },
+  created () {
+    if (this.allPrograms.length === 0) {
+      // en caso el usuario es tipo entidad
+      if (this.userSesion.user.type_user_id === 2) {
+        this.getAllPrograms({ entity_id: this.userSesion.user.entity.id })
+          .then(response => {
+
+          })
+      }
+      // en caso el usuario es tipo administrador
+      if (this.userSesion.user.type_user_id === 1) {
+        this.getAllPrograms()
+          .then(response => {
+
+          })
+      }
+
+    }
+    if(this.allEntities.length === 0) {
+      this.getAllEntities({ state_in: '1,2,4' })
+    }
+  },
   methods: {
+    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries']),
     submit () {
       this.$validator.validateAll()
         .then(result => {

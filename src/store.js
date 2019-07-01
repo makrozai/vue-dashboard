@@ -14,6 +14,7 @@ import typeProgramsService from './services/typePrograms'
 import contactsService from './services/contacts'
 import programsService from './services/programs'
 import imagesService from './services/images'
+import beneficiariesServices from './services/beneficiaries'
 
 Vue.use(Vuex)
 
@@ -81,7 +82,8 @@ const store = new Vuex.Store({
     allPrograms: [],
     recoverPass: null,
     website: 'https://exe.combativa.com/',
-    preloadIframe: false
+    preloadIframe: false,
+    allBeneficiaries: []
   },
   getters: {
     getTypeProvinces: (state) => (id) => {
@@ -201,6 +203,9 @@ const store = new Vuex.Store({
     },
     setOtherContact (state, payload) {
       state.otherContact = payload
+    },
+    setAllBeneficiaries (state, payload) {
+      state.allBeneficiaries = payload
     }
 
   },
@@ -577,6 +582,25 @@ const store = new Vuex.Store({
         contactsService.save(payload)
           .then(response => {
             context.commit('setOtherContact', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getAllBeneficiaries (context, payload) {
+      let dataFilters = ''
+      if (payload) {
+        dataFilters = Object.entries(payload)
+          .map(pair => pair.map(encodeURIComponent).join('='))
+          .join('&')
+      }
+
+      return new Promise((resolve, reject) => {
+        beneficiariesServices.getAll(dataFilters)
+          .then(response => {
+            this.commit('setAllBeneficiaries', response)
             resolve(response)
           })
           .catch(error => {
