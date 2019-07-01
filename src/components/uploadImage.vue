@@ -49,7 +49,8 @@ export default {
   },
   watch: {
     image (value) {
-      if(!value.url) {
+      if (!value.url) {
+        // eslint-disable-next-line
         this.imageProfile = require('../assets/default-img.svg')
         this.disabledUpload = false
         this.imageId = null

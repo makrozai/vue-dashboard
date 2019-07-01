@@ -330,7 +330,6 @@ export default {
   created () {
     this.programOwn = Object.assign({}, this.program)
 
-
     if (this.allEntities.length === 0) {
       this.getAllEntities({ state_in: '1,2,4' })
         .then(response => {
@@ -341,7 +340,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'getAllEntities','updateProgram']),
+    ...mapActions([ 'getAllEntities', 'updateProgram' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {
@@ -419,14 +418,13 @@ export default {
       this.programOwn.entities.splice(index, 1)
     },
     nameEntity () {
-        let fullname = this.allEntities.filter(item => item.id === this.program.owner_id)
-        if(fullname.length > 0) {
-          fullname = 'RUC ' + fullname[0].ruc + ' ' + fullname[0].name
-          this.fullnameEntity = fullname.toUpperCase()
-        } else {
-          this.fullnameEntity = ''
-        }
-
+      let fullname = this.allEntities.filter(item => item.id === this.program.owner_id)
+      if (fullname.length > 0) {
+        fullname = 'RUC ' + fullname[0].ruc + ' ' + fullname[0].name
+        this.fullnameEntity = fullname.toUpperCase()
+      } else {
+        this.fullnameEntity = ''
+      }
     }
   }
 }

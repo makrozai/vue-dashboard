@@ -63,14 +63,14 @@
               <v-dialog
                 ref="dialog"
                 v-model="dateStartModal"
-                :return-value.sync="initiativeData.program_id"
+                :return-value.sync="initiativeData.start_date"
                 lazy
                 full-width
                 width="290px"
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="initiativeData.program_id"
+                    v-model="initiativeData.start_date"
                     v-validate="'required'"
                     :error-messages="errors.collect('año de inicio')"
                     label="Año de inicio"
@@ -80,10 +80,10 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="initiativeData.program_id" type="month" locale="es" scrollable>
+                <v-date-picker v-model="initiativeData.start_date" type="month" locale="es" scrollable>
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dialog.save(initiativeData.program_id)">OK</v-btn>
+                  <v-btn flat color="primary" @click="$refs.dialog.save(initiativeData.start_date)">OK</v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-flex>
@@ -126,10 +126,22 @@
                   </v-list-tile-content>
                 </template>
               </v-combobox>
-              <v-btn fab small color="primary" class="mt-2">
+              <v-btn fab small color="primary" class="mt-2" @click="registerInvolved">
                 <v-icon>add</v-icon>
               </v-btn>
+
+              <v-dialog
+                ref="dialog"
+                v-model="addInvolveds"
+                :return-value.sync="initiativeData.start_date"
+                lazy
+                full-width
+                width="500px"
+              >
+                <form-involved :entity="openEntityInvoled"></form-involved>
+              </v-dialog>
             </v-flex>
+
             <!--autocompletado-->
             <v-flex xs12>
               <card-entity :entities="entitiesParticipans"></card-entity>
@@ -168,7 +180,7 @@
             </v-flex>
             <v-flex xs5>
               <v-text-field
-                v-model="initiativeData.inversion"
+                v-model="initiativeData.total_investment_amount"
                 v-validate="'required'"
                 :error-messages="errors.collect('Inversión')"
                 label="Inversión"
@@ -197,9 +209,10 @@
 import { mapState, mapActions } from 'vuex'
 import CardEntity from './cardEntity'
 import CardBenefit from './cardBenefit'
+import FormInvolved from './formInvolved'
 
 export default {
-  components: { CardEntity, CardBenefit },
+  components: { CardEntity, CardBenefit, FormInvolved },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities']),
     entityFullName () {
@@ -209,16 +222,18 @@ export default {
   },
   data () {
     return {
+      addInvolveds: false,
       programSelected: null,
       dateStartModal: false,
       initiativeData: {
         program_id: null,
         name: '',
-        program_id: new Date().toISOString().substr(0, 7),
+        start_date: new Date().toISOString().substr(0, 7),
         intervention_period: null,
-        inversion: null
+        total_investment_amount: null
       },
       // placeholder
+      entityAddDialog: null,
       entitySelect: null,
       benefitSelect: null,
       entitiesParticipans: [
@@ -377,14 +392,13 @@ export default {
 
           })
       }
-
     }
-    if(this.allEntities.length === 0) {
+    if (this.allEntities.length === 0) {
       this.getAllEntities({ state_in: '1,2,4' })
     }
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries']),
+    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {
@@ -395,6 +409,10 @@ export default {
             console.log('bye')
           }
         })
+    },
+    registerInvolved () {
+      this.addInvolveds = true
+      this.entityAddDialog = Object.assign({}, this.entitySelect)
     }
   }
 }

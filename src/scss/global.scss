@@ -942,3 +942,12 @@
   }
 
 }
+.c-form-involveds{
+  &__tabs{
+    .v-window-item{
+      .v-input:last-child{
+        width: 40%;
+      }
+    }
+  }
+}

@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  props: ['entities', 'onlyRemove', 'onlyEdit','disabled'],
+  props: ['entities', 'onlyRemove', 'onlyEdit', 'disabled'],
   data () {
     return {
       colorButton: 'primary'
