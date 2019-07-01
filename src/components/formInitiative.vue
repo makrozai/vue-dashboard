@@ -233,6 +233,7 @@ export default {
         total_investment_amount: null
       },
       // placeholder
+      openEntityInvoled: null,
       entityAddDialog: null,
       entitySelect: null,
       benefitSelect: null,
@@ -412,7 +413,8 @@ export default {
     },
     registerInvolved () {
       this.addInvolveds = true
-      this.entityAddDialog = Object.assign({}, this.entitySelect)
+      this.openEntityInvoled = Object.assign({}, this.entitySelect)
+      console.log(this.openEntityInvoled)
     }
   }
 }

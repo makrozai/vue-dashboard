@@ -9,6 +9,7 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
+              v-model="entityMounth.name"
               label="Razón comercial"
               box
             ></v-text-field>
@@ -89,7 +90,20 @@ export default {
   props: ['entity'],
   data () {
     return {
-      tab: null
+      tab: null,
+      entityMounth: {}
+    }
+  },
+  watch: {
+    entity () {
+      if (this.entity === 'object' && this.entity) {
+        this.entityMounth = this.entity
+      }
+    }
+  },
+  created () {
+    if (this.entity === 'object' && this.entity) {
+      this.entityMounth = this.entity
     }
   },
   methods: {
