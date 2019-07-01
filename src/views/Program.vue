@@ -207,7 +207,9 @@ export default {
       this.programDetail = program
     },
     closeFormDrawner (state) {
+       console.log('cerrar modal')
       this.formDrawner = false
+      this.formDrawnerEdit = false
     }
   }
 }
