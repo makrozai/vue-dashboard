@@ -322,13 +322,14 @@ export default {
       value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
     program (value) {
-      this.programOwn = value
+      this.programOwn = Object.assign({}, value)
       this.nameEntity()
       this.editValues = true
     }
   },
   created () {
-    this.programOwn = this.program
+    this.programOwn = Object.assign({}, this.program)
+
 
     if (this.allEntities.length === 0) {
       this.getAllEntities({ state_in: '1,2,4' })
@@ -340,15 +341,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['saveProgram', 'getAllEntities','updateProgram']),
+    ...mapActions([ 'getAllEntities','updateProgram']),
     submit () {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-              this.programOwn.entities = this.getArrayByObjs(this.programOwn.entities)
-            // eliminar elementos replicados de entidades
-            this.programOwn.entities = [...new Set(this.programOwn.entities)]
-
             this.updateProgram(this.programOwn)
               .then(response => {
                 this.resetFields()

@@ -187,13 +187,13 @@ const store = new Vuex.Store({
       state.allPrograms = payload
     },
     updateProgram (state, payload) {
-      console.log('ingresa al update mutation')
       let dataIndex
       state.allPrograms.forEach((element, index) => {
-        if (element.id === payload) {
+        if (element.id === payload.id) {
           dataIndex = index
         }
       })
+      // console.log('state',state.allPrograms[dataIndex])
       state.allPrograms[dataIndex] = payload
     },
     deleteProgram (state, payload) {
@@ -510,11 +510,11 @@ const store = new Vuex.Store({
       })
     },
     updateProgram (context, payload) {
-      console.log('ingresa al update action')
       return new Promise((resolve, reject) => {
-        programsService.put(payload)
+        let dataObject = Object.assign({}, payload)
+        programsService.put(dataObject)
           .then(response => {
-            context.commit('updateProgram', response)
+            context.commit('updateProgram', dataObject)
             resolve(response)
           })
           .catch(error => {

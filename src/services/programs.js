@@ -43,7 +43,13 @@ const programsService = {
     })
   },
   put: (payload) => {
-    console.log('ingresa al update service')
+    payload = Object.assign({}, payload)
+    let arrayIds = []
+    payload.entities.forEach(item => {
+      arrayIds.push(item.id)
+    })
+    payload.entities = [...new Set(arrayIds)]
+
     return new Promise((resolve, reject) => {
       Vue.http.put(`programs/${payload.id}`, payload)
         .then(response => {

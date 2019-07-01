@@ -120,7 +120,7 @@
         fixed
         width="550"
       >
-        <form-program-edit class="u-form--white" :program="programDetail" v-if="programDetail"></form-program-edit>
+        <form-program-edit class="u-form--white" @modal-state="closeFormDrawner" :program="programDetail" v-if="programDetail"></form-program-edit>
       </v-navigation-drawer>
     </v-layout>
   </v-container>
