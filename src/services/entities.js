@@ -6,8 +6,9 @@ const entitiesService = {
       Vue.http.post('entities', payload)
         .then(response => {
           // enruta correctamente la entidad a la respuesta
-          response = response.body.data.entity
 
+          console.log(response)
+          response = response.body.data.entity
           resolve(response)
         })
         .catch(error => {

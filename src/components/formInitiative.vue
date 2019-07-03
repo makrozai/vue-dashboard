@@ -113,7 +113,6 @@
                 item-text="name"
                 item-value="id"
                 prepend-inner-icon="search"
-                return-object
                 box
               >
                 <template v-slot:item="data">
@@ -138,7 +137,7 @@
                 full-width
                 width="500px"
               >
-                <form-involved :entity="openEntityInvoled"></form-involved>
+                <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled"></form-involved>
               </v-dialog>
             </v-flex>
 
@@ -206,7 +205,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import CardEntity from './cardEntity'
 import CardBenefit from './cardBenefit'
 import FormInvolved from './formInvolved'
@@ -215,6 +214,7 @@ export default {
   components: { CardEntity, CardBenefit, FormInvolved },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities']),
+    ...mapGetters(['getOnlyEntity']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -222,6 +222,7 @@ export default {
   },
   data () {
     return {
+      checkOtherEntity: false,
       addInvolveds: false,
       programSelected: null,
       dateStartModal: false,
@@ -237,37 +238,7 @@ export default {
       entityAddDialog: null,
       entitySelect: null,
       benefitSelect: null,
-      entitiesParticipans: [
-        {
-          ruc: '13200214',
-          name: 'Grupo Graña y Montero',
-          status: 'verify',
-          participations: [
-            {
-              title: 'Donación o auspicio',
-              description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.',
-              price: '95 552.00'
-            },
-            {
-              title: 'Bienes y servicios',
-              description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium nobis maiores suscipit quo quae.',
-              price: '95 552.00'
-            }
-          ]
-        },
-        {
-          ruc: '13200214',
-          name: 'Combativa SAC',
-          status: 'verify',
-          participations: [
-            {
-              title: 'Convenio',
-              description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-              price: '95 552.00'
-            }
-          ]
-        }
-      ],
+      entitiesParticipans: [],
       benefitiesParticipans: [
         {
           type: 'Institución educativa',
@@ -399,7 +370,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ]),
+    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ,'setAlert']),
     submit () {
       this.$validator.validateAll()
         .then(result => {
@@ -412,9 +383,54 @@ export default {
         })
     },
     registerInvolved () {
+      // se ejecuta cuando se desea abrir el modal
+
+      this.checkOtherEntity = !this.checkOtherEntity
+      // abre el modal
       this.addInvolveds = true
-      this.openEntityInvoled = Object.assign({}, this.entitySelect)
-      console.log(this.openEntityInvoled)
+      // prepara el objeto de entidad para enviarlo al modal
+      this.openEntityInvoled = this.entitySelect
+    },
+    AggreEntityInvoled (involeds) {
+      let onliEntity = this.getOnlyEntity(involeds.entity_id)
+      let objectInvoled = {
+        entity_id: onliEntity.id,
+        ruc: onliEntity.ruc,
+        name: onliEntity.name,
+        status: onliEntity.state,
+        participations: involeds.participations,
+        logo_image_link: onliEntity.logo_image_link
+      }
+      return objectInvoled
+    },
+    AddInvoled (value) {
+      this.addInvolveds = false
+      let generateInvoled = Object.assign({}, value)
+      let arrayParticipations = this.deleteReactive(value.participations)
+      generateInvoled.participations = arrayParticipations
+
+      let responseInvoled = {
+        entity_id: generateInvoled.entity_id,
+        participations: arrayParticipations
+      }
+      console.log(responseInvoled)
+      this.entitiesParticipans.push(this.AggreEntityInvoled(responseInvoled))
+    },
+    deleteReactive (arrayReactive) {
+      let returnNoReactive = []
+      arrayReactive.forEach(element => {
+        returnNoReactive.push(Object.assign({}, element))
+      })
+      return returnNoReactive
+    },
+    validEntityEnvoled (id) {
+      this.entitiesParticipans.forEach(element => {
+        if(element.entity_id === id) {
+          console.log('entidad repetida')
+          return true
+        }
+      })
+      return false
     }
   }
 }

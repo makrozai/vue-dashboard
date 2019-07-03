@@ -38,14 +38,18 @@
       </div>
       <div class="c-card-entity__body" v-if="item.participations">
         <ul>
-          <li
+          <div
             v-for="(participation, index) in item.participations"
             :key="index"
           >
-            <b>{{ participation.title }}</b>
-            <p>{{ participation.description }}</p>
-            <b>S/ {{ participation.price }}</b>
-          </li>
+            <li
+              v-if="participation.amount || participation.description"
+            >
+              <b>{{ participation.title }}</b>
+              <p>{{ participation.description }}</p>
+              <b>S/ {{ participation.amount }}</b>
+            </li>
+          </div>
         </ul>
       </div>
 

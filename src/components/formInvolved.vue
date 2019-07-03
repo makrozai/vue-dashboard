@@ -9,6 +9,7 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
+              :disabled="bloquedEntity"
               v-model="entity.name"
               label="Razón comercial"
               box
@@ -16,6 +17,7 @@
           </v-flex>
           <v-flex xs6>
             <v-text-field
+              :disabled="bloquedEntity"
               v-model="entity.social_reason"
               label="Razón social"
               box
@@ -23,6 +25,7 @@
           </v-flex>
           <v-flex xs6>
             <v-text-field
+              :disabled="bloquedEntity"
               v-model="entity.ruc"
               label="Ruc"
               box
@@ -63,7 +66,7 @@
               <v-tab-item>
                 <v-textarea
                   v-validate="'alpha_spaces'"
-                  v-model="involeds.participations[0].description"
+                  v-model="involeds.participations[1].description"
                   :error-messages="errors.collect('descripción de bienes')"
                   data-vv-name="descripción de bienes"
                   box
@@ -71,7 +74,7 @@
                 ></v-textarea>
                 <v-text-field
                   v-validate="'integer'"
-                  v-model="involeds.participations[0].amount"
+                  v-model="involeds.participations[1].amount"
                   :error-messages="errors.collect('monto de bienes')"
                   data-vv-name="monto de bienes"
                   label="Monto"
@@ -82,7 +85,7 @@
               <v-tab-item>
                 <v-textarea
                   v-validate="'alpha_spaces'"
-                  v-model="involeds.participations[0].description"
+                  v-model="involeds.participations[2].description"
                   :error-messages="errors.collect('descripción de convenio')"
                   data-vv-name="descripción de convenio"
                   box
@@ -90,7 +93,7 @@
                 ></v-textarea>
                 <v-text-field
                   v-validate="'integer'"
-                  v-model="involeds.participations[0].amount"
+                  v-model="involeds.participations[2].amount"
                   :error-messages="errors.collect('monto de convenio')"
                   data-vv-name="monto de convenio"
                   label="Monto"
@@ -106,7 +109,7 @@
     <v-divider></v-divider>
     <v-card-actions>
       <v-container class="py-1">
-        <v-btn color="primary" @click="addInvolveds=false">Registrar</v-btn>
+        <v-btn color="primary" @click="submit">Registrar</v-btn>
         <v-btn @click="addInvolveds=false">Cerrar</v-btn>
       </v-container>
     </v-card-actions>
@@ -114,38 +117,92 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
-  props: ['entity'],
+  props: ['entity', 'changeValue'],
+  computed: {
+    ...mapState(['allEntities'])
+  },
   data () {
     return {
+      bloquedEntity: true,
       tab: null,
       involeds: {
         entity_id: null,
         participations: [
           {
-            "type": 1,
-            "description": "",
-            "amount": null
+            title: 'Donación o auspicio',
+            type: 1,
+            description: '',
+            amount: null
           },
           {
-            "type": 2,
-            "description": "",
-            "amount": null
+            title: 'Bienes y servicios',
+            type: 2,
+            description: '',
+            amount: null
           },
           {
-            "type": 3,
-            "description": "",
-            "amount": null
+            title: 'Convenio',
+            type: 3,
+            description: '',
+            amount: null
           }
         ]
       }
     }
   },
   watch: {
+    changeValue (value) {
+      this.resetInvoled()
+      if (!this.entity.id) {
+        this.bloquedEntity = false
+
+      }
+    }
   },
   created () {
+    this.resetInvoled()
+    if (!this.entity.id) {
+      this.bloquedEntity = false
+    }
   },
   methods: {
+    ...mapActions([ 'setEntity' ]),
+
+    submit () {
+      let tempEntity = {
+        name: this.entity.name,
+        social_reason: this.entity.social_reason,
+        ruc: this.entity.ruc,
+        state: 2
+      }
+
+      if (this.entity.id) {
+        this.involeds.entity_id = this.entity.id
+        this.addInvolveds = false
+        this.$emit('involed', this.involeds)
+      } else {
+        this.setEntity(tempEntity)
+          .then(response => {
+            this.involeds.entity_id = response.id
+            this.addInvolveds = false
+            this.$emit('involed', this.involeds)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    },
+    resetInvoled () {
+
+      this.involeds.entity_id = null
+      this.involeds.participations.forEach(element => {
+        element.description = ''
+        element.amount = null
+      })
+    }
   }
 }
 </script>
