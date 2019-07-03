@@ -9,19 +9,21 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
-              v-model="entityMounth.name"
+              v-model="entity.name"
               label="Razón comercial"
               box
             ></v-text-field>
           </v-flex>
           <v-flex xs6>
             <v-text-field
+              v-model="entity.social_reason"
               label="Razón social"
               box
             ></v-text-field>
           </v-flex>
           <v-flex xs6>
             <v-text-field
+              v-model="entity.ruc"
               label="Ruc"
               box
             ></v-text-field>
@@ -38,33 +40,59 @@
           </v-flex>
 
           <v-flex xs12 class="mt-3">
-            <v-tabs-items v-model="tab" class="c-form-involveds__tabs">
+            <v-tabs-items v-model="tab" class="c-form-involeds__tabs">
               <v-tab-item>
                 <v-textarea
+                  v-validate="'alpha_spaces'"
+                  v-model="involeds.participations[0].description"
+                  :error-messages="errors.collect('descripción de donación')"
+                  data-vv-name="descripción de donación"
                   box
                   label="Descripción"
                 ></v-textarea>
                 <v-text-field
+                  v-validate="'integer'"
+                  v-model="involeds.participations[0].amount"
+                  :error-messages="errors.collect('monto de donación')"
+                  data-vv-name="monto de donación"
                   label="Monto"
                   box
                 ></v-text-field>
               </v-tab-item>
+
               <v-tab-item>
                 <v-textarea
+                  v-validate="'alpha_spaces'"
+                  v-model="involeds.participations[0].description"
+                  :error-messages="errors.collect('descripción de bienes')"
+                  data-vv-name="descripción de bienes"
                   box
                   label="Descripción"
                 ></v-textarea>
                 <v-text-field
+                  v-validate="'integer'"
+                  v-model="involeds.participations[0].amount"
+                  :error-messages="errors.collect('monto de bienes')"
+                  data-vv-name="monto de bienes"
                   label="Monto"
                   box
                 ></v-text-field>
               </v-tab-item>
+
               <v-tab-item>
                 <v-textarea
+                  v-validate="'alpha_spaces'"
+                  v-model="involeds.participations[0].description"
+                  :error-messages="errors.collect('descripción de convenio')"
+                  data-vv-name="descripción de convenio"
                   box
                   label="Descripción"
                 ></v-textarea>
                 <v-text-field
+                  v-validate="'integer'"
+                  v-model="involeds.participations[0].amount"
+                  :error-messages="errors.collect('monto de convenio')"
+                  data-vv-name="monto de convenio"
                   label="Monto"
                   box
                 ></v-text-field>
@@ -91,20 +119,31 @@ export default {
   data () {
     return {
       tab: null,
-      entityMounth: {}
-    }
-  },
-  watch: {
-    entity () {
-      if (this.entity === 'object' && this.entity) {
-        this.entityMounth = this.entity
+      involeds: {
+        entity_id: null,
+        participations: [
+          {
+            "type": 1,
+            "description": "",
+            "amount": null
+          },
+          {
+            "type": 2,
+            "description": "",
+            "amount": null
+          },
+          {
+            "type": 3,
+            "description": "",
+            "amount": null
+          }
+        ]
       }
     }
   },
+  watch: {
+  },
   created () {
-    if (this.entity === 'object' && this.entity) {
-      this.entityMounth = this.entity
-    }
   },
   methods: {
   }
