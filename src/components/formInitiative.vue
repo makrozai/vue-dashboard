@@ -370,7 +370,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ,'setAlert']),
+    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {
@@ -425,7 +425,7 @@ export default {
     },
     validEntityEnvoled (id) {
       this.entitiesParticipans.forEach(element => {
-        if(element.entity_id === id) {
+        if (element.entity_id === id) {
           console.log('entidad repetida')
           return true
         }

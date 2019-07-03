@@ -155,16 +155,14 @@ export default {
   },
   watch: {
     changeValue (value) {
-      this.resetInvoled()
-      if (!this.entity.id) {
+      if (!this.entity && !this.entity.id) {
         this.bloquedEntity = false
-
       }
     }
   },
   created () {
-    this.resetInvoled()
-    if (!this.entity.id) {
+    console.log(this.entity)
+    if (this.entity && !this.entity.id) {
       this.bloquedEntity = false
     }
   },
@@ -196,7 +194,6 @@ export default {
       }
     },
     resetInvoled () {
-
       this.involeds.entity_id = null
       this.involeds.participations.forEach(element => {
         element.description = ''
