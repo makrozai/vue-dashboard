@@ -129,7 +129,7 @@ export default {
   },
   data () {
     return {
-      bloquedEntity: true,
+      bloquedEntity: false,
       tab: null,
       involeds: {
         entity_id: null,
@@ -156,42 +156,67 @@ export default {
             description: '',
             amount: null
           }
-        ],
-        entityInvoled: {
-        }
+        ]
       }
     }
   },
   watch: {
     changeValue (value) {
       if (this.entity !== null && typeof this.entity === 'object') {
-        console.log(this.entity)
-        console.log('lo enviado es un objeto')
+        // bloquea los inputs
+        this.bloquedEntity = true
+        // evalua si envia una entidad
+        this.involeds.name = this.entity.name
+        this.involeds.ruc = this.entity.ruc
+        this.involeds.social_reason = this.entity.social_reason
+        console.log(this.involeds)
       } else {
-        console.log('no se envio nada')
+        // bloquea los inputs
+        this.bloquedEntity = false
+        // en caso no lo envie, borra todo lo que estaba anteriormente
+        this.involeds.name = ''
+        this.involeds.ruc = ''
+        this.involeds.social_reason = ''
       }
+      // reset de participaciones
+      this.resetInvoled()
     }
   },
   created () {
     if (this.entity !== null && typeof this.entity === 'object') {
-      console.log(this.entity)
-      console.log('lo enviado es un objeto')
+      // bloquea los inputs
+      this.bloquedEntity = true
+      // evalua si envia una entidad
+      this.involeds.entity_id = this.entity.id
+      this.involeds.name = this.entity.name
+      this.involeds.ruc = this.entity.ruc
+      this.involeds.social_reason = this.entity.social_reason
+      console.log(this.involeds)
     } else {
-      console.log('no se envio nada')
+      // bloquea los inputs
+      this.bloquedEntity = false
+      // en caso no lo envie, borra todo lo que estaba anteriormente
+      this.involeds.entity_id = null
+      this.involeds.name = ''
+      this.involeds.ruc = ''
+      this.involeds.social_reason = ''
     }
+    // reset de participaciones
+    this.resetInvoled()
   },
   methods: {
     ...mapActions([ 'setEntity' ]),
 
     submit () {
-      if (this.entityInvoled.id) {
-        this.involeds.entity_id = this.entityInvoled.id
+      if (this.involeds.id) {
+        // se ejecuta cuando la entdiad existe
         this.addInvolveds = false
         this.$emit('involed', this.involeds)
       } else {
-        this.setEntity(this.entityInvoled)
+        // se ejecuta primero para crear una entidad
+        this.setEntity(this.involeds)
           .then(response => {
-            this.entityInvoled.id = response.id
+            this.involeds.entity_id = response.id
             this.addInvolveds = false
             this.$emit('involed', this.involeds)
           })
@@ -201,7 +226,6 @@ export default {
       }
     },
     resetInvoled () {
-      this.involeds.entity_id = null
       this.involeds.participations.forEach(element => {
         element.description = ''
         element.amount = null
