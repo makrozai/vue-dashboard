@@ -11,7 +11,7 @@
             <v-text-field
               :v-validate="'required'"
               :disabled="bloquedEntity"
-              v-model="entityInvoled.name"
+              v-model="involeds.name"
               label="Razón comercial"
               box
             ></v-text-field>
@@ -20,7 +20,7 @@
             <v-text-field
               :v-validate="'required'"
               :disabled="bloquedEntity"
-              v-model="entityInvoled.social_reason"
+              v-model="involeds.social_reason"
               label="Razón social"
               box
             ></v-text-field>
@@ -29,7 +29,7 @@
             <v-text-field
               :v-validate="'required'"
               :disabled="bloquedEntity"
-              v-model="entityInvoled.ruc"
+              v-model="involeds.ruc"
               label="Ruc"
               box
             ></v-text-field>
@@ -133,6 +133,10 @@ export default {
       tab: null,
       involeds: {
         entity_id: null,
+        name: '',
+        social_reason: '',
+        ruc: null,
+        state: 2,
         participations: [
           {
             title: 'Donación o auspicio',
@@ -154,40 +158,32 @@ export default {
           }
         ],
         entityInvoled: {
-          id: null,
-          name: '',
-          social_reason: '',
-          ruc: null,
-          state: 2
         }
       }
     }
   },
   watch: {
     changeValue (value) {
-      if (typeof this.entity === 'object') {
-        console.log('entro al if del watch')
-        // this.bloquedEntity = false
+      if (this.entity !== null && typeof this.entity === 'object') {
+        console.log(this.entity)
+        console.log('lo enviado es un objeto')
+      } else {
+        console.log('no se envio nada')
       }
     }
   },
   created () {
-    if (typeof this.entity === 'object') {
-      console.log('entro al if del created')
-      // this.bloquedEntity = false
+    if (this.entity !== null && typeof this.entity === 'object') {
+      console.log(this.entity)
+      console.log('lo enviado es un objeto')
+    } else {
+      console.log('no se envio nada')
     }
   },
   methods: {
     ...mapActions([ 'setEntity' ]),
 
     submit () {
-      let tempEntity = {
-        name: this.entity.name,
-        social_reason: this.entity.social_reason,
-        ruc: this.entity.ruc,
-        state: 2
-      }
-
       if (this.entityInvoled.id) {
         this.involeds.entity_id = this.entityInvoled.id
         this.addInvolveds = false
@@ -195,7 +191,7 @@ export default {
       } else {
         this.setEntity(this.entityInvoled)
           .then(response => {
-            this.entityInvoled = response.id
+            this.entityInvoled.id = response.id
             this.addInvolveds = false
             this.$emit('involed', this.involeds)
           })
