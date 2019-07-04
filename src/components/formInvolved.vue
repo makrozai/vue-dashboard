@@ -132,6 +132,7 @@ export default {
       bloquedEntity: false,
       tab: null,
       involeds: {
+        id: null,
         entity_id: null,
         name: '',
         social_reason: '',
@@ -166,6 +167,8 @@ export default {
         // bloquea los inputs
         this.bloquedEntity = true
         // evalua si envia una entidad
+        this.involeds.entity_id = this.entity.id
+        this.involeds.id = this.entity.id
         this.involeds.name = this.entity.name
         this.involeds.ruc = this.entity.ruc
         this.involeds.social_reason = this.entity.social_reason
@@ -174,6 +177,8 @@ export default {
         // bloquea los inputs
         this.bloquedEntity = false
         // en caso no lo envie, borra todo lo que estaba anteriormente
+        this.involeds.entity_id = null
+        this.involeds.id = null
         this.involeds.name = ''
         this.involeds.ruc = ''
         this.involeds.social_reason = ''
@@ -188,15 +193,16 @@ export default {
       this.bloquedEntity = true
       // evalua si envia una entidad
       this.involeds.entity_id = this.entity.id
+      this.involeds.id = this.entity.id
       this.involeds.name = this.entity.name
       this.involeds.ruc = this.entity.ruc
       this.involeds.social_reason = this.entity.social_reason
-      console.log(this.involeds)
     } else {
       // bloquea los inputs
       this.bloquedEntity = false
       // en caso no lo envie, borra todo lo que estaba anteriormente
       this.involeds.entity_id = null
+      this.involeds.id = null
       this.involeds.name = ''
       this.involeds.ruc = ''
       this.involeds.social_reason = ''
