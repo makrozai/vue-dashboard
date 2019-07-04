@@ -9,24 +9,27 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
+              :v-validate="'required'"
               :disabled="bloquedEntity"
-              v-model="entity.name"
+              v-model="entityInvoled.name"
               label="Razón comercial"
               box
             ></v-text-field>
           </v-flex>
           <v-flex xs6>
             <v-text-field
+              :v-validate="'required'"
               :disabled="bloquedEntity"
-              v-model="entity.social_reason"
+              v-model="entityInvoled.social_reason"
               label="Razón social"
               box
             ></v-text-field>
           </v-flex>
           <v-flex xs6>
             <v-text-field
+              :v-validate="'required'"
               :disabled="bloquedEntity"
-              v-model="entity.ruc"
+              v-model="entityInvoled.ruc"
               label="Ruc"
               box
             ></v-text-field>
@@ -149,21 +152,29 @@ export default {
             description: '',
             amount: null
           }
-        ]
+        ],
+        entityInvoled: {
+          id: null,
+          name: '',
+          social_reason: '',
+          ruc: null,
+          state: 2
+        }
       }
     }
   },
   watch: {
     changeValue (value) {
-      if (!this.entity && !this.entity.id) {
-        this.bloquedEntity = false
+      if (typeof this.entity === 'object') {
+        console.log('entro al if del watch')
+        // this.bloquedEntity = false
       }
     }
   },
   created () {
-    console.log(this.entity)
-    if (this.entity && !this.entity.id) {
-      this.bloquedEntity = false
+    if (typeof this.entity === 'object') {
+      console.log('entro al if del created')
+      // this.bloquedEntity = false
     }
   },
   methods: {
@@ -177,14 +188,14 @@ export default {
         state: 2
       }
 
-      if (this.entity.id) {
-        this.involeds.entity_id = this.entity.id
+      if (this.entityInvoled.id) {
+        this.involeds.entity_id = this.entityInvoled.id
         this.addInvolveds = false
         this.$emit('involed', this.involeds)
       } else {
-        this.setEntity(tempEntity)
+        this.setEntity(this.entityInvoled)
           .then(response => {
-            this.involeds.entity_id = response.id
+            this.entityInvoled = response.id
             this.addInvolveds = false
             this.$emit('involed', this.involeds)
           })
