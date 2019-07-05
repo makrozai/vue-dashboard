@@ -349,17 +349,30 @@ export default {
       })
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ]),
+    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries', 'saveInitiative' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
+            let arrayBeneficiaries = []
+            this.initiativeData = this.initiativeData + '-01'
+            this.benefitiesParticipans.forEach(element => {
+              arrayBeneficiaries.push(element.id)
+            })
             let submitData = {
               involveds: this.entitiesParticipans,
-              beneficiaries: this.benefitiesParticipans
+              beneficiaries: arrayBeneficiaries
             }
+            this.initiativeData.program_id = this.programSelected.id
             submitData = Object.assign(submitData, this.initiativeData)
 
+            this.saveInitiative(submitData)
+              .then(response => {
+                console.log(response)
+              })
+              .catch(error => {
+
+              })
 
           } else {
             console.log('bye')
