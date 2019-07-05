@@ -180,7 +180,7 @@
                 full-width
                 width="500px"
               >
-                <form-beneficiaries-edit :beneficiary="editBeneficiaryData"></form-beneficiaries-edit>
+                <form-beneficiaries-edit :entity="editBeneficiaryData" @beneficiary="editBeneficiaryUpdate"></form-beneficiaries-edit>
               </v-dialog>
             </v-flex>
             <!--autocompletado-->
@@ -320,21 +320,6 @@ export default {
           id: 14,
           name: '14 meses'
         }
-      ],
-      people: [
-        { name: 'Sandra Adams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-        { name: 'Ali Connors', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-        { name: 'Trevor Hansen', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
-        { name: 'Tucker Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-        { name: 'Britta Holt', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { name: 'Jane Smith ', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg' },
-        { name: 'John Smith', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-        { name: 'Sandra Williams', group: 'Group 1', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
-      ],
-      programs: [
-        { name: 'PROGRAMA 1', group: 'Año de inicio', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
-        { name: 'PROGRAMA 2', group: 'Año de inicio', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
-        { name: 'PROGRAMA 3', group: 'Año de inicio', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' }
       ]
     }
   },
@@ -369,8 +354,13 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            console.log('hello')
-            console.log(this.programOwn)
+            let submitData = {
+              involveds: this.entitiesParticipans,
+              beneficiaries: this.benefitiesParticipans
+            }
+            submitData = Object.assign(submitData, this.initiativeData)
+
+
           } else {
             console.log('bye')
           }
@@ -448,10 +438,13 @@ export default {
     },
     editBeneficiary (value) {
       // abre modal
-        this.editBeneficiary = true
+      this.editBeneficiaryDialog = true
       // envia datos al modal
-        this.editBeneficiaryData = this.benefitiesParticipans[value]
-        console.log(value)
+      this.editBeneficiaryData = this.benefitiesParticipans[value]
+    },
+    editBeneficiaryUpdate () {
+      // cerrar modal
+      this.editBeneficiaryDialog = false
     }
   }
 }

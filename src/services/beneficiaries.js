@@ -30,6 +30,21 @@ const beneficiariesServices = {
           reject(error)
         })
     })
+  },
+  update: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.put(`beneficiaries/${payload.id}`)
+        .then(response => {
+          // enruta correctamente a la respuesta
+          response = response.body.data.beneficiary
+          // retornna respuesta
+          resolve(response)
+        })
+        .catch(error => {
+          // retorna error
+          reject(error)
+        })
+    })
   }
 }
 

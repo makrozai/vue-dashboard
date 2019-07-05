@@ -16,6 +16,7 @@ import programsService from './services/programs'
 import imagesService from './services/images'
 import beneficiariesServices from './services/beneficiaries'
 import typeBeneficiariesService from './services/typeBeneficiaries'
+import initiativesService from './services/initiatives'
 
 Vue.use(Vuex)
 
@@ -82,6 +83,7 @@ const store = new Vuex.Store({
     },
     allEntities: [],
     allPrograms: [],
+    allInitiatives: [],
     recoverPass: null,
     website: 'https://exe.combativa.com/',
     preloadIframe: false,
@@ -229,6 +231,18 @@ const store = new Vuex.Store({
     },
     setBeneficiary (state, payload) {
       state.allBeneficiaries.push(payload)
+    },
+    updateBeneficiary (state, payload) {
+      let dataIndex
+      state.allBeneficiaries.forEach((element, index) => {
+        if (element.id === payload.id) {
+          dataIndex = index
+        }
+      })
+      state.allBeneficiaries[dataIndex] = payload
+    },
+    setInitiative (state, payload) {
+      state.allInitiatives.push(payload)
     }
 
   },
@@ -648,6 +662,30 @@ const store = new Vuex.Store({
         beneficiariesServices.save(payload)
           .then(response => {
             context.commit('setBeneficiary', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    updateBeneficiary (context, payload) {
+      return new Promise((resolve, reject) => {
+        beneficiariesServices.update(payload)
+          .then(response => {
+            context.commit('updateBeneficiary', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    saveInitiative (context, payload) {
+      return new Promise((resolve, reject) => {
+        initiativesService.save(payload)
+          .then(response => {
+            context.commit('setInitiative', payload)
             resolve(response)
           })
           .catch(error => {

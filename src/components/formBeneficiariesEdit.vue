@@ -91,7 +91,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
-  props: ['beneficiary'],
+  props: ['entity'],
   computed: {
     ...mapState(['typeBeneficiaries', 'ubigeo']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
@@ -99,6 +99,7 @@ export default {
   data () {
     return {
       beneficiary: {
+        id: null,
         type_beneficiary_id: null,
         region_id: null,
         province_id: null,
@@ -107,16 +108,23 @@ export default {
       }
     }
   },
+  watch: {
+    entity (value) {
+      this.beneficiary = value
+    }
+  },
+  created () {
+    this.beneficiary = this.entity
+  },
   methods: {
-    ...mapActions(['saveBeneficiary', 'getAllBeneficiaries']),
+    ...mapActions(['saveBeneficiary', 'getAllBeneficiaries', 'updateBeneficiary']),
     submit () {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            this.saveBeneficiary(this.beneficiary)
+            this.updateBeneficiary(this.beneficiary)
               .then(response => {
                 this.$emit('beneficiary', response)
-                this.resetForm()
               })
               .catch(error => {
                 console.log(error)
@@ -125,14 +133,6 @@ export default {
             console.log('los datos no estan validados')
           }
         })
-    },
-    resetForm () {
-      this.beneficiary.type_beneficiary_id = null
-      this.beneficiary.region_id = null
-      this.beneficiary.province_id = null
-      this.beneficiary.district_id = null
-      this.beneficiary.name = ''
-      this.$validator.reset()
     }
   }
 }
