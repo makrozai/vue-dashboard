@@ -88,12 +88,12 @@
 </template>
 
 <script>
-import { mapState,mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['typeBeneficiaries','ubigeo']),
-    ...mapGetters(['getTypeProvinces','getTypeDistricts'])
+    ...mapState(['typeBeneficiaries', 'ubigeo']),
+    ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
   },
   data () {
     return {
@@ -117,7 +117,7 @@ export default {
                 console.log(response)
                 this.$emit('beneficiary', response)
               })
-              .catch(error => {
+              .catch(error => {
                 console.log(error)
               })
           } else {

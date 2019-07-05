@@ -1,6 +1,5 @@
 <template>
   <div class="c-card-benefit">
-    {{ initConsole }}
     <div class="c-card-benefit__entity"
       v-for="(item, index) in entities"
       :key="index"
@@ -30,24 +29,22 @@ import { mapGetters } from 'vuex'
 export default {
   props: ['entities'],
   computed: {
-    ...mapGetters(['getRegion', 'getProvince', 'getDistrict', 'getTypeBeneficiary']),
+    ...mapGetters(['getRegion', 'getProvince', 'getDistrict', 'getTypeBeneficiary'])
+  },
+  created () {
+  },
+  methods: {
     nameTypeBenecifiary (typeBeneficiary) {
-      console.log(typeBeneficiary)
       return this.getTypeBeneficiary(typeBeneficiary).name
     },
     nameRegionBeneficiary (region) {
       return this.getRegion(region).name
     },
     nameProvinceBeneficiary (province) {
-      return this.getProvince(provinces).name
+      return this.getProvince(province).name
     },
     nameDistrictBeneficiary (district) {
       return this.getDistrict(district).name
-    }
-  },
-  methods: {
-    initConsole () {
-      console.log(this.entities)
     }
   }
 }

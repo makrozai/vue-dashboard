@@ -185,7 +185,7 @@
             </v-flex>
             <!--autocompletado-->
             <v-flex xs12 class="mb-4">
-              <card-benefit :entities="benefitiesParticipans" v-if="benefitiesParticipans.length > 0"></card-benefit>
+              <card-benefit :entities="benefitiesParticipans"></card-benefit>
             </v-flex>
             <v-flex xs7>
               <p>Indicar el monto en soles de la inversión generada en la iniciativa</p>
