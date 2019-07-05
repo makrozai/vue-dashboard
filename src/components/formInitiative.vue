@@ -426,8 +426,11 @@ export default {
       return false
     },
     addBeneficiary (value) {
+      // agrega el beneficiario al arreglo
       let propBeneficiary = Object.assign({}, value)
       this.benefitiesParticipans.push(propBeneficiary)
+      // cierra el modal
+      this.addBeneficiaries = false
     }
   }
 }

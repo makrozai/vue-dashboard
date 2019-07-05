@@ -115,6 +115,7 @@ export default {
             this.saveBeneficiary(this.beneficiary)
               .then(response => {
                 this.$emit('beneficiary', response)
+                this.resetForm()
               })
               .catch(error => {
                 console.log(error)
@@ -123,6 +124,14 @@ export default {
             console.log('los datos no estan validados')
           }
         })
+    },
+    resetForm () {
+      this.beneficiary.type_beneficiary_id = null
+      this.beneficiary.region_id = null
+      this.beneficiary.province_id = null
+      this.beneficiary.district_id = null
+      this.beneficiary.name = ''
+      this.$validator.reset()
     }
   }
 }
