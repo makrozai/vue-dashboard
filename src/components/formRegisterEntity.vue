@@ -196,6 +196,7 @@ export default {
                   })
               })
               .catch(error => {
+                this.loadingSubmit = false
                 this.statusSubmit = 'error'
 
                 this.setAlert({
