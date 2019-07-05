@@ -107,14 +107,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['saveBeneficiary']),
+    ...mapActions(['saveBeneficiary', 'getAllBeneficiaries']),
     submit () {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
             this.saveBeneficiary(this.beneficiary)
               .then(response => {
-                console.log(response)
                 this.$emit('beneficiary', response)
               })
               .catch(error => {

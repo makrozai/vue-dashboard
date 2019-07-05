@@ -152,22 +152,14 @@
             <v-flex xs12 class="c-input__button-action">
               <v-combobox
                 v-model="benefitSelect"
-                :items="people"
+                :items="allBeneficiaries"
                 label="Buscar entidad propietaria del programa"
                 item-text="name"
-                item-value="name"
+                item-value="id"
                 prepend-inner-icon="search"
+                return-object
                 box
               >
-                <template v-slot:item="data">
-                  <v-list-tile-avatar>
-                    <img :src="data.item.avatar">
-                  </v-list-tile-avatar>
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-                    <v-list-tile-sub-title v-html="data.item.group"></v-list-tile-sub-title>
-                  </v-list-tile-content>
-                </template>
               </v-combobox>
               <v-btn fab small color="primary" class="mt-2" @click="registerBeneficiare">
                 <v-icon>add</v-icon>
@@ -227,7 +219,7 @@ import FormBeneficiaries from './formBeneficiaries'
 export default {
   components: { CardEntity, CardBenefit, FormInvolved, FormBeneficiaries },
   computed: {
-    ...mapState(['userSesion', 'allPrograms', 'allEntities']),
+    ...mapState(['userSesion', 'allPrograms', 'allEntities', 'allBeneficiaries']),
     ...mapGetters(['getOnlyEntity']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
@@ -355,6 +347,10 @@ export default {
     if (this.allEntities.length === 0) {
       this.getAllEntities({ state_in: '1,2,4' })
     }
+
+    this.getAllBeneficiaries()
+      .then(response => {
+      })
   },
   methods: {
     ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries' ]),
@@ -379,8 +375,14 @@ export default {
       this.openEntityInvoled = this.entitySelect
     },
     registerBeneficiare () {
-      // abre el modal
-      this.addBeneficiaries = true
+      // valida si el formulario debe se abrirse
+      if (this.benefitSelect !== null && typeof this.benefitSelect === 'object') {
+        this.benefitiesParticipans.push(Object.assign({}, this.benefitSelect))
+        this.benefitSelect = null
+      } else {
+        // abre el modal
+        this.addBeneficiaries = true
+      }
     },
     AggreEntityInvoled (involeds) {
       let onliEntity = this.getOnlyEntity(involeds.entity_id)
