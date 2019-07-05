@@ -166,7 +166,6 @@
               </v-btn>
 
               <v-dialog
-                ref="dialog"
                 v-model="addBeneficiaries"
                 lazy
                 full-width
@@ -174,10 +173,19 @@
               >
                 <form-beneficiaries @beneficiary="addBeneficiary"></form-beneficiaries>
               </v-dialog>
+
+              <v-dialog
+                v-model="editBeneficiaryDialog"
+                lazy
+                full-width
+                width="500px"
+              >
+                <form-beneficiaries-edit :beneficiary="editBeneficiaryData"></form-beneficiaries-edit>
+              </v-dialog>
             </v-flex>
             <!--autocompletado-->
             <v-flex xs12 class="mb-4">
-              <card-benefit :entities="benefitiesParticipans" @delete="deleteBeneficiary"></card-benefit>
+              <card-benefit :entities="benefitiesParticipans" @delete="deleteBeneficiary" @edit="editBeneficiary"></card-benefit>
             </v-flex>
             <v-flex xs7>
               <p>Indicar el monto en soles de la inversión generada en la iniciativa</p>
@@ -215,9 +223,10 @@ import CardEntity from './cardEntity'
 import CardBenefit from './cardBenefit'
 import FormInvolved from './formInvolved'
 import FormBeneficiaries from './formBeneficiaries'
+import FormBeneficiariesEdit from './formBeneficiariesEdit'
 
 export default {
-  components: { CardEntity, CardBenefit, FormInvolved, FormBeneficiaries },
+  components: { CardEntity, CardBenefit, FormInvolved, FormBeneficiaries, FormBeneficiariesEdit },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities', 'allBeneficiaries']),
     ...mapGetters(['getOnlyEntity']),
@@ -240,6 +249,8 @@ export default {
         intervention_period: null,
         total_investment_amount: null
       },
+      editBeneficiaryDialog: false,
+      editBeneficiaryData: null,
       // placeholder
       openEntityInvoled: null,
       entityAddDialog: null,
@@ -432,9 +443,15 @@ export default {
       // cierra el modal
       this.addBeneficiaries = false
     },
-    deleteBeneficiary(value) {
-      console.log(value)
+    deleteBeneficiary (value) {
       this.benefitiesParticipans.splice(value, 1)
+    },
+    editBeneficiary (value) {
+      // abre modal
+        this.editBeneficiary = true
+      // envia datos al modal
+        this.editBeneficiaryData = this.benefitiesParticipans[value]
+        console.log(value)
     }
   }
 }

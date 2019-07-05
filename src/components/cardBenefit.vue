@@ -17,7 +17,7 @@
           <li>La {{ nameRegionBeneficiary(item.region_id) }} / {{ nameProvinceBeneficiary(item.province_id) }} / {{ nameDistrictBeneficiary(item.district_id) }}</li>
         </ul>
       </div>
-      <v-btn fab small color="primary">
+      <v-btn fab small color="primary" @click="editBeneficiary(index)">
         <v-icon>edit</v-icon>
       </v-btn>
     </div>
@@ -50,7 +50,7 @@ export default {
       this.$emit('delete', index)
     },
     editBeneficiary (index) {
-      this.$emit('editBeneficiary', index)
+      this.$emit('edit', index)
     }
   }
 }
