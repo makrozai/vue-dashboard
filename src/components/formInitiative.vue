@@ -180,12 +180,12 @@
                 full-width
                 width="500px"
               >
-                <form-beneficiaries></form-beneficiaries>
+                <form-beneficiaries @beneficiary="addBeneficiary"></form-beneficiaries>
               </v-dialog>
             </v-flex>
             <!--autocompletado-->
             <v-flex xs12 class="mb-4">
-              <card-benefit :entities="benefitiesParticipans"></card-benefit>
+              <card-benefit :entities="benefitiesParticipans" v-if="benefitiesParticipans.length > 0"></card-benefit>
             </v-flex>
             <v-flex xs7>
               <p>Indicar el monto en soles de la inversión generada en la iniciativa</p>
@@ -254,35 +254,7 @@ export default {
       entitySelect: null,
       benefitSelect: null,
       entitiesParticipans: [],
-      benefitiesParticipans: [
-        {
-          type: 'Institución educativa',
-          name: 'Colegio educativo San Nicolas',
-          address: {
-            region: 'La Libertad',
-            province: 'Trujillo',
-            district: 'Trujillo'
-          }
-        },
-        {
-          type: 'Docente',
-          name: 'Colegio Inicial 203 San Martín',
-          address: {
-            region: 'Lima',
-            province: 'Lima',
-            district: 'Santiago de Surco'
-          }
-        },
-        {
-          type: 'Zona geográfica-comunidad',
-          name: 'Santa Rosa de Lima',
-          address: {
-            region: 'La Libertad',
-            province: 'Trujillo',
-            district: 'Trujillo'
-          }
-        }
-      ],
+      benefitiesParticipans: [],
       // eslint-disable-next-line
       typeLines: [
         {
@@ -450,6 +422,10 @@ export default {
         }
       })
       return false
+    },
+    addBeneficiary (value) {
+      let propBeneficiary = Object.assign({}, value)
+      this.benefitiesParticipans.push(propBeneficiary)
     }
   }
 }

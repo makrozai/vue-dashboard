@@ -5,11 +5,11 @@
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
-      <v-container grid-list-md class="py-0">
+      <v-container grid-list-md class="pb-0">
         <v-layout row wrap>
           <v-flex xs12>
             <v-select
-              v-model="beneficiarie.type_beneficiary_id"
+              v-model="beneficiary.type_beneficiary_id"
               v-validate="'required'"
               :items="typeBeneficiaries"
               item-text="name"
@@ -23,7 +23,7 @@
           </v-flex>
           <v-flex xs12>
             <v-text-field
-              v-model="beneficiarie.name"
+              v-model="beneficiary.name"
               v-validate="'required'"
               :error-messages="errors.collect('nombre de entidad')"
               label="Nombre de Entidad"
@@ -34,7 +34,7 @@
           </v-flex>
           <v-flex xs6>
             <v-select
-              v-model="beneficiarie.region_id"
+              v-model="beneficiary.region_id"
               v-validate="'required'"
               :items="ubigeo.regions"
               item-text="name"
@@ -48,9 +48,9 @@
           </v-flex>
           <v-flex xs6>
             <v-select
-              v-model="beneficiarie.province_id"
+              v-model="beneficiary.province_id"
               v-validate="'required'"
-              :items="getTypeProvinces(beneficiarie.region_id)"
+              :items="getTypeProvinces(beneficiary.region_id)"
               item-text="name"
               item-value="id"
               :error-messages="errors.collect('provincia')"
@@ -62,9 +62,9 @@
           </v-flex>
           <v-flex xs12>
             <v-select
-              v-model="beneficiarie.district_id"
+              v-model="beneficiary.district_id"
               v-validate="'required'"
-              :items="getTypeDistricts(beneficiarie.province_id)"
+              :items="getTypeDistricts(beneficiary.province_id)"
               item-text="name"
               item-value="id"
               :error-messages="errors.collect('distrito')"
@@ -77,11 +77,18 @@
         </v-layout>
       </v-container>
     </v-card-text>
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-container class="py-0">
+        <v-btn large color="primary" @click="submit">Guardar</v-btn>
+      </v-container>
+
+    </v-card-actions>
    </v-card>
 </template>
 
 <script>
-import { mapState,mapGetters } from 'vuex'
+import { mapState,mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
@@ -90,7 +97,7 @@ export default {
   },
   data () {
     return {
-      beneficiarie: {
+      beneficiary: {
         type_beneficiary_id: null,
         region_id: null,
         province_id: null,
@@ -100,7 +107,24 @@ export default {
     }
   },
   methods: {
-
+    ...mapActions(['saveBeneficiary']),
+    submit () {
+      this.$validator.validateAll()
+        .then(result => {
+          if (result) {
+            this.saveBeneficiary(this.beneficiary)
+              .then(response => {
+                console.log(response)
+                this.$emit('beneficiary', response)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          } else {
+            console.log('los datos no estan validados')
+          }
+        })
+    }
   }
 }
 </script>

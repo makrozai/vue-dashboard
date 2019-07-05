@@ -96,6 +96,18 @@ const store = new Vuex.Store({
     },
     getOnlyEntity: (state) => (id) => {
       return state.allEntities.filter(item => item.id === id)[0]
+    },
+    getRegion: (state) => (id) => {
+      return state.ubigeo.regions.filter(item => item.id === id)[0]
+    },
+    getProvince: (state) => (id) => {
+      return state.ubigeo.provinces.filter(item => item.id === id)[0]
+    },
+    getDistrict: (state) => (id) => {
+      return state.ubigeo.districts.filter(item => item.id === id)[0]
+    },
+    getTypeBeneficiary: (state) => (id) => {
+      return state.typeBeneficiaries.filter(item => item.id === id)[0]
     }
   },
   mutations: {
@@ -214,6 +226,9 @@ const store = new Vuex.Store({
     },
     setTypeBeneficiaries (state, payload) {
       state.typeBeneficiaries = payload
+    },
+    setBeneficiary (state, payload) {
+      state.allBeneficiaries.push(payload)
     }
 
   },
@@ -621,6 +636,18 @@ const store = new Vuex.Store({
         typeBeneficiariesService.get()
           .then(response => {
             context.commit('setTypeBeneficiaries', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    saveBeneficiary (context, payload) {
+      return new Promise((resolve, reject) => {
+        beneficiariesServices.save(payload)
+          .then(response => {
+            context.commit('setBeneficiary', payload)
             resolve(response)
           })
           .catch(error => {
