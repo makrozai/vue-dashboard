@@ -75,12 +75,20 @@
                     :error-messages="errors.collect('año de inicio')"
                     label="Año de inicio"
                     data-vv-name="año de inicio"
+                    required
                     readonly
                     box
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="initiativeData.start_date" type="month" locale="es" scrollable>
+                <v-date-picker
+                  ref="picker"
+                  v-model="initiativeData.start_date"
+                  type="month"
+                  locale="es"
+                  :max="new Date().toISOString().substr(0, 10)"
+                  scrollable
+                >
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
                   <v-btn flat color="primary" @click="$refs.dialog.save(initiativeData.start_date)">OK</v-btn>
@@ -323,6 +331,11 @@ export default {
       ]
     }
   },
+  watch: {
+    dateStartModal (value) {
+      value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+    }
+  },
   created () {
     if (this.allPrograms.length === 0) {
       // en caso el usuario es tipo entidad
@@ -355,7 +368,7 @@ export default {
         .then(result => {
           if (result) {
             let arrayBeneficiaries = []
-            this.initiativeData = this.initiativeData + '-01'
+            this.initiativeData.start_date = this.initiativeData.start_date + '-01'
             this.benefitiesParticipans.forEach(element => {
               arrayBeneficiaries.push(element.id)
             })
