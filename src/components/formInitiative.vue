@@ -177,7 +177,7 @@
             </v-flex>
             <!--autocompletado-->
             <v-flex xs12 class="mb-4">
-              <card-benefit :entities="benefitiesParticipans"></card-benefit>
+              <card-benefit :entities="benefitiesParticipans" @delete="deleteBeneficiary"></card-benefit>
             </v-flex>
             <v-flex xs7>
               <p>Indicar el monto en soles de la inversión generada en la iniciativa</p>
@@ -431,6 +431,10 @@ export default {
       this.benefitiesParticipans.push(propBeneficiary)
       // cierra el modal
       this.addBeneficiaries = false
+    },
+    deleteBeneficiary(value) {
+      console.log(value)
+      this.benefitiesParticipans.splice(value, 1)
     }
   }
 }

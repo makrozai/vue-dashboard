@@ -4,7 +4,7 @@
       v-for="(item, index) in entities"
       :key="index"
     >
-      <v-btn fab small color="primary">
+      <v-btn fab small color="primary" @click="deleteBeneficiary(index)">
         <v-icon>remove</v-icon>
       </v-btn>
       <div class="c-card-benefit__entity__header">
@@ -45,6 +45,12 @@ export default {
     },
     nameDistrictBeneficiary (district) {
       return this.getDistrict(district).name
+    },
+    deleteBeneficiary (index) {
+      this.$emit('delete', index)
+    },
+    editBeneficiary (index) {
+      this.$emit('editBeneficiary', index)
     }
   }
 }
