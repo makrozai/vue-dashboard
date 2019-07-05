@@ -15,6 +15,7 @@ import contactsService from './services/contacts'
 import programsService from './services/programs'
 import imagesService from './services/images'
 import beneficiariesServices from './services/beneficiaries'
+import typeBeneficiariesService from './services/typeBeneficiaries'
 
 Vue.use(Vuex)
 
@@ -36,6 +37,7 @@ const store = new Vuex.Store({
     lines: [],
     typeEntities: [],
     typePrograms: [],
+    typeBeneficiaries: [],
     otherContact: {},
     image: null,
     placeholderUser: {},
@@ -209,6 +211,9 @@ const store = new Vuex.Store({
     },
     setAllBeneficiaries (state, payload) {
       state.allBeneficiaries = payload
+    },
+    setTypeBeneficiaries (state, payload) {
+      state.typeBeneficiaries = payload
     }
 
   },
@@ -604,6 +609,18 @@ const store = new Vuex.Store({
         beneficiariesServices.getAll(dataFilters)
           .then(response => {
             this.commit('setAllBeneficiaries', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getTypeBeneficiaries (context, payload) {
+      return new Promise((resolve, reject) => {
+        typeBeneficiariesService.get()
+          .then(response => {
+            context.commit('setTypeBeneficiaries', response)
             resolve(response)
           })
           .catch(error => {

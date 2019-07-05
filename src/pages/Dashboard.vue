@@ -54,9 +54,10 @@ export default {
     this.getLines()
     this.getTypeEntities()
     this.getTypePrograms()
+    this.getTypeBeneficiaries()
   },
   methods: {
-    ...mapActions(['getRegions', 'getProvinces', 'getDistricts', 'getLines', 'getTypeEntities', 'getTypePrograms']),
+    ...mapActions(['getRegions', 'getProvinces', 'getDistricts', 'getLines', 'getTypeEntities', 'getTypePrograms', 'getTypeBeneficiaries']),
     updateNavbar (response) {
       this.navbarStatus = response
     }

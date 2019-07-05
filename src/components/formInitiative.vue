@@ -132,13 +132,13 @@
               <v-dialog
                 ref="dialog"
                 v-model="addInvolveds"
-                :return-value.sync="initiativeData.start_date"
                 lazy
                 full-width
                 width="500px"
               >
                 <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled"></form-involved>
               </v-dialog>
+
             </v-flex>
 
             <!--autocompletado-->
@@ -149,7 +149,7 @@
               <h3>Beneficiados</h3>
             </v-flex>
             <!--autocompletado-->
-            <v-flex xs12>
+            <v-flex xs12 class="c-input__button-action">
               <v-combobox
                 v-model="benefitSelect"
                 :items="people"
@@ -169,6 +169,19 @@
                   </v-list-tile-content>
                 </template>
               </v-combobox>
+              <v-btn fab small color="primary" class="mt-2" @click="registerBeneficiare">
+                <v-icon>add</v-icon>
+              </v-btn>
+
+              <v-dialog
+                ref="dialog"
+                v-model="addBeneficiaries"
+                lazy
+                full-width
+                width="500px"
+              >
+                <form-beneficiaries></form-beneficiaries>
+              </v-dialog>
             </v-flex>
             <!--autocompletado-->
             <v-flex xs12 class="mb-4">
@@ -209,9 +222,10 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import CardEntity from './cardEntity'
 import CardBenefit from './cardBenefit'
 import FormInvolved from './formInvolved'
+import FormBeneficiaries from './formBeneficiaries'
 
 export default {
-  components: { CardEntity, CardBenefit, FormInvolved },
+  components: { CardEntity, CardBenefit, FormInvolved, FormBeneficiaries },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities']),
     ...mapGetters(['getOnlyEntity']),
@@ -224,6 +238,7 @@ export default {
     return {
       checkOtherEntity: false,
       addInvolveds: false,
+      addBeneficiaries: false,
       programSelected: null,
       dateStartModal: false,
       initiativeData: {
@@ -390,6 +405,10 @@ export default {
       this.addInvolveds = true
       // prepara el objeto de entidad para enviarlo al modal
       this.openEntityInvoled = this.entitySelect
+    },
+    registerBeneficiare () {
+      // abre el modal
+      this.addBeneficiaries = true
     },
     AggreEntityInvoled (involeds) {
       let onliEntity = this.getOnlyEntity(involeds.entity_id)
