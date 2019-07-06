@@ -172,7 +172,6 @@ export default {
         this.involeds.name = this.entity.name
         this.involeds.ruc = this.entity.ruc
         this.involeds.social_reason = this.entity.social_reason
-        console.log(this.involeds)
       } else {
         // bloquea los inputs
         this.bloquedEntity = false
@@ -214,22 +213,33 @@ export default {
     ...mapActions([ 'setEntity' ]),
 
     submit () {
-      if (this.involeds.id) {
+      let involedSubmit = Object.assign({}, this.involeds)
+      involedSubmit.participations = this.validParticipations(involedSubmit.participations)
+      if (involedSubmit.id) {
         // se ejecuta cuando la entdiad existe
         this.addInvolveds = false
-        this.$emit('involed', this.involeds)
+        this.$emit('involed', involedSubmit)
       } else {
         // se ejecuta primero para crear una entidad
-        this.setEntity(this.involeds)
+        this.setEntity(involedSubmit)
           .then(response => {
-            this.involeds.entity_id = response.id
+            involedSubmit.entity_id = response.id
             this.addInvolveds = false
-            this.$emit('involed', this.involeds)
+            this.$emit('involed', involedSubmit)
           })
           .catch(error => {
             console.log(error)
           })
       }
+    },
+    validParticipations (value) {
+      let arrayParticipations = []
+      this.involeds.participations.forEach(element => {
+        if (element.description && element.amount) {
+          arrayParticipations.push(element)
+        }
+      })
+      return arrayParticipations
     },
     resetInvoled () {
       this.involeds.participations.forEach(element => {

@@ -384,9 +384,7 @@ export default {
                 console.log(response)
               })
               .catch(error => {
-
               })
-
           } else {
             console.log('bye')
           }
@@ -433,7 +431,6 @@ export default {
         entity_id: generateInvoled.entity_id,
         participations: arrayParticipations
       }
-      console.log(responseInvoled)
       this.entitiesParticipans.push(this.AggreEntityInvoled(responseInvoled))
     },
     deleteReactive (arrayReactive) {
