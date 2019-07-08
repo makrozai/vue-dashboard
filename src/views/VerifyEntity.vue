@@ -299,13 +299,12 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.phone"
-                v-validate="'required|integer'"
+                v-validate="'integer'"
                 maxlength="11"
                 :error-messages="errors.collect(getNameSpace('teléfono',index))"
                 label="Nº Fijo"
                 :data-vv-name="getNameSpace('teléfono',index)"
                 @keyup.enter="submit"
-                required
                 box
               ></v-text-field>
             </v-flex>
@@ -313,13 +312,12 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.anexo"
-                v-validate="'required|integer'"
+                v-validate="'integer'"
                 maxlength="10"
                 :error-messages="errors.collect(getNameSpace('anexo',index))"
                 label="Anexo"
                 :data-vv-name="getNameSpace('anexo',index)"
                 @keyup.enter="submit"
-                required
                 box
               ></v-text-field>
             </v-flex>
@@ -338,7 +336,7 @@
       <!--@ registro de programa-->
       <div class="c-verify-entity__row">
         <div class="c-verify-entity__row-small">
-          <div class="c-verify-entity__section">
+          <div class="c-verify-entity__section c-verify-entity__section--final">
             <span>3</span>
           </div>
         </div>
@@ -374,45 +372,8 @@
             <span>Agregar programa</span>
           </div>
 
-        </div>
-      </div>
-
-      <v-dialog v-model="dialog" max-width="600px" scrollable>
-        <form-program @modal-state="changeActivityModal"></form-program>
-      </v-dialog>
-      <!--@ registro de programa-->
-
-      <!--@ terminos y condiciones-->
-      <div class="c-verify-entity__row">
-        <div class="c-verify-entity__row-small">
-          <div class="c-verify-entity__section c-verify-entity__section--final">
-            <span>4</span>
-          </div>
-        </div>
-        <div class="c-verify-entity__row-large">
-          <h3 class="c-verify-entity__title">Confirmación y protección de datos</h3>
-
-          <v-radio-group
-            :disabled="loadingSubmit"
-            v-model="entity.conditions"
-            class="c-verify-entity__radios"
-            v-validate="'required'"
-            :error-messages="errors.collect('terminos y condiciones')"
-            data-vv-name="terminos y condiciones"
-            required
-          >
-            <v-radio value="accept" color="primary">
-              <template v-slot:label>
-                <p>Términos y condiciones</p>
-                <p>El responsable de la organización, recoge estos datos a través de Google Forms para ser ingresada  en la base de datos de Empresarios por la Educación.</p>
-                <p>Al marcar la casilla de aceptación da pleno consentimiento. Puedes ver su política de privacidad en y los términos y condiciones.</p>
-              </template>
-            </v-radio>
-
-          </v-radio-group>
-
           <div
-            class="c-recaptcha mb-4"
+            class="c-recaptcha my-4"
             :class="alertRecaptcha ? '': 'c-recaptcha--error'"
           >
             <vue-recaptcha :sitekey="recaptchaCode" @verify="onVerify" ></vue-recaptcha>
@@ -436,7 +397,12 @@
           </v-btn>
         </div>
       </div>
-      <!--@ terminos y condiciones-->
+
+      <v-dialog v-model="dialog" max-width="600px" scrollable>
+        <form-program @modal-state="changeActivityModal"></form-program>
+      </v-dialog>
+      <!--@ registro de programa-->
+
     </form>
   </v-container>
 </template>
