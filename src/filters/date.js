@@ -2,7 +2,6 @@ const date = {}
 
 function dateNoDay (date) {
   let dateNoFormat = date.split('-', 2)
-  console.log(dateNoFormat)
 
   let arrayMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 

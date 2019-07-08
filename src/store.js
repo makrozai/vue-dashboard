@@ -89,7 +89,7 @@ const store = new Vuex.Store({
     preloadIframe: false,
     allBeneficiaries: [],
     settings: {
-      iframeTG: 'https://exe.combativa.com/terminos-y-condiciones/?modal=99fe1294ecf6fd28741e231a21d5228f'
+      iframeTG: 'https://exe.combativa.com/politicias-de-privacidad/?modal=99fe1294ecf6fd28741e231a21d5228f'
     }
   },
   getters: {
