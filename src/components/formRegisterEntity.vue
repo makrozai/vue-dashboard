@@ -114,7 +114,7 @@
             <a @click="dialogTerms = true">¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?</a>
             <v-dialog v-model="dialogTerms" persistent max-width="560">
               <v-card>
-                <iframe src="https://vuetifyjs.com/" height="650px" width="100%"></iframe>
+                <iframe :src="settings.iframeTG" height="650px" width="100%"></iframe>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="green darken-1" flat @click="dialogTerms = false">Aceptar</v-btn>
@@ -164,7 +164,7 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha },
   computed: {
-    ...mapState(['recaptchaCode'])
+    ...mapState(['recaptchaCode','settings'])
   },
   data () {
     return {

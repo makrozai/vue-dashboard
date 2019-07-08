@@ -87,7 +87,10 @@ const store = new Vuex.Store({
     recoverPass: null,
     website: 'https://exe.combativa.com/',
     preloadIframe: false,
-    allBeneficiaries: []
+    allBeneficiaries: [],
+    settings: {
+      iframeTG: 'https://exe.combativa.com/terminos-y-condiciones/?modal=99fe1294ecf6fd28741e231a21d5228f'
+    }
   },
   getters: {
     getTypeProvinces: (state) => (id) => {
