@@ -1,5 +1,5 @@
 <template>
-  <v-card class="c-form-program">
+  <v-card class="c-form-program c-card-fixed u-form--white">
     <v-card-title>
       <v-container class="py-0">
         <h2>ENTIDAD</h2>
@@ -14,7 +14,6 @@
         ></v-text-field>
       </v-container>
     </v-card-title>
-    <v-divider></v-divider>
     <v-card-text class="c-valid-entity">
       <v-container grid-list-md >
         <v-layout wrap>
@@ -79,7 +78,6 @@
         </v-layout>
       </v-container>
     </v-card-text>
-    <v-divider></v-divider>
     <v-card-actions>
       <v-container class="py-0">
         <v-btn
@@ -145,6 +143,19 @@ export default {
       textButton: 'Validar',
       valid: false
     }
+  },
+  mounted () {
+    let fixedCard = document.querySelector('.c-card-fixed')
+    let fixedCardTitle = fixedCard.querySelector('.v-card__title').clientHeight
+    let fixedCardAction = fixedCard.querySelector('.v-card__actions').clientHeight
+    let fixedCardText = fixedCard.querySelector('.v-card__text')
+
+    // define la altura del contenedor
+    fixedCardText.style.height = window.innerHeight - fixedCardTitle - fixedCardAction + 'px'
+    // agrega marginTop al contendor
+    fixedCardText.style.marginTop = fixedCardTitle + 'px'
+    // agrega marginBottom al contenedor
+    fixedCardText.style.marginBottom = fixedCardAction + 'px'
   },
   methods: {
     ...mapActions(['validEntity', 'getAllEntities']),

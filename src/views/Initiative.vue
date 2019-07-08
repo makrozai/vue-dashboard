@@ -44,7 +44,7 @@
         fixed
         width="550"
       >
-        <form-initiative class="u-form--white"></form-initiative>
+        <form-initiative class="u-form--white c-card-fixed"></form-initiative>
       </v-navigation-drawer>
     </v-layout>
   </v-container>

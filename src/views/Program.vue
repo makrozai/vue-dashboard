@@ -109,7 +109,7 @@
         fixed
         width="550"
       >
-        <form-program class="u-form--white" @modal-state="closeFormDrawner"></form-program>
+        <form-program class="u-form--white c-card-fixed" @modal-state="closeFormDrawner"></form-program>
       </v-navigation-drawer>
 
       <v-navigation-drawer
@@ -120,7 +120,7 @@
         fixed
         width="550"
       >
-        <form-program-edit class="u-form--white" @modal-state="closeFormDrawner" :program="programDetail" v-if="programDetail"></form-program-edit>
+        <form-program-edit class="u-form--white c-card-fixed" @modal-state="closeFormDrawner" :program="programDetail" v-if="programDetail"></form-program-edit>
       </v-navigation-drawer>
     </v-layout>
   </v-container>

@@ -315,6 +315,24 @@ export default {
       this.getAllEntities({ state_in: '1,2,4' })
     }
   },
+  mounted () {
+    if (document.querySelector('.c-card-fixed')) {
+      let fixedCard = document.querySelectorAll('.c-card-fixed')
+
+      fixedCard.forEach(element => {
+        let fixedCardTitle = element.querySelector('.v-card__title').clientHeight
+        let fixedCardAction = element.querySelector('.v-card__actions').clientHeight
+        let fixedCardText = element.querySelector('.v-card__text')
+
+        // define la altura del contenedor
+        fixedCardText.style.height = window.innerHeight - fixedCardTitle - fixedCardAction + 'px'
+        // agrega marginTop al contendor
+        fixedCardText.style.marginTop = fixedCardTitle + 'px'
+        // agrega marginBottom al contenedor
+        fixedCardText.style.marginBottom = fixedCardAction + 'px'
+      })
+    }
+  },
   methods: {
     ...mapActions(['saveProgram', 'getAllEntities']),
     submit () {

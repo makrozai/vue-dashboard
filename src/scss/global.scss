@@ -951,3 +951,31 @@
     }
   }
 }
+.c-card {
+  &-fixed {
+    height: 100vh !important;
+    position: relative;
+    overflow-y: hidden;
+
+    .v-card__title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: #f6f6f6 !important;
+      border-bottom: 1px solid rgba(0,0,0,0.12) !important;
+    }
+    .v-card__actions {
+      background: #f6f6f6 !important;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid rgba(0,0,0,0.12) !important;
+    }
+    .v-card__text {
+      overflow-y: auto;
+    }
+  }
+}

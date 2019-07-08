@@ -361,6 +361,21 @@ export default {
       .then(response => {
       })
   },
+  mounted () {
+    if (document.querySelector('.c-card-fixed')) {
+      let fixedCard = document.querySelectorAll('.c-card-fixed')
+
+      fixedCard.forEach(element => {
+        let fixedCardAction = element.querySelector('.v-card__actions').clientHeight
+        let fixedCardText = element.querySelector('.v-card__text')
+
+        // define la altura del contenedor
+        fixedCardText.style.height = window.innerHeight - fixedCardAction + 'px'
+        // agrega marginBottom al contenedor
+        fixedCardText.style.marginBottom = fixedCardAction + 'px'
+      })
+    }
+  },
   methods: {
     ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries', 'saveInitiative' ]),
     submit () {
@@ -382,8 +397,6 @@ export default {
             this.saveInitiative(submitData)
               .then(response => {
                 console.log(response)
-              })
-              .catch(error => {
               })
           } else {
             console.log('bye')
