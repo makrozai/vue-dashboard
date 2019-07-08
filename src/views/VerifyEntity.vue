@@ -11,8 +11,8 @@
         <h2>Ficha de verificación de entidad</h2>
       </v-flex>
     </v-layout>
-    <form class="c-verify-entity">
-      <div class="c-verify-entity__row mb-5">
+    <form class="c-verify-entity ">
+      <div class="c-verify-entity__row mb-5 c-verify-entity--main">
         <div class="c-verify-entity__row-small">
           <upload-image
             @image-resolve="uploadImage"
