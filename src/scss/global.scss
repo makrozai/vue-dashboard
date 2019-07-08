@@ -178,15 +178,23 @@
   }
   &__entity{
     cursor:pointer;
-    font-weight: 700;
     display: flex;
     align-items: center;
     text-align: left;
+    margin-top:.5em;
+    margin-bottom: .5em;
 
     img{
       display: block;
       margin-right: 1em;
-      width: 2.8em;
+      height: 5em;
+    }
+
+    &__description{
+      text-transform: uppercase;
+      p{
+        margin: 0;
+      }
     }
   }
 }

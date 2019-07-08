@@ -165,7 +165,7 @@ export default {
           // esto de aca no se puede quedar asi
           this.textButton = 'Validado'
 
-          this.$emit('response-valid', true)
+          this.$emit('response-valid', status)
         })
         .catch(error => {
           console.log(error)

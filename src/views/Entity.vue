@@ -35,12 +35,13 @@
             <td>
               <div class="c-data-table__entity">
                 <img :src="props.item.logo_image_link || require('../assets/default-img.svg')" alt="">
-                {{ props.item.name }}
+                <div class="c-data-table__entity__description">
+                  <p><b>{{ props.item.name }}</b> - {{ props.item.ruc }}</p>
+                  <p>{{ props.item.social_reason }}</p>
+                </div>
               </div>
             </td>
-            <td>{{ props.item.social_reason }}</td>
-            <td class="text-sm-right">{{ props.item.ruc }}</td>
-            <td class="text-sm-center">
+            <td class="text-sm-right">
               <v-tooltip top v-if="props.item.website">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
@@ -137,19 +138,9 @@ export default {
           value: 'name'
         },
         {
-          text: 'Razón social',
-          value: 'social_reason',
-          align: 'left'
-        },
-        {
-          text: 'Ruc',
-          value: 'ruc',
-          align: 'right'
-        },
-        {
           text: 'Contacto',
           value: 'website',
-          align: 'center'
+          align: 'right'
         },
         {
           text: 'Estado',
@@ -184,8 +175,15 @@ export default {
     responseValid (response) {
       if (response) {
         this.formDrawner = false
+        let message = ''
+        if(response == 1) {
+          response = 'Entidad valida correctamente'
+        }
+        if (response == 3) {
+          response = 'Entidad rechazada correctamente'
+        }
         this.setAlert({
-          text: 'Entidad validada correctamente',
+          text: response,
           state: true,
           dismissible: false,
           type: 'success',
