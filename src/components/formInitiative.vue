@@ -144,7 +144,7 @@
                 full-width
                 width="500px"
               >
-                <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled"></form-involved>
+                <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled" @modal-close="closeInvoled"></form-involved>
               </v-dialog>
 
             </v-flex>
@@ -179,7 +179,7 @@
                 full-width
                 width="500px"
               >
-                <form-beneficiaries @beneficiary="addBeneficiary"></form-beneficiaries>
+                <form-beneficiaries @beneficiary="addBeneficiary" @modal-close="closeBeneficiaries"></form-beneficiaries>
               </v-dialog>
 
               <v-dialog
@@ -188,7 +188,7 @@
                 full-width
                 width="500px"
               >
-                <form-beneficiaries-edit :entity="editBeneficiaryData" @beneficiary="editBeneficiaryUpdate"></form-beneficiaries-edit>
+                <form-beneficiaries-edit :entity="editBeneficiaryData" @beneficiary="editBeneficiaryUpdate" @modal-close="closeEditBeneficiaries"></form-beneficiaries-edit>
               </v-dialog>
             </v-flex>
             <!--autocompletado-->
@@ -481,6 +481,15 @@ export default {
     editBeneficiaryUpdate () {
       // cerrar modal
       this.editBeneficiaryDialog = false
+    },
+    closeInvoled (value) {
+      this.addInvolveds = value
+    },
+    closeBeneficiaries (value) {
+      this.addBeneficiaries = value
+    },
+    closeEditBeneficiaries (value) {
+      this.editBeneficiaryDialog = value
     }
   }
 }

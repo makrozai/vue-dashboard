@@ -278,6 +278,7 @@
       <v-card-actions>
         <v-container class="py-0">
           <v-btn large color="primary" @click="submit">Guardar</v-btn>
+          <v-btn large @click="close">Cerrar</v-btn>
         </v-container>
       </v-card-actions>
 
@@ -402,7 +403,6 @@ export default {
       let duplicate = false
       this.programOwn.entities.forEach(item => {
         if (item.id === id.id) {
-          console.log('elemento duplibado')
           duplicate = true
         }
       })
@@ -443,6 +443,9 @@ export default {
     },
     removeEntity (index) {
       this.programOwn.entities.splice(index, 1)
+    },
+    close () {
+      this.$emit('modal-close', false)
     }
   }
 }

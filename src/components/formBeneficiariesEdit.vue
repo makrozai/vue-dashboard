@@ -81,6 +81,7 @@
     <v-card-actions>
       <v-container class="py-0">
         <v-btn large color="primary" @click="submit">Guardar</v-btn>
+        <v-btn @click="close">Cerrar</v-btn>
       </v-container>
 
     </v-card-actions>
@@ -133,6 +134,9 @@ export default {
             console.log('los datos no estan validados')
           }
         })
+    },
+    close () {
+      this.$emit('modal-close', false)
     }
   }
 }

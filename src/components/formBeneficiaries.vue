@@ -81,6 +81,7 @@
     <v-card-actions>
       <v-container class="py-0">
         <v-btn large color="primary" @click="submit">Guardar</v-btn>
+        <v-btn @click="close">Cerrar</v-btn>
       </v-container>
 
     </v-card-actions>
@@ -132,6 +133,9 @@ export default {
       this.beneficiary.district_id = null
       this.beneficiary.name = ''
       this.$validator.reset()
+    },
+    close () {
+      this.$emit('modal-close', false)
     }
   }
 }

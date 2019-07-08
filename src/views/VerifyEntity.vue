@@ -399,7 +399,7 @@
       </div>
 
       <v-dialog v-model="dialog" max-width="600px" scrollable>
-        <form-program @modal-state="changeActivityModal"></form-program>
+        <form-program @modal-state="changeActivityModal" @modal-close="closeDialog"></form-program>
       </v-dialog>
       <!--@ registro de programa-->
 
@@ -598,6 +598,9 @@ export default {
     },
     onVerify (response) {
       this.verifyRecaptcha = response
+    },
+    closeDialog (value) {
+      this.dialog = value
     }
   }
 }
