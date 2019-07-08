@@ -57,8 +57,8 @@
               </div>
             </td>
             <td>{{ getnameEntity(props.item.entities[0]) }}</td>
-            <td>{{ props.item.start_date }}</td>
-            <td>
+            <td class="text-sm-right">{{ props.item.start_date }}</td>
+            <td class="text-sm-center">
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
@@ -149,19 +149,19 @@ export default {
       headers: [
         {
           text: 'Programa',
-          align: 'center',
+          align: 'left',
           sortable: true,
           value: 'name'
         },
         {
           text: 'Entidad',
           value: 'fat',
-          align: 'center'
+          align: 'ñeft'
         },
         {
           text: 'Inicio',
           value: 'start_date',
-          align: 'center'
+          align: 'right'
         },
         {
           text: 'Contacto',
@@ -171,7 +171,7 @@ export default {
         {
           text: 'Línea Acción',
           value: 'type_program_name',
-          align: 'center'
+          align: 'left'
         },
         {
           text: '',

@@ -39,8 +39,8 @@
               </div>
             </td>
             <td>{{ props.item.social_reason }}</td>
-            <td>{{ props.item.ruc }}</td>
-            <td>
+            <td class="text-sm-right">{{ props.item.ruc }}</td>
+            <td class="text-sm-center">
               <v-tooltip top v-if="props.item.website">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
@@ -78,6 +78,7 @@
             </td>
             <td
               v-if="userSesion.user.type_user_id == 1"
+              class="text-sm-center"
             >
               <span
                 class="c-badge-status"
@@ -86,7 +87,7 @@
                 {{ badgeStatus(props.item.state).text }}
               </span>
             </td>
-            <td>
+            <td class="text-sm-center">
               <v-btn
                 :disabled="userSesion.user.type_user_id !== 1 ? true : false"
                 fab
@@ -132,18 +133,18 @@ export default {
       headers: [
         {
           text: 'Entidad',
-          align: 'center',
+          align: 'left',
           value: 'name'
         },
         {
           text: 'Razón social',
           value: 'social_reason',
-          align: 'center'
+          align: 'left'
         },
         {
           text: 'Ruc',
           value: 'ruc',
-          align: 'center'
+          align: 'right'
         },
         {
           text: 'Contacto',
