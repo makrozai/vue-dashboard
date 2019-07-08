@@ -164,7 +164,7 @@ import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: { VueRecaptcha },
   computed: {
-    ...mapState(['recaptchaCode','settings'])
+    ...mapState(['recaptchaCode', 'settings'])
   },
   data () {
     return {
