@@ -350,7 +350,7 @@
               <img :src="program.logo_image_link || require('../assets/default-img.svg')" alt="">
               <div class="information">
                 <p>{{ program.name }}</p>
-                <span>{{ program.start_date }} hasta la actualidad</span>
+                <span>{{ program.start_date | date-no-day }} hasta la actualidad</span>
               </div>
               <v-btn
                 :disabled="program.owner_id != userSesion.entity.id"

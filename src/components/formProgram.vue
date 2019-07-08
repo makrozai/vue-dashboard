@@ -153,9 +153,9 @@
                   <v-text-field
                     v-model="programOwn.start_date"
                     v-validate="'required'"
-                    :error-messages="errors.collect('año de inicio')"
-                    label="Año de inicio"
-                    data-vv-name="año de inicio"
+                    :error-messages="errors.collect('fecha de inicio')"
+                    label="Fecha de inicio"
+                    data-vv-name="fecha de inicio"
                     @keyup.enter="submit"
                     required
                     readonly

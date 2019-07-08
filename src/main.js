@@ -13,13 +13,12 @@ import VeeValidate, { Validator } from 'vee-validate'
 // import of vue resource
 import VueResource from 'vue-resource'
 
-// import of axios library
-// import axios from 'axios'
-// import VueAxios from 'vue-axios'
-// Vue.use(VueAxios, axios)
+// import filters
+import date from './filters/date'
 
 Vue.use(VeeValidate)
 Vue.use(VueResource)
+Vue.use(date)
 
 Validator.localize('es', es)
 
