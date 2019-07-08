@@ -975,3 +975,18 @@
     }
   }
 }
+.c-checkbox-register {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+
+  a{
+    margin: 0;
+    text-align: left;
+    color: black;
+  }
+}
+iframe {
+  border: none;
+  outline: none;
+}

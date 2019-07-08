@@ -99,17 +99,29 @@
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-checkbox
-            v-model="entityInfo.autorization"
-            v-validate="'required'"
-            :error-messages="errors.collect('autorización')"
-            label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
-            data-vv-name="autorización"
-            @keyup.enter="submit"
-            required
-            color="primary"
-            class="mt-0"
-          ></v-checkbox>
+          <div class="c-checkbox-register">
+            <v-checkbox
+              v-model="entityInfo.autorization"
+              v-validate="'required'"
+              :error-messages="errors.collect('autorización')"
+              label=""
+              data-vv-name="autorización"
+              @keyup.enter="submit"
+              required
+              color="primary"
+              class="mt-0"
+            ></v-checkbox>
+            <a @click="dialogTerms = true">¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?</a>
+            <v-dialog v-model="dialogTerms" persistent max-width="560">
+              <v-card>
+                <iframe src="https://vuetifyjs.com/" height="650px" width="100%"></iframe>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="green darken-1" flat @click="dialogTerms = false">Aceptar</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
         </v-flex>
         <v-flex xs12>
           <div
@@ -173,6 +185,7 @@ export default {
       loadingSubmit: false,
       statusSubmit: 'primary',
       show1: false,
+      dialogTerms: false,
       verifyRecaptcha: null,
       alertRecaptcha: true
     }

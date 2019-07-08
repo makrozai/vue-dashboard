@@ -111,17 +111,29 @@
           ></v-text-field>
         </v-flex>
         <v-flex xs12>
-          <v-checkbox
-            v-validate="'required'"
-            :error-messages="errors.collect('autorizacion')"
-            data-vv-name="autorizacion"
-            @keyup.enter="submit"
-            v-model="autorization"
-            label="¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?"
-            class="mt-0"
-            color="primary"
-            required
-          ></v-checkbox>
+          <div class="c-checkbox-register">
+            <v-checkbox
+              v-validate="'required'"
+              :error-messages="errors.collect('autorizacion')"
+              data-vv-name="autorizacion"
+              @keyup.enter="submit"
+              v-model="autorization"
+              label=""
+              class="mt-0"
+              color="primary"
+              required
+            ></v-checkbox>
+            <a @click="dialogTerms = true">¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?</a>
+            <v-dialog v-model="dialogTerms" persistent max-width="560">
+              <v-card>
+                <iframe src="https://vuetifyjs.com/" height="650px" width="100%"></iframe>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="green darken-1" flat @click="dialogTerms = false">Aceptar</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
         </v-flex>
         <v-flex xs12>
           <div class="c-recaptcha">
@@ -179,7 +191,7 @@ export default {
       },
       loadingSubmit: false,
       statusSubmit: 'primary',
-
+      dialogTerms: false,
       autorization: null,
       show1: false,
       verifyRecaptcha: null
@@ -226,6 +238,9 @@ export default {
     },
     onVerify (response) {
       this.verifyRecaptcha = response
+    },
+    openTerms () {
+
     }
   }
 }
