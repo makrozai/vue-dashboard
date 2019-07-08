@@ -197,6 +197,19 @@
       }
     }
   }
+  &__program {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    img {
+      display: block;
+      height: 3em;
+      margin-right: 1em;
+    }
+  }
 }
 .c-navbar{
   display: flex;

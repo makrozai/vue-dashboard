@@ -51,7 +51,7 @@
           </template>
           <template v-slot:items="props">
             <td>
-              <div class="c-data-table__entity" @click="openDetail(props.item)">
+              <div class="c-data-table__program" @click="openDetail(props.item)">
                 <img :src="props.item.logo_image_link || require('../assets/default-img.svg')" alt="">
                 {{ props.item.name }}
               </div>
