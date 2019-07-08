@@ -5,6 +5,7 @@
           <h2>PROGRAMA</h2>
 
           <v-text-field
+            v-if="userSesion.user.type_user_id === 2"
             disabled
             v-model="entityFullName"
             v-validate="'required'"
@@ -15,6 +16,27 @@
             box
             class="none-errors pt-2"
           ></v-text-field>
+
+          <v-combobox
+            v-if="userSesion.user.type_user_id === 1"
+            v-model="entityOwner"
+            :items="allEntities"
+            label="Buscar entidad propietaria del programa"
+            item-text="name"
+            item-value="name"
+            class="pt-2"
+            box
+          >
+            <template v-slot:item="data">
+              <v-list-tile-avatar>
+                <img :src="data.item.logo_image_link || require('./../assets/default-img.svg')">
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="data.item.ruc"></v-list-tile-sub-title>
+              </v-list-tile-content>
+            </template>
+          </v-combobox>
         </v-container>
       </v-card-title>
 
@@ -282,6 +304,7 @@ export default {
   },
   data () {
     return {
+      entityOwner: null,
       dateStartModal: false,
       programOwn: {
         owner_id: null,
@@ -306,6 +329,9 @@ export default {
   watch: {
     dateStartModal (value) {
       value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+    },
+    entityOwner (value) {
+      this.programOwn.owner_id = value.id
     }
   },
   created () {
