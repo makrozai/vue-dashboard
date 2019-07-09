@@ -165,16 +165,31 @@
     }
     
   }
+  tbody{
+    tr{
+      td:first-child{
+        @media (min-width: 1264px){
+          width: 40%;
+        }
+
+        @media (min-width: 1464px){
+          width: 50%;
+        }
+        
+      }
+    }
+  }
   tr:hover &__status{
     background-color: var(--v-primary-darken1);
   }
   &__status{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    text-align: center;
     background-color: var(--v-primary-base);
     transition: all .3s;
+
+    span{
+      display: block;
+    }
   }
   &__entity{
     cursor:pointer;
@@ -201,13 +216,20 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    font-weight: 700;
-    text-transform: uppercase;
+    margin-top: .5em;
+    margin-bottom: .5em;
 
     img {
       display: block;
-      height: 3em;
+      height: 5em;
       margin-right: 1em;
+    }
+
+    &__description{
+      text-transform: uppercase;
+      p{
+        margin: 0;
+      }
     }
   }
 }

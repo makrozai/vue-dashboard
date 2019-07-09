@@ -56,11 +56,13 @@
             <td>
               <div class="c-data-table__program" @click="openDetail(props.item)">
                 <img :src="props.item.logo_image_link || require('../assets/default-img.svg')" alt="">
-                {{ props.item.name }}
+                <div class="c-data-table__program__description">
+                  <p><b>{{ props.item.name }}</b></p>
+                  <p>{{ getnameEntity(props.item.entities[0]) }}</p>
+                </div>
+
               </div>
             </td>
-            <td>{{ getnameEntity(props.item.entities[0]) }}</td>
-            <td class="text-sm-right">{{ props.item.start_date }}</td>
             <td class="text-sm-center">
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
@@ -97,8 +99,8 @@
             </td>
             <td>{{ props.item.type_program_name }}</td>
             <td class="c-data-table__status">
-              <span>Validado</span>
-              <span>12/10/2019</span>
+              <span>CREADO</span>
+              <span>{{ props.item.start_date | date-no-day }}</span>
             </td>
           </template>
         </v-data-table>
@@ -155,16 +157,6 @@ export default {
           align: 'left',
           sortable: true,
           value: 'name'
-        },
-        {
-          text: 'Entidad',
-          value: 'fat',
-          align: 'left'
-        },
-        {
-          text: 'Inicio',
-          value: 'start_date',
-          align: 'right'
         },
         {
           text: 'Contacto',
