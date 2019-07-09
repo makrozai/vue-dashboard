@@ -23,7 +23,7 @@
       >
 
       </v-flex>
-      <v-flex xs12 class="mt-5">
+      <v-flex xs12 class="mt-5" v-if="!noData">
         <v-data-table
           :headers="headers"
           :items="allEntities"
@@ -104,6 +104,18 @@
           </template>
         </v-data-table>
       </v-flex>
+      <v-flex xs12 class="mt-5" v-if="noData">
+        <div class="c-not-data">
+          <h3>Aún no se ha cargado una iniciativa</h3>
+          <p>Posiblemente no tenga ninguna iniciativa vigente, en caso contrario click en el botón</p>
+          <v-btn
+            large
+            color="primary"
+          >
+            Crear iniciativa
+          </v-btn>
+        </div>
+      </v-flex>
 
       <v-navigation-drawer
         v-model="formDrawner"
@@ -128,6 +140,7 @@ export default {
   },
   data () {
     return {
+      noData: false,
       search: '',
       valueEntity: null,
       formDrawner: null,
@@ -161,8 +174,18 @@ export default {
   created () {
     if (this.userSesion.user.type_user_id === 1) {
       this.getAllEntities({ with_contacts: true, state_in: '1,2,3,4' })
+        .then(response => {
+          if (this.allEntities.length === 0) {
+            this.noData = true
+          }
+        })
     } else {
       this.getAllEntities({ with_contacts: true })
+        .then(response => {
+          if (this.allEntities.length === 0) {
+            this.noData = true
+          }
+        })
     }
 
     if (this.userSesion.user.type_user_id !== 1) {

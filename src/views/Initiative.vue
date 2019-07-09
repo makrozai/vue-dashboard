@@ -37,6 +37,7 @@
       <v-flex
         xs12
         class="mt-4"
+        v-if="!noData"
       >
         <v-data-table
           :headers="headers"
@@ -71,6 +72,19 @@
         </v-data-table>
       </v-flex>
 
+      <v-flex xs12 class="mt-5" v-if="noData">
+        <div class="c-not-data">
+          <h3>Aún no se ha cargado una iniciativa</h3>
+          <p>Posiblemente no tenga ninguna iniciativa vigente, en caso contrario click en el botón</p>
+          <v-btn
+            large
+            color="primary"
+          >
+            Crear iniciativa
+          </v-btn>
+        </div>
+      </v-flex>
+
       <v-navigation-drawer
         v-model="formDrawner"
         temporary
@@ -97,6 +111,7 @@ export default {
   },
   data () {
     return {
+      noData: false,
       search: '',
       formDrawner: null,
 
@@ -130,6 +145,11 @@ export default {
   created () {
     if (this.allInitiatives.length === 0) {
       this.getAllInitiatives()
+        .then(response => {
+          if (this.allInitiatives.length === 0) {
+            this.noData = true
+          }
+        })
     }
   },
   methods: {

@@ -37,6 +37,7 @@
       <v-flex
         xs12
         class="mt-5"
+        v-if="!noData"
       >
         <v-data-table
           :headers="headers"
@@ -46,11 +47,6 @@
           :search="search"
           :pagination.sync="pagination"
         >
-          <template v-slot:no-data>
-            <v-alert :value="true" color="error" icon="warning">
-              No existe informacion de programas
-            </v-alert>
-          </template>
           <template v-slot:items="props">
             <td>
               <div class="c-data-table__program" @click="openDetail(props.item)">
@@ -105,6 +101,19 @@
         </v-data-table>
       </v-flex>
 
+      <v-flex xs12 class="mt-5" v-if="noData">
+        <div class="c-not-data">
+          <h3>No se encontró ningún programa</h3>
+          <p>Es necesario como Entidad registrar programas para la implementación de Iniciativas, dale click al botón para crear.</p>
+          <v-btn
+            large
+            color="primary"
+          >
+            Crear iniciativa
+          </v-btn>
+        </div>
+      </v-flex>
+
       <v-navigation-drawer
         v-if="userSesion.user.type_user_id !== 3"
         v-model="formDrawner"
@@ -143,6 +152,7 @@ export default {
   },
   data () {
     return {
+      noData: false,
       search: '',
       formDrawner: null,
       formDrawnerEdit: null,
@@ -180,9 +190,19 @@ export default {
       switch (this.userSesion.user.type_user_id) {
         case 1:
           this.getAllPrograms()
+            .then(response => {
+              if (this.allPrograms.length === 0) {
+                this.noData = true
+              }
+            })
           break
         case 2:
           this.getAllPrograms({ entity_id: this.userSesion.entity.id })
+            .then(response => {
+              if (this.allPrograms.length === 0) {
+                this.noData = true
+              }
+            })
           break
       }
     }
