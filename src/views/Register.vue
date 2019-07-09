@@ -38,6 +38,10 @@
       </div>
       <form-register-entity v-if="registerPage == 'entity'"></form-register-entity>
       <form-register-particular v-if="registerPage == 'particular'"></form-register-particular>
+
+      <p class="text-xs-center">¿Ya tienes una cuenta?
+        <router-link :to="{name:'login'}" >Inicia sesión</router-link>
+      </p>
     </v-flex>
   </v-layout>
 </template>

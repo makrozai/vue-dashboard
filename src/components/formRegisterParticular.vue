@@ -158,7 +158,7 @@
           </v-btn>
         </v-flex>
         <p class="text-xs-center">¿Ya tienes una cuenta?
-          <router-link :to="{name:'login'}" class="red--text">Inicia sesión</router-link>
+          <router-link :to="{name:'login'}">Inicia sesión</router-link>
         </p>
       </v-layout>
     </form>
