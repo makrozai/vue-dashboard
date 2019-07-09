@@ -15,6 +15,7 @@ import indicators from './views/Indicators'
 import inversion from './views/Inversion'
 import typeInversion from './views/TypeInversion'
 import home from './views/Home'
+import pageNotFound from './views/PageNotFound'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -26,6 +27,15 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '*',
+      name: 'page-not-found',
+      component: pageNotFound,
+      meta: {
+        Auth: false,
+        title: 'La Pagina no existe'
+      }
+    },
     {
       path: '/',
       name: 'login',
