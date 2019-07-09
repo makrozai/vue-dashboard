@@ -6,18 +6,21 @@
         class="c-dashboard-title"
       >
         <h2>Entidades</h2>
-      </v-flex>
-      <v-flex
-        xs12 md6 lg4
-        class="c-dashboard-input"
-      >
+
         <v-text-field
+          class="c-dashboard-title__input"
           box
           label="Busqueda de entidades"
           prepend-inner-icon="search"
           hide-details
           v-model="search"
         ></v-text-field>
+
+      </v-flex>
+      <v-flex
+        xs12 md6 lg4
+        class="c-dashboard-input"
+      >
 
       </v-flex>
       <v-flex xs12 class="mt-5">

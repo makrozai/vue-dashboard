@@ -355,17 +355,15 @@
     justify-content: flex-end;
   }
   &-title{
-    text-transform: uppercase;
     padding-top: .5em;
     font-size: 1.4em;
 
     div{
       display: flex;
       align-items: center;
-
-      h2{
-        margin-left: .5em;
-      }
+    }
+    h2{
+      text-transform: uppercase;
     }
 
     &__input{
