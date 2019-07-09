@@ -102,6 +102,9 @@ const store = new Vuex.Store({
     getOnlyEntity: (state) => (id) => {
       return state.allEntities.filter(item => item.id === id)[0]
     },
+    getOnlyProgram: (state) => (id) => {
+      return state.allPrograms.filter(item => item.id === id)[0]
+    },
     getRegion: (state) => (id) => {
       return state.ubigeo.regions.filter(item => item.id === id)[0]
     },
@@ -246,6 +249,9 @@ const store = new Vuex.Store({
     },
     setInitiative (state, payload) {
       state.allInitiatives.push(payload)
+    },
+    setAllInitiatives (state, payload) {
+      state.allInitiatives = payload
     }
 
   },
@@ -689,6 +695,25 @@ const store = new Vuex.Store({
         initiativesService.save(payload)
           .then(response => {
             context.commit('setInitiative', payload)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getAllInitiatives (context, payload) {
+      let dataFilters = ''
+      if (payload) {
+        dataFilters = Object.entries(payload)
+          .map(pair => pair.map(encodeURIComponent).join('='))
+          .join('&')
+      }
+
+      return new Promise((resolve, reject) => {
+        initiativesService.getAll(dataFilters)
+          .then(response => {
+            this.commit('setAllInitiatives', response)
             resolve(response)
           })
           .catch(error => {

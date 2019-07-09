@@ -15,7 +15,23 @@ const initiativesService = {
           reject(error)
         })
     })
+  },
+  getAll: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get(`initiatives?${payload}`)
+        .then(response => {
+          // enruta correctamente a la respuesta
+          response = response.body.data.initiatives
+          // retorna respuesta
+          resolve(response)
+        })
+        .catch(error => {
+          // retornna error
+          reject(error)
+        })
+    })
   }
+
 }
 
 export default initiativesService

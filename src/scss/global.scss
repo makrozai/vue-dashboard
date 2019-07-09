@@ -232,6 +232,26 @@
       }
     }
   }
+  &__initiative{
+    display: flex;
+    align-items: center;
+    margin-top: .5em;
+    margin-bottom: .5em;
+
+    img{
+      display: block;
+      height: 5em;
+      margin-right: 1em;
+    }
+
+    &__description{
+      text-transform: uppercase;
+
+      p{
+        margin: 0;
+      }
+    }
+  }
 }
 .c-navbar{
   display: flex;
