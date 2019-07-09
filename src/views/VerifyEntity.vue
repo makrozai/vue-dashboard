@@ -16,6 +16,7 @@
         <div class="c-verify-entity__row-small">
           <upload-image
             @image-resolve="uploadImage"
+            @image-url="changeImageLink"
             :image="{url: entity.logo_image_link, id: entity.logo_image_id}"
             type="entity_logo"
           ></upload-image>
@@ -425,6 +426,7 @@ export default {
       entity: {
         id: null,
         logo_image_id: null,
+        logo_image_link: null,
         name: '',
         ruc: null,
         social_reason: '',
@@ -592,6 +594,9 @@ export default {
     },
     uploadImage (image) {
       this.entity.logo_image_id = image
+    },
+    changeImageLink (image) {
+      this.entity.logo_image_link = image
     },
     changeActivityModal (value) {
       this.dialog = value

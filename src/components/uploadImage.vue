@@ -50,6 +50,7 @@ export default {
   watch: {
     image (value) {
       if (!value.url) {
+        console.log('se ejecuta el watch')
         // eslint-disable-next-line
         this.imageProfile = require('../assets/default-img.svg')
         this.disabledUpload = false
@@ -86,6 +87,7 @@ export default {
             this.disabledUpload = true
             this.loaderImage = false
             this.$emit('image-resolve', this.imageId)
+            this.$emit('image-url', this.imageProfile)
           })
           .catch(error => {
             this.loaderImage = false
@@ -100,9 +102,9 @@ export default {
         .then(response => {
           // eslint-disable-next-line
           this.imageProfile= require('../assets/default-img.svg')
-          console.log(response)
           this.disabledUpload = false
           this.$emit('image-resolve', null)
+          this.$emit('image-url', null)
         })
         .catch(error => {
           console.log(error)
