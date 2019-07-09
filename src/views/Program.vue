@@ -104,7 +104,7 @@
       <v-flex xs12 class="mt-5" v-if="noData">
         <div class="c-not-data">
           <h3>No se encontró ningún programa</h3>
-          <p>Es necesario como Entidad registrar programas para la implementación de Iniciativas, dale click al botón para crear.</p>
+          <p>Es necesario como entidad registrada, tener programas para la implementación de iniciativas. Por favor, crea el tuyo.</p>
           <v-btn
             large
             color="primary"
