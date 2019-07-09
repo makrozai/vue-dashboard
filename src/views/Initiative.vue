@@ -86,12 +86,11 @@
 
 <script>
 import FormInitiative from '../components/formInitiative'
-import MProgramaTable from '../components/programaTable'
 
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
-  components: { MProgramaTable, FormInitiative },
+  components: { FormInitiative },
   computed: {
     ...mapState(['userSesion', 'allInitiatives', 'allEntities', 'allPrograms']),
     ...mapGetters(['getOnlyEntity', 'getOnlyProgram'])
@@ -129,7 +128,7 @@ export default {
     }
   },
   created () {
-    if(this.allInitiatives.length === 0) {
+    if (this.allInitiatives.length === 0) {
       this.getAllInitiatives()
     }
   },

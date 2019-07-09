@@ -10,7 +10,6 @@
       >
         <h2>programa</h2>
 
-
         <v-text-field
           class="c-dashboard-title__input"
           box
