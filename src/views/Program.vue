@@ -9,26 +9,29 @@
         class="c-dashboard-title"
       >
         <h2>programa</h2>
-      </v-flex>
-      <v-flex
-        xs12 md6 lg4
-        class="c-dashboard-input"
-      >
+
+
         <v-text-field
+          class="c-dashboard-title__input"
           box
           label="Busqueda de programa"
           prepend-inner-icon="search"
           hide-details
           v-model="search"
         ></v-text-field>
+      </v-flex>
+      <v-flex
+        xs12 md6 lg4
+        class="c-dashboard-input"
+      >
         <v-btn
           v-if="userSesion.user.type_user_id !== 3"
-          fab
+          large
           color="primary"
-          class="my-0 mr-0"
+          class="mr-0"
           @click.stop="formDrawner = !formDrawner"
         >
-          <v-icon dark>add</v-icon>
+          Crear Programa
         </v-btn>
 
       </v-flex>

@@ -306,14 +306,14 @@
 
 .c-dashboard{
   &-input{
+
+    padding-top: .5em;
     display: flex;
     align-items: flex-start;
     justify-content: flex-end;
   }
   &-title{
-    display: flex;
     text-transform: uppercase;
-    align-items: flex-start;
     padding-top: .5em;
     font-size: 1.4em;
 
@@ -324,6 +324,12 @@
       h2{
         margin-left: .5em;
       }
+    }
+
+    &__input{
+      display: block;
+      max-width: 30em;
+      margin-top: 1em !important;
     }
   }
 }
