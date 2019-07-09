@@ -176,14 +176,14 @@ export default {
       if (response) {
         this.formDrawner = false
         let message = ''
-        if(response == 1) {
-          response = 'Entidad valida correctamente'
+        if (response === 1) {
+          message = 'Entidad valida correctamente'
         }
-        if (response == 3) {
-          response = 'Entidad rechazada correctamente'
+        if (response === 3) {
+          message = 'Entidad rechazada correctamente'
         }
         this.setAlert({
-          text: response,
+          text: message,
           state: true,
           dismissible: false,
           type: 'success',
