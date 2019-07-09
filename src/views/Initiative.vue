@@ -16,6 +16,7 @@
           label="Buscar una iniciativa"
           hide-details
           prepend-inner-icon="search"
+          v-model="search"
         ></v-text-field>
       </v-flex>
       <v-flex
@@ -41,6 +42,8 @@
           :headers="headers"
           :items="allInitiatives"
           item-key="id"
+
+          :search="search"
           class="c-data-table"
           :pagination.sync="pagination"
         >
@@ -50,8 +53,10 @@
                 <img src="../assets/default-img.svg" alt="">
                 <div class="c-data-table__initiative__description">
                   <p><b>{{ props.item.name }}</b></p>
-                  <p>{{ getOnlyProgram(props.item.program_id).name }}</p>
-                  <p>{{ getOnlyEntity(getOnlyProgram(props.item.program_id).owner_id).name }}</p>
+                  <template v-if="allEntities.length > 0 && allPrograms.length  > 0">
+                    <p>{{ getOnlyProgram(props.item.program_id).name }}</p>
+                    <p>{{ getOnlyEntity(getOnlyProgram(props.item.program_id).owner_id).name }}</p>
+                  </template>
                 </div>
 
               </div>
@@ -88,11 +93,12 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   components: { MProgramaTable, FormInitiative },
   computed: {
-    ...mapState(['userSesion', 'allInitiatives']),
+    ...mapState(['userSesion', 'allInitiatives', 'allEntities', 'allPrograms']),
     ...mapGetters(['getOnlyEntity', 'getOnlyProgram'])
   },
   data () {
     return {
+      search: '',
       formDrawner: null,
 
       pagination: {
