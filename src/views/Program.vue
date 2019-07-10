@@ -23,6 +23,23 @@
         xs12 md6 lg4
         class="c-dashboard-input"
       >
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              fab
+              small
+              outline
+              color="primary"
+              class="c-button-refresh"
+              v-on="on"
+              @click="refreshProgram"
+            >
+              <i class="icon-refresh"></i>
+            </v-btn>
+          </template>
+          <span>Actualiza</span>
+        </v-tooltip>
+
         <v-btn
           v-if="userSesion.user.type_user_id !== 3"
           large
@@ -225,6 +242,26 @@ export default {
       console.log('cerrar modal')
       this.formDrawner = false
       this.formDrawnerEdit = false
+    },
+    refreshProgram () {
+      switch (this.userSesion.user.type_user_id) {
+        case 1:
+          this.getAllPrograms()
+            .then(response => {
+              if (this.allPrograms.length === 0) {
+                this.noData = true
+              }
+            })
+          break
+        case 2:
+          this.getAllPrograms({ entity_id: this.userSesion.entity.id })
+            .then(response => {
+              if (this.allPrograms.length === 0) {
+                this.noData = true
+              }
+            })
+          break
+      }
     }
   }
 }

@@ -23,6 +23,23 @@
         xs12 md6 lg4
         class="c-dashboard-input"
       >
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              fab
+              small
+              outline
+              color="primary"
+              class="c-button-refresh"
+              v-on="on"
+              @click="refreshInitiative"
+            >
+              <i class="icon-refresh"></i>
+            </v-btn>
+          </template>
+          <span>Actualiza</span>
+        </v-tooltip>
+
         <v-btn
           v-if="userSesion.user.type_user_id !== 3"
           large
@@ -171,6 +188,14 @@ export default {
     },
     responseInitiative (value) {
       this.formDrawner = value
+    },
+    refreshInitiative () {
+      this.getAllInitiatives()
+        .then(response => {
+          if (this.allInitiatives.length === 0) {
+            this.noData = true
+          }
+        })
     }
   }
 }

@@ -21,7 +21,22 @@
         xs12 md6 lg4
         class="c-dashboard-input"
       >
-
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              fab
+              small
+              outline
+              color="primary"
+              class="c-button-refresh"
+              v-on="on"
+              @click="refreshEntity"
+            >
+              <i class="icon-refresh"></i>
+            </v-btn>
+          </template>
+          <span>Actualiza</span>
+        </v-tooltip>
       </v-flex>
       <v-flex xs12 class="mt-5" v-if="!noData">
         <v-data-table
@@ -233,6 +248,27 @@ export default {
         return { email: contact.email, phone: contact.cellphone }
       }
       return ''
+    },
+    refreshEntity () {
+      if (this.userSesion.user.type_user_id === 1) {
+        this.getAllEntities({ with_contacts: true, state_in: '1,2,3,4' })
+          .then(response => {
+            if (this.allEntities.length === 0) {
+              this.noData = true
+            }
+          })
+      } else {
+        this.getAllEntities({ with_contacts: true })
+          .then(response => {
+            if (this.allEntities.length === 0) {
+              this.noData = true
+            }
+          })
+      }
+
+      if (this.userSesion.user.type_user_id !== 1) {
+        this.headers.splice(4, 1)
+      }
     }
   }
 }

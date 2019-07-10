@@ -92,3 +92,6 @@
 .icon-dots:before {
   content: "\72";
 }
+.icon-refresh:before {
+  content: "\73";
+}
