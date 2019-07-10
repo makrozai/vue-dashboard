@@ -55,8 +55,8 @@
                 <div class="c-data-table__initiative__description">
                   <p><b>{{ props.item.name }}</b></p>
                   <template v-if="allEntities.length > 0 && allPrograms.length  > 0">
-                    <p>{{ getOnlyProgram(props.item.program_id).name }}</p>
-                    <p>{{ getOnlyEntity(getOnlyProgram(props.item.program_id).owner_id).name }}</p>
+                    <p>{{ nameProgram(props.item.program_id) }}</p>
+                    <p>{{ nameEntity(props.item.program_id) }}</p>
                   </template>
                 </div>
 
@@ -154,7 +154,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getAllInitiatives'])
+    ...mapActions(['getAllInitiatives']),
+    nameProgram (id) {
+      let name = this.getOnlyProgram(id)
+      return name.name
+    },
+    nameEntity (id) {
+      let program = this.getOnlyProgram(id).owner_id
+      let name = this.getOnlyEntity(program)
+
+      if (name) {
+        return name.name
+      } else {
+        return 'no cuenta con entidad'
+      }
+
+      // getOnlyEntity(getOnlyProgram(props.item.program_id).owner_id).name
+    }
   }
 }
 </script>

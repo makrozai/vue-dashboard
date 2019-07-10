@@ -322,13 +322,13 @@ export default {
       value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
     program (value) {
-      this.programOwn = Object.assign({}, value)
+      this.programOwn = value
       this.nameEntity()
       this.editValues = true
     }
   },
   created () {
-    this.programOwn = Object.assign({}, this.program)
+    this.programOwn = this.program
 
     if (this.allEntities.length === 0) {
       this.getAllEntities({ state_in: '1,2,4' })
