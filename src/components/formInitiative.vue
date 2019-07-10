@@ -398,10 +398,10 @@ export default {
 
             this.saveInitiative(submitData)
               .then(response => {
-                console.log(response)
+                this.$emit('modal-state', false)
               })
           } else {
-            console.log('bye')
+            console.log('valid no correct')
           }
         })
     },

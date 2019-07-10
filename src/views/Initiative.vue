@@ -93,7 +93,7 @@
         fixed
         width="550"
       >
-        <form-initiative class="u-form--white c-card-fixed"></form-initiative>
+        <form-initiative class="u-form--white c-card-fixed" @modal-state="responseInitiative"></form-initiative>
       </v-navigation-drawer>
     </v-layout>
   </v-container>
@@ -168,6 +168,9 @@ export default {
       } else {
         return 'no cuenta con entidad'
       }
+    },
+    responseInitiative (value) {
+      this.formDrawner = value
     }
   }
 }
