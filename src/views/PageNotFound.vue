@@ -5,7 +5,9 @@
         <div class="c-page-not-found">
           <h2>404</h2>
           <p>página no encontrada</p>
-          <img src="../assets/404error.svg" alt="">
+          <router-link :to="{name:'login'}" class="c-page-not-found__image">
+            <img src="../assets/404error.svg" alt="" >
+          </router-link>
         </div>
       </v-flex>
     </v-layout>
