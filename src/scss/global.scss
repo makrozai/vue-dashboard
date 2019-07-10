@@ -681,7 +681,6 @@
   padding: 1em 1.5em;
   display: flex;
   align-items: center;
-  height: 6.5em;
   border-radius: 7px;
   cursor: pointer;
   transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -700,9 +699,16 @@
     }
   }
   p{
+    padding-left: .5rem;
+    text-transform: uppercase;
     width: 75%;
     margin: 0;
     line-height: 1.2;
+
+    span{
+      display: block;
+      text-transform: initial;
+    }
   }
 }
 .c-form-program{

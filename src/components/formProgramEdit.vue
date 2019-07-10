@@ -38,8 +38,8 @@
               >
                 <i class="icon-huella"></i>
                 <p>
-                  Propia<br>
-                  El programa es de mi propia autoria como Entidad y esta registrada
+                  Propia
+                  <span>El programa es de mi propia autoria</span>
                 </p>
               </div>
             </v-flex>
@@ -51,8 +51,8 @@
               >
                 <i class="icon-archivo"></i>
                 <p>
-                  En convenio<br>
-                  El programa le pertenece a un grupo de Entidades
+                  En convenio
+                  <span>El programa le pertenece a un grupo</span>
                 </p>
               </div>
             </v-flex>
