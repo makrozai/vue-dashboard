@@ -168,8 +168,6 @@ export default {
       } else {
         return 'no cuenta con entidad'
       }
-
-      // getOnlyEntity(getOnlyProgram(props.item.program_id).owner_id).name
     }
   }
 }

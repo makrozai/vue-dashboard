@@ -201,7 +201,7 @@
             <v-flex xs12>
               <v-text-field
                 v-model="programOwn.website"
-                v-validate="{required: true,url: {require_protocol: true }}"
+                v-validate="{url: {require_protocol: true }}"
                 :error-messages="errors.collect('sitio web')"
                 data-vv-name="sitio web"
                 @keyup.enter="submit"
