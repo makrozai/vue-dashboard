@@ -13,11 +13,18 @@ import VeeValidate, { Validator } from 'vee-validate'
 // import of vue resource
 import VueResource from 'vue-resource'
 
+// import wysiwyg
+import CKEditor from '@ckeditor/ckeditor5-vue'
+
 // import filters
 import date from './filters/date'
 
+// use libraries
 Vue.use(VeeValidate)
 Vue.use(VueResource)
+Vue.use(CKEditor)
+
+// use filters
 Vue.use(date)
 
 Validator.localize('es', es)
