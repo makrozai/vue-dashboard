@@ -108,8 +108,9 @@
           <v-btn
             large
             color="primary"
+            @click.stop="formDrawner = !formDrawner"
           >
-            Crear iniciativa
+            Crear Programa
           </v-btn>
         </div>
       </v-flex>

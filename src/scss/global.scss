@@ -1,5 +1,6 @@
 .c-container-dashboard{
   max-width: 1600px;
+  width: 90%;
 
   &--small{
     max-width: 800px;
@@ -186,6 +187,7 @@
     text-align: center;
     background-color: var(--v-primary-base);
     transition: all .3s;
+    width: 10rem;
 
     span{
       display: block;
@@ -1067,6 +1069,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 4em;
   
 
   h3{

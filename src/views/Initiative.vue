@@ -79,6 +79,7 @@
           <v-btn
             large
             color="primary"
+            @click.stop="formDrawner = !formDrawner"
           >
             Crear iniciativa
           </v-btn>

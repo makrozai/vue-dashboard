@@ -73,7 +73,7 @@
         </form>
         <!--@FORM LAYOUT END-->
         <p class="text-xs-center">¿No puedes acceder?
-          <router-link :to="{name:'recuperar-contrasena'}" class="red--text">Recupera tu clave</router-link>
+          <router-link :to="{name:'recuperar-contrasena'}">Recupera tu clave</router-link>
         </p>
         <p class="text-xs-center">Deseo ser parte</p>
         <v-btn
