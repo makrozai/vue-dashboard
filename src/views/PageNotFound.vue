@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height>
+  <v-container fill-height class="py-0">
     <v-layout>
       <v-flex>
         <div class="c-page-not-found">
