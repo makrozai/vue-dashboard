@@ -44,7 +44,7 @@
           v-if="userSesion.user.type_user_id !== 3"
           large
           color="primary"
-          class="mr-0"
+          class="mr-0 my-0"
           @click.stop="formDrawner = !formDrawner"
         >
           Crear Programa

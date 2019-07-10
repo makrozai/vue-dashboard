@@ -1,6 +1,13 @@
 <template>
   <label class="c-upload">
-    <img :src="imageProfile" alt="">
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on }">
+        <img :src="imageProfile" alt="" v-on="on">
+      </template>
+      <span>Subir imagen</span>
+    </v-tooltip>
+
     <p>Formato válido (jpg, png), máximo 20MB</p>
     <input
       :disabled="disabledUpload"
