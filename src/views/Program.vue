@@ -59,7 +59,7 @@
               </div>
             </td>
             <td class="text-sm-center">
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.website">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <v-icon color="black">web_asset</v-icon>
@@ -67,7 +67,7 @@
                 </template>
                 <span>{{ props.item.website }}</span>
               </v-tooltip>
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.facebook">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <i class="icon-facebook v-icon material-icons theme--light black--text"></i>
@@ -75,7 +75,7 @@
                 </template>
                 <span>{{ props.item.facebook }}</span>
               </v-tooltip>
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.twitter">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <div class="icon-twitter v-icon material-icons theme--light black--text"></div>
@@ -83,7 +83,7 @@
                 </template>
                 <span>{{ props.item.twitter }}</span>
               </v-tooltip>
-              <v-tooltip top>
+              <v-tooltip top v-if="props.item.instagram">
                 <template v-slot:activator="{ on }">
                   <a v-on="on" href="#!" class="mx-1">
                     <div class="icon-instagram v-icon material-icons theme--light black--text"></div>

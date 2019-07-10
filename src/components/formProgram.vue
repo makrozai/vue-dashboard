@@ -370,7 +370,7 @@ export default {
               this.programOwn.entities = this.getArrayByObjs(this.programOwn.entities)
             }
             // eliminar elementos replicados de entidades
-            this.programOwn.entities.push(this.userSesion.entity.id)
+            this.programOwn.entities.push(this.programOwn.owner_id)
             this.programOwn.entities = [...new Set(this.programOwn.entities)]
 
             this.saveProgram(this.programOwn)

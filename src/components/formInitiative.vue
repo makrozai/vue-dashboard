@@ -357,9 +357,11 @@ export default {
       this.getAllEntities({ state_in: '1,2,4' })
     }
 
-    this.getAllBeneficiaries()
-      .then(response => {
-      })
+    if (this.allBeneficiaries.length === 0) {
+      this.getAllBeneficiaries()
+        .then(response => {
+        })
+    }
   },
   mounted () {
     if (document.querySelector('.c-card-fixed')) {
