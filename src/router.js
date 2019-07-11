@@ -16,6 +16,7 @@ import inversion from './views/Inversion'
 import typeInversion from './views/TypeInversion'
 import home from './views/Home'
 import pageNotFound from './views/PageNotFound'
+import editProfile from './views/EditProfile'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -104,6 +105,15 @@ const router = new Router({
       path: '/dashboard',
       component: dashboard,
       children: [
+        {
+          path: 'editar-perfil',
+          name: 'editar-perfil',
+          component: editProfile,
+          meta: {
+            Auth: true,
+            title: 'Editar Perfil'
+          }
+        },
         {
           path: 'entidad',
           name: 'entidad',
