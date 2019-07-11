@@ -193,6 +193,12 @@
                 @keyup.enter="submit"
                 box
               ></v-textarea>
+
+              <ckeditor
+                :editor="editor"
+                v-model="programOwn.description"
+                :config="editorConfig"
+              ></ckeditor>
             </v-flex>
             <v-flex xs12>
               <h3>Tipo de servicio :</h3>
@@ -289,6 +295,8 @@
 </template>
 
 <script>
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 import { mapState, mapActions } from 'vuex'
 import UploadImage from './uploadImage'
 import CardEntity from './cardEntity'
@@ -305,6 +313,10 @@ export default {
   },
   data () {
     return {
+      editor: ClassicEditor,
+      editorConfig: {
+        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ]
+      },
       entityOwner: null,
       dateStartModal: false,
       programOwn: {
