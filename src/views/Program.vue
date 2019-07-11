@@ -240,6 +240,7 @@ export default {
     },
     closeFormDrawner (state) {
       console.log('cerrar modal')
+      this.programDetail = null
       this.formDrawner = false
       this.formDrawnerEdit = false
     },
