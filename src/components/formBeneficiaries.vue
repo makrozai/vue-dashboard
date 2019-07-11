@@ -25,9 +25,9 @@
             <v-text-field
               v-model="beneficiary.name"
               v-validate="'required'"
-              :error-messages="errors.collect('nombre de entidad')"
-              label="Nombre de Entidad"
-              data-vv-name="nombre de entidad"
+              :error-messages="errors.collect('nombre de beneficiado')"
+              label="Nombre de Beneficiado"
+              data-vv-name="nombre de beneficiado"
               required
               box
             ></v-text-field>
