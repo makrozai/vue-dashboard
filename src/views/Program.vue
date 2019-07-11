@@ -146,7 +146,7 @@ export default {
   components: { FormProgram, FormProgramEdit },
   computed: {
     ...mapState(['userSesion', 'allPrograms']),
-    ...mapGetters(['getOnlyEntity','getOnlyTypeProgram'])
+    ...mapGetters(['getOnlyEntity', 'getOnlyTypeProgram'])
   },
   data () {
     return {
@@ -211,11 +211,8 @@ export default {
       let program = this.getOnlyEntity(value)
       if (program) {
         return program.name
-      } else {
-        return 'no cuenta con entidad'
       }
-
-      return 'Sin Entidad'
+      return 'no cuenta con entidad'
     },
     openDetail (program) {
       this.formDrawnerEdit = true

@@ -352,20 +352,16 @@
       </div>
       <!--@ informacion de contacto-->
 
-
-
     </form>
   </v-container>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import FormProgram from '../components/formProgram'
 import UploadImage from '../components/uploadImage'
-import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  components: { VueRecaptcha, FormProgram, UploadImage },
+  components: { UploadImage },
   computed: {
     ...mapState(['userSesion', 'ubigeo', 'lines', 'typeEntities', 'recaptchaCode']),
     ...mapGetters(['getTypeProvinces', 'getTypeDistricts'])
@@ -451,7 +447,7 @@ export default {
 
       this.$validator.validateAll()
         .then(result => {
-          if (result ) {
+          if (result) {
             this.entity.state = 4
 
             this.putEntity(this.entity)
