@@ -9,28 +9,40 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-text-field
-              :v-validate="'required'"
+              v-validate="'required|max:180'"
               :disabled="bloquedEntity"
               v-model="involeds.name"
+              maxlength="180"
               label="Razón comercial"
+              :error-messages="errors.collect('razón comercial involucrado')"
+              data-vv-name="razón comercial involucrado"
+              required
               box
             ></v-text-field>
           </v-flex>
           <v-flex xs6>
             <v-text-field
-              :v-validate="'required'"
+              v-validate="'required|max:180'"
               :disabled="bloquedEntity"
               v-model="involeds.social_reason"
+              maxlength="11"
               label="Razón social"
+              :error-messages="errors.collect('razón social involucrado')"
+              data-vv-name="razón social involucrado"
+              required
               box
             ></v-text-field>
           </v-flex>
           <v-flex xs6>
             <v-text-field
-              :v-validate="'required'"
+              v-validate="'required|integer|length:11'"
               :disabled="bloquedEntity"
               v-model="involeds.ruc"
+              maxlength="11"
               label="Ruc"
+              :error-messages="errors.collect('ruc involucrado')"
+              data-vv-name="ruc involucrado"
+              required
               box
             ></v-text-field>
           </v-flex>
@@ -49,7 +61,6 @@
             <v-tabs-items v-model="tab" class="c-form-involeds__tabs">
               <v-tab-item>
                 <v-textarea
-                  v-validate="'alpha_spaces'"
                   v-model="involeds.participations[0].description"
                   :error-messages="errors.collect('descripción de donación')"
                   data-vv-name="descripción de donación"
@@ -68,7 +79,6 @@
 
               <v-tab-item>
                 <v-textarea
-                  v-validate="'alpha_spaces'"
                   v-model="involeds.participations[1].description"
                   :error-messages="errors.collect('descripción de bienes')"
                   data-vv-name="descripción de bienes"
@@ -87,7 +97,6 @@
 
               <v-tab-item>
                 <v-textarea
-                  v-validate="'alpha_spaces'"
                   v-model="involeds.participations[2].description"
                   :error-messages="errors.collect('descripción de convenio')"
                   data-vv-name="descripción de convenio"
@@ -107,7 +116,6 @@
           </v-flex>
         </v-layout>
       </v-container>
-
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
@@ -213,24 +221,29 @@ export default {
     ...mapActions([ 'setEntity' ]),
 
     submit () {
-      let involedSubmit = Object.assign({}, this.involeds)
-      involedSubmit.participations = this.validParticipations(involedSubmit.participations)
-      if (involedSubmit.id) {
-        // se ejecuta cuando la entdiad existe
-        this.addInvolveds = false
-        this.$emit('involed', involedSubmit)
-      } else {
-        // se ejecuta primero para crear una entidad
-        this.setEntity(involedSubmit)
-          .then(response => {
-            involedSubmit.entity_id = response.id
-            this.addInvolveds = false
-            this.$emit('involed', involedSubmit)
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
+      this.$validator.validateAll()
+        .then(result => {
+          if (result) {
+            let involedSubmit = Object.assign({}, this.involeds)
+            involedSubmit.participations = this.validParticipations(involedSubmit.participations)
+            if (involedSubmit.id) {
+              // se ejecuta cuando la entdiad existe
+              this.addInvolveds = false
+              this.$emit('involed', involedSubmit)
+            } else {
+              // se ejecuta primero para crear una entidad
+              this.setEntity(involedSubmit)
+                .then(response => {
+                  involedSubmit.entity_id = response.id
+                  this.addInvolveds = false
+                  this.$emit('involed', involedSubmit)
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+            }
+          }
+        })
     },
     validParticipations (value) {
       let arrayParticipations = []

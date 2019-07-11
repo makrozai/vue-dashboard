@@ -326,7 +326,7 @@ export default {
         logo_image_id: null,
         name: '',
         type_program_id: null,
-        start_date: new Date().toISOString().substr(0, 7),
+        start_date: null,
         description: null,
         website: '',
         twitter: '',

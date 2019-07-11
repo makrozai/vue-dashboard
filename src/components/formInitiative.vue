@@ -61,7 +61,7 @@
             </v-flex>
             <v-flex xs6>
               <v-dialog
-                ref="dialog"
+                ref="dialogDate"
                 v-model="dateStartModal"
                 :return-value.sync="initiativeData.start_date"
                 lazy
@@ -75,6 +75,7 @@
                     :error-messages="errors.collect('fecha de inicio')"
                     label="Fecha de inicio"
                     data-vv-name="fecha de inicio"
+                    @keyup.enter="submit"
                     required
                     readonly
                     box
@@ -91,7 +92,7 @@
                 >
                   <v-spacer></v-spacer>
                   <v-btn flat color="primary" @click="dateStartModal = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dialog.save(initiativeData.start_date)">OK</v-btn>
+                  <v-btn flat color="primary" @click="$refs.dialogDate.save(initiativeData.start_date)">OK</v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-flex>
@@ -137,17 +138,15 @@
                 <v-icon>add</v-icon>
               </v-btn>
 
-              <v-dialog
-                ref="dialog"
-                v-model="addInvolveds"
-                lazy
-                full-width
-                width="500px"
-              >
-                <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled" @modal-close="closeInvoled"></form-involved>
-              </v-dialog>
-
             </v-flex>
+            <v-dialog
+              v-model="addInvolveds"
+              lazy
+              full-width
+              width="500px"
+            >
+              <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled" @modal-close="closeInvoled"></form-involved>
+            </v-dialog>
 
             <!--autocompletado-->
             <v-flex xs12>
@@ -253,7 +252,7 @@ export default {
       initiativeData: {
         program_id: null,
         name: '',
-        start_date: new Date().toISOString().substr(0, 7),
+        start_date: null,
         intervention_period: null,
         total_investment_amount: null
       },
