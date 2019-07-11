@@ -168,7 +168,7 @@ export default {
         {
           text: 'Contacto',
           value: 'carbs',
-          align: 'center'
+          align: 'left'
         },
         {
           text: 'Línea Acción',

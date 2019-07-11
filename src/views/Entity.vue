@@ -177,7 +177,7 @@ export default {
         {
           text: 'Contacto',
           value: 'website',
-          align: 'right'
+          align: 'left'
         },
         {
           text: 'Estado',
