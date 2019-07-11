@@ -176,6 +176,8 @@ export default {
     userRedirect () {
       if (this.userSesion.entity && this.userSesion.entity.state === 2) {
         this.$router.push({ name: 'ficha-de-verificacion' })
+      } else if (this.userSesion.entity && this.userSesion.entity.state === 4) {
+        this.$router.push({ name: 'editar-perfil' })
       } else {
         this.setAlert({
           text: 'no se tiene acceso a esta pagina',
