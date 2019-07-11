@@ -341,11 +341,11 @@ export default {
     }
   },
   watch: {
-    dateStartModal (value) {
-      value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+    dateStartModal (valueModal) {
+      valueModal && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
-    entityOwner (value) {
-      this.programOwn.owner_id = value.id
+    entityOwner (valueOnwer) {
+      this.programOwn.owner_id = valueOnwer.id
     }
   },
   created () {
@@ -423,8 +423,8 @@ export default {
         this.programOwn.entities.push(this.entityModel)
       }
     },
-    addOtherEntity (value) {
-      this.programOwn.entities.push(value)
+    addOtherEntity (valueOtherEntity) {
+      this.programOwn.entities.push(valueOtherEntity)
       this.dialog = false
     },
     uploadImage (image) {

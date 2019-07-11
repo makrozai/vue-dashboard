@@ -116,6 +116,9 @@ const store = new Vuex.Store({
     },
     getTypeBeneficiary: (state) => (id) => {
       return state.typeBeneficiaries.filter(item => item.id === id)[0]
+    },
+    getOnlyTypeProgram: (state) => (id) => {
+      return state.typePrograms.filter(item => item.id === id)[0]
     }
   },
   mutations: {

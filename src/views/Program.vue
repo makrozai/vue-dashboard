@@ -70,46 +70,25 @@
                 <img :src="props.item.logo_image_link || require('../assets/default-img.svg')" alt="">
                 <div class="c-data-table__program__description">
                   <p><b>{{ props.item.name }}</b></p>
-                  <p>{{ getnameEntity(props.item.entities[0]) }}</p>
+                  <p>{{ getnameEntity(props.item.owner_id) }}</p>
                 </div>
 
               </div>
             </td>
-            <td class="text-sm-center">
-              <v-tooltip top v-if="props.item.website">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <v-icon color="black">web_asset</v-icon>
-                  </a>
-                </template>
-                <span>{{ props.item.website }}</span>
-              </v-tooltip>
-              <v-tooltip top v-if="props.item.facebook">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <i class="icon-facebook v-icon material-icons theme--light black--text"></i>
-                  </a>
-                </template>
-                <span>{{ props.item.facebook }}</span>
-              </v-tooltip>
-              <v-tooltip top v-if="props.item.twitter">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <div class="icon-twitter v-icon material-icons theme--light black--text"></div>
-                  </a>
-                </template>
-                <span>{{ props.item.twitter }}</span>
-              </v-tooltip>
-              <v-tooltip top v-if="props.item.instagram">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <div class="icon-instagram v-icon material-icons theme--light black--text"></div>
-                  </a>
-                </template>
-                <span>{{ props.item.instagram }}</span>
-              </v-tooltip>
+            <td class="text-sm-left">
+              <div class="c-data-table__socials">
+                <v-tooltip top v-if="props.item.website">
+                  <template v-slot:activator="{ on }">
+                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                      <v-icon color="black">web_asset</v-icon>
+                      <span>sitio web</span>
+                    </a>
+                  </template>
+                  <span>{{ props.item.website }}</span>
+                </v-tooltip>
+              </div>
             </td>
-            <td>{{ props.item.type_program_name }}</td>
+            <td>{{ nameTypeProgram(props.item.type_program_id) }}</td>
             <td class="c-data-table__status">
               <span>CREADO</span>
               <span>{{ props.item.start_date | date-no-day }}</span>
@@ -161,12 +140,13 @@
 import FormProgram from '../components/formProgram'
 import FormProgramEdit from '../components/formProgramEdit'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   components: { FormProgram, FormProgramEdit },
   computed: {
-    ...mapState(['userSesion', 'allPrograms'])
+    ...mapState(['userSesion', 'allPrograms']),
+    ...mapGetters(['getOnlyEntity','getOnlyTypeProgram'])
   },
   data () {
     return {
@@ -228,8 +208,11 @@ export default {
   methods: {
     ...mapActions(['getAllPrograms']),
     getnameEntity (value) {
-      if (value) {
-        return value.name
+      let program = this.getOnlyEntity(value)
+      if (program) {
+        return program.name
+      } else {
+        return 'no cuenta con entidad'
       }
 
       return 'Sin Entidad'
@@ -263,6 +246,10 @@ export default {
             })
           break
       }
+    },
+    nameTypeProgram (id) {
+      let name = this.getOnlyTypeProgram(id).name
+      return name
     }
   }
 }

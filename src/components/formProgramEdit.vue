@@ -331,11 +331,11 @@ export default {
     }
   },
   watch: {
-    dateStartModal (value) {
-      value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+    dateStartModal (valueStartModal) {
+      valueStartModal && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
-    program (value) {
-      this.programOwn = value
+    program (valueProgram) {
+      this.programOwn = valueProgram
       this.nameEntity()
       this.editValues = true
     }
@@ -414,8 +414,8 @@ export default {
         this.programOwn.entities.push(this.entityModel)
       }
     },
-    addOtherEntity (value) {
-      this.programOwn.entities.push(value)
+    addOtherEntity (valueOtherEntity) {
+      this.programOwn.entities.push(valueOtherEntity)
       this.dialog = false
     },
     uploadImage (image) {

@@ -60,40 +60,46 @@
               </div>
             </td>
             <td class="text-sm-right">
-              <v-tooltip top v-if="props.item.website">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <v-icon color="black">web_asset</v-icon>
-                  </a>
-                </template>
-                <span>{{ props.item.website }}</span>
-              </v-tooltip>
+              <div class="c-data-table__socials">
+                <v-tooltip top v-if="props.item.website">
+                  <template v-slot:activator="{ on }">
+                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                      <v-icon color="black">web_asset</v-icon>
+                      <span>sitio web</span>
+                    </a>
+                  </template>
+                  <span>{{ props.item.website }}</span>
+                </v-tooltip>
 
-              <v-tooltip top v-if="props.item.address">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <v-icon color="black">home</v-icon>
-                  </a>
-                </template>
-                <span>{{ props.item.address }}</span>
-              </v-tooltip>
+                <v-tooltip top v-if="props.item.address">
+                  <template v-slot:activator="{ on }">
+                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                      <v-icon color="black">home</v-icon>
+                      <span>dirección</span>
+                    </a>
+                  </template>
+                  <span>{{ props.item.address }}</span>
+                </v-tooltip>
 
-              <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <v-icon color="black">contact_mail</v-icon>
-                  </a>
-                </template>
-                <span>{{ contact(props.item.contacts[0]).email }}</span>
-              </v-tooltip>
-              <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
-                <template v-slot:activator="{ on }">
-                  <a v-on="on" href="#!" class="mx-1">
-                    <v-icon color="black">phone</v-icon>
-                  </a>
-                </template>
-                <span>{{ contact(props.item.contacts[0]).phone }}</span>
-              </v-tooltip>
+                <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
+                  <template v-slot:activator="{ on }">
+                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                      <v-icon color="black">contact_mail</v-icon>
+                      <span>correo</span>
+                    </a>
+                  </template>
+                  <span>{{ contact(props.item.contacts[0]).email }}</span>
+                </v-tooltip>
+                <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
+                  <template v-slot:activator="{ on }">
+                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                      <v-icon color="black">phone</v-icon>
+                      <span>Teléfono</span>
+                    </a>
+                  </template>
+                  <span>{{ contact(props.item.contacts[0]).phone }}</span>
+                </v-tooltip>
+              </div>
             </td>
             <td
               v-if="userSesion.user.type_user_id == 1"
