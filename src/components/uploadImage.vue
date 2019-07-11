@@ -57,7 +57,6 @@ export default {
   watch: {
     image (value) {
       if (!value.url) {
-        console.log('se ejecuta el watch')
         // eslint-disable-next-line
         this.imageProfile = require('../assets/default-img.svg')
         this.disabledUpload = false

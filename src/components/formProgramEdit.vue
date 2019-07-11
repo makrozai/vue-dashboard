@@ -170,7 +170,7 @@
               ></upload-image>
             </v-flex>
             <v-flex xs12>
-              <v-textarea
+              <!--<v-textarea
                 :disabled="editValues"
                 v-model="programOwn.description"
                 v-validate="'required'"
@@ -179,9 +179,10 @@
                 data-vv-name="descripción  del programa"
                 @keyup.enter="submit"
                 box
-              ></v-textarea>
+              ></v-textarea>-->
 
               <ckeditor
+                :disabled="editValues"
                 :editor="editor"
                 v-model="programOwn.description"
                 :config="editorConfig"

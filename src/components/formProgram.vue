@@ -184,7 +184,7 @@
               ></upload-image>
             </v-flex>
             <v-flex xs12>
-              <v-textarea
+              <!--<v-textarea
                 v-model="programOwn.description"
                 v-validate="'required'"
                 :error-messages="errors.collect('descripción  del programa')"
@@ -192,12 +192,13 @@
                 data-vv-name="descripción  del programa"
                 @keyup.enter="submit"
                 box
-              ></v-textarea>
+              ></v-textarea>-->
 
               <ckeditor
                 :editor="editor"
                 v-model="programOwn.description"
                 :config="editorConfig"
+                class="c-ckeditor"
               ></ckeditor>
             </v-flex>
             <v-flex xs12>

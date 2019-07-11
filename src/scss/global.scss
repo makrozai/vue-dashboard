@@ -1135,6 +1135,12 @@
     font-size: 2em;
   }
 }
+.ck-editor {
+  &__editable{
+    min-height: 8em;
+    margin-bottom: 2em;
+  }
+}
 iframe {
   border: none;
   outline: none;
