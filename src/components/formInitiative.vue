@@ -59,7 +59,7 @@
               box
             ></v-text-field>
           </v-flex>
-          <v-flex xs4>
+          <v-flex xs5>
             <v-dialog
               ref="dialogDate"
               v-model="dateStartModal"
@@ -107,8 +107,8 @@
               box
             ></v-text-field>
           </v-flex>
-          <v-flex xs4>
-            <p class="mt-3 c-period__text">meses de actividad</p>
+          <v-flex xs3>
+            <p class="mt-2 c-period__text">meses de <br> actividad</p>
           </v-flex>
           <v-flex xs12 class="mb-2">
             <h3>Entidad(es) comprometida(s)</h3>
