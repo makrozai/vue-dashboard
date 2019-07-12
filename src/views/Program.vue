@@ -162,23 +162,26 @@ export default {
         {
           text: 'Programa',
           align: 'left',
-          sortable: true,
-          value: 'name'
+          value: 'name',
+          sortable: false
         },
         {
           text: 'Contacto',
           value: 'carbs',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Línea Acción',
           value: 'type_program_name',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: '',
-          value: 'iron',
-          align: 'center'
+          value: 'start_date',
+          align: 'center',
+          sortable: true
         }
       ]
     }
