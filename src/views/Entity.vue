@@ -112,7 +112,9 @@
                 {{ badgeStatus(props.item.state).text }}
               </span>
             </td>
-            <td class="text-sm-center">
+            <td
+              class="text-sm-center c-data-table__options"
+            >
               <v-btn
                 :disabled="userSesion.user.type_user_id !== 1 ? true : false"
                 fab

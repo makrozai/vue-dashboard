@@ -60,7 +60,7 @@
           :headers="headers"
           :items="allPrograms"
           item-key="id"
-          class="c-data-table"
+          class="c-data-table elevation-3"
           :search="search"
           :pagination.sync="pagination"
         >
