@@ -140,22 +140,26 @@ export default {
         {
           text: 'Nombre',
           align: 'left',
-          value: 'name'
+          value: 'name',
+          sortable: false
         },
         {
           text: 'Periodo',
           value: 'intervention_period',
-          align: 'right'
+          align: 'right',
+          sortable: false
         },
         {
           text: 'Inversion',
           value: 'total_investment_amount',
-          align: 'right'
+          align: 'right',
+          sortable: false
         },
         {
           text: '',
           value: 'start_date',
-          align: 'center'
+          align: 'center',
+          sortable: true
         }
       ]
     }
