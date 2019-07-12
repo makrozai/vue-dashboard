@@ -179,7 +179,7 @@ export default {
         this.$router.push({ name: 'ficha-de-verificacion' })
       } else if (this.userSesion.entity && (this.userSesion.entity.state === 4 || this.userSesion.entity.state === 1)) {
         this.$router.push({ name: 'editar-perfil' })
-      } else if (this.userSesion.partaker) {
+      } else if (this.userSesion.partaker && this.userSesion.user.type_user_id === 3) {
         this.$router.push({ name: 'editar-participante' })
       } else {
         this.setAlert({
