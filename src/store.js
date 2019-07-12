@@ -255,6 +255,9 @@ const store = new Vuex.Store({
     },
     setAllInitiatives (state, payload) {
       state.allInitiatives = payload
+    },
+    updatePartaker (state, payload) {
+      state.userSesion.partaker = payload
     }
 
   },
@@ -717,6 +720,18 @@ const store = new Vuex.Store({
         initiativesService.getAll(dataFilters)
           .then(response => {
             this.commit('setAllInitiatives', response)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    updatePartaker (context, payload) {
+      return new Promise((resolve, reject) => {
+        partakersService.put(payload)
+          .then(response => {
+            context.commit('updatePartaker', response)
             resolve(response)
           })
           .catch(error => {

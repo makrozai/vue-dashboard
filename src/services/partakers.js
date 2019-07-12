@@ -29,6 +29,20 @@ const partakersServices = {
           reject(error)
         })
     })
+  },
+  put: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.put(`partakers/${payload.id}`, payload)
+        .then(response => {
+          // enruta correctamente la entidad a la respuesta
+          response = response.body.data.partaker
+
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }
 

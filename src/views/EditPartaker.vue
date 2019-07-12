@@ -151,7 +151,7 @@ export default {
     Object.assign(this.partaker, this.userSesion.partaker)
   },
   methods: {
-    ...mapActions(['image', 'setAlert']),
+    ...mapActions(['image', 'setAlert', 'updatePartaker']),
     uploadImage (image) {
       this.entity.logo_image_id = image
     },
@@ -164,7 +164,29 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
+            this.updatePartaker(this.partaker)
+              .then(response => {
+                console.log(response)
+                this.loadingSubmit = false
+                this.statusSubmit = 'success'
 
+                this.setAlert({
+                  text: 'Verifica correctamente los campos',
+                  state: true,
+                  dismissible: false,
+                  type: 'success',
+                  time: 4000
+                })
+              })
+              .catch(error => {
+                this.setAlert({
+                  text: error.message,
+                  state: true,
+                  dismissible: false,
+                  type: 'error',
+                  time: 4000
+                })
+              })
           } else {
             this.loadingSubmit = false
             this.statusSubmit = 'error'
