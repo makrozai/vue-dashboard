@@ -27,8 +27,8 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="partaker.name"
-                v-validate="'required|max:180'"
-                maxlength="180"
+                v-validate="'required|alpha_spaces|max:60'"
+                maxlength="60"
                 :error-messages="errors.collect('nombre')"
                 label="Nombre"
                 data-vv-name="nombre"
@@ -41,8 +41,8 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="partaker.lastname"
-                v-validate="'required|max:180'"
-                maxlength="180"
+                v-validate="'required|alpha_spaces|max:60'"
+                maxlength="60"
                 :error-messages="errors.collect('apellidos')"
                 label="Apellidos"
                 data-vv-name="apellidos"
@@ -73,8 +73,8 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="partaker.nro_doc"
-                v-validate="'required|integer|length:11'"
-                maxlength="11"
+                v-validate="'required|integer|max:12'"
+                maxlength="12"
                 :error-messages="errors.collect('Documento de identidad')"
                 label="Nº Documento de identidad"
                 data-vv-name="Documento de identidad"
@@ -87,8 +87,8 @@
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="partaker.phone"
-                v-validate="'required|max:180'"
-                maxlength="180"
+                v-validate="'required|integer|max:12'"
+                maxlength="12"
                 :error-messages="errors.collect('Nº Celular')"
                 label="Nº Celular"
                 data-vv-name="Nº Celular"
