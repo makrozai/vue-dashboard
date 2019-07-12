@@ -139,8 +139,9 @@ export default {
     validMenu () {
       if (this.userSesion.user.type_user_id === 2 && this.userSesion.entity.state && this.userSesion.entity.state === 2) {
         return false
-      }
-      if (this.userSesion.user.type_user_id === 3) {
+      } else if (this.userSesion.user.type_user_id === 2 && this.userSesion.entity.state && this.userSesion.entity.state === 4) {
+        return false
+      } else if (this.userSesion.user.type_user_id === 3) {
         return false
       }
       return true
@@ -176,8 +177,10 @@ export default {
     userRedirect () {
       if (this.userSesion.entity && this.userSesion.entity.state === 2) {
         this.$router.push({ name: 'ficha-de-verificacion' })
-      } else if (this.userSesion.entity && this.userSesion.entity.state === 4) {
+      } else if (this.userSesion.entity && (this.userSesion.entity.state === 4 || this.userSesion.entity.state === 1)) {
         this.$router.push({ name: 'editar-perfil' })
+      } else if (this.userSesion.partaker) {
+        this.$router.push({ name: 'editar-participante' })
       } else {
         this.setAlert({
           text: 'no se tiene acceso a esta pagina',

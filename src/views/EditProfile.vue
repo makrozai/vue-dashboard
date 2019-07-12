@@ -383,8 +383,7 @@ export default {
         provinces_id: '',
         districts_id: '',
         website: '',
-        conditions: null,
-        state: null
+        conditions: null
       },
       ubigeoPrepare: {
         districts: [],
@@ -409,7 +408,6 @@ export default {
     }
   },
   created () {
-    // this.entity = this.userSesion.entity
     Object.assign(this.entity, this.userSesion.entity)
 
     this.getContactsByEntity(this.entity.id)
@@ -424,7 +422,7 @@ export default {
       })
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'setAlert']),
+    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'resetContacts', 'image', 'setAlert']),
     addContact () {
       let contact = {
         name: '',
@@ -448,8 +446,6 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            this.entity.state = 4
-
             this.putEntity(this.entity)
               .then(response => {
                 this.resetContacts([])
@@ -496,16 +492,16 @@ export default {
           } else {
             this.loadingSubmit = false
             this.statusSubmit = 'error'
+
+            this.setAlert({
+              text: 'Verifica correctamente los campos',
+              state: true,
+              dismissible: false,
+              type: 'error',
+              time: 4000
+            })
           }
         })
-    },
-    valuesObject (obj, key) {
-      let arrayObj = []
-      obj.forEach(item => {
-        arrayObj.push(item[key])
-      })
-      console.log(arrayObj)
-      return arrayObj
     },
     selectRegion (value) {
       this.ubigeoPrepare.provinces = this.getTypeProvinces(value)
@@ -518,15 +514,6 @@ export default {
     },
     changeImageLink (image) {
       this.entity.logo_image_link = image
-    },
-    changeActivityModal (value) {
-      this.dialog = value
-    },
-    onVerify (response) {
-      this.verifyRecaptcha = response
-    },
-    closeDialog (value) {
-      this.dialog = value
     }
   }
 }

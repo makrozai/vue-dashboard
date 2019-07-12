@@ -487,7 +487,7 @@ export default {
       })
   },
   methods: {
-    ...mapActions(['putEntity', 'getContactsByEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms', 'setAlert', 'deleteProgram']),
+    ...mapActions(['putEntity', 'saveContact', 'putContact', 'getContactsByEntity', 'resetContacts', 'image', 'getAllPrograms', 'setAlert', 'deleteProgram']),
     addContact () {
       let contact = {
         name: '',

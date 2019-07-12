@@ -1,5 +1,4 @@
 // VIEWS IMPORT
-// import home from './views/Home.vue'
 import login from './views/Login.vue'
 import register from './views/Register.vue'
 import dashboard from './pages/Dashboard.vue'
@@ -17,6 +16,7 @@ import typeInversion from './views/TypeInversion'
 import home from './views/Home'
 import pageNotFound from './views/PageNotFound'
 import editProfile from './views/EditProfile'
+import editPartaker from './views/EditPartaker'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -105,6 +105,15 @@ const router = new Router({
       path: '/dashboard',
       component: dashboard,
       children: [
+        {
+          path: 'editar-participante',
+          name: 'editar-participante',
+          component: editPartaker,
+          meta: {
+            Auth: true,
+            title: 'Editar participante'
+          }
+        },
         {
           path: 'editar-perfil',
           name: 'editar-perfil',
