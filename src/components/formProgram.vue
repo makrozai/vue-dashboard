@@ -443,7 +443,7 @@ export default {
       this.programOwn.logo_image_id = null
       this.programOwn.name = ''
       this.programOwn.type_program_id = null
-      this.programOwn.start_date = new Date().toISOString().substr(0, 7)
+      this.programOwn.start_date = null
       this.programOwn.description = null
       this.programOwn.website = ''
       this.programOwn.twitter = ''
