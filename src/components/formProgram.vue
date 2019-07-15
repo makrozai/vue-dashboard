@@ -433,7 +433,6 @@ export default {
     getArrayByObjs (objResolve) {
       let arrayIds = []
       objResolve.forEach(item => {
-        console.log(item)
         arrayIds.push(item.id)
       })
       return arrayIds
