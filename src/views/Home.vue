@@ -21,6 +21,9 @@
               <i class="icon-program v-icon material-icons theme--light"></i>
             </div>
           </v-card-title>
+          <v-card-actions>
+          <v-btn flat color="white">Explore</v-btn>
+        </v-card-actions>
         </v-card>
       </v-flex>
       <v-flex xs3>
@@ -37,6 +40,9 @@
               <i class="icon-init v-icon material-icons theme--light"></i>
             </div>
           </v-card-title>
+          <v-card-actions>
+            <v-btn flat color="white">Explore</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
       <v-flex xs3>
@@ -53,6 +59,9 @@
               <i class="icon-entity v-icon material-icons theme--light"></i>
             </div>
           </v-card-title>
+          <v-card-actions>
+            <v-btn flat color="white">Explore</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
       <v-flex xs3>
@@ -69,6 +78,9 @@
               <v-icon>face</v-icon>
             </div>
           </v-card-title>
+          <v-card-actions>
+            <v-btn flat color="white">Explore</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
       <v-flex xs3 class="mt-4">
