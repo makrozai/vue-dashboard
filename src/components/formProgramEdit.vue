@@ -189,8 +189,8 @@
               ></ckeditor>
             </v-flex>
             <v-flex xs12>
-              <h3>Tipo de servicio :</h3>
-              <p>formación para el trabajo</p>
+              <h3>Redes :</h3>
+              <p></p>
             </v-flex>
             <v-flex xs12>
               <v-text-field
@@ -338,10 +338,16 @@ export default {
       this.programOwn = valueProgram
       this.nameEntity()
       this.editValues = true
+
+
+      let noFormatDate = this.programOwn.start_date.split('-', 2)
+      this.programOwn.start_date = noFormatDate[0] + '-' + noFormatDate[1]
     }
   },
   created () {
     this.programOwn = this.program
+    let noFormatDate = this.programOwn.start_date.split('-', 2)
+    this.programOwn.start_date = noFormatDate[0] + '-' + noFormatDate[1]
 
     if (this.allEntities.length === 0) {
       this.getAllEntities({ state_in: '1,2,4' })
@@ -456,6 +462,10 @@ export default {
       } else {
         this.fullnameEntity = ''
       }
+    },
+    simpleDate (date) {
+      let dateNoFormat = date.split('-', 2)
+      return dateNoFormat[0] + '-' + dateNoFormat[1]
     }
   }
 }

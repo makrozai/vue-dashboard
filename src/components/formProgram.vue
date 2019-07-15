@@ -202,8 +202,8 @@
               ></ckeditor>
             </v-flex>
             <v-flex xs12>
-              <h3>Tipo de servicio :</h3>
-              <p>formación para el trabajo</p>
+              <h3>Redes :</h3>
+              <p></p>
             </v-flex>
             <v-flex xs12>
               <v-text-field
