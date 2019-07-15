@@ -339,7 +339,6 @@ export default {
       this.nameEntity()
       this.editValues = true
 
-
       let noFormatDate = this.programOwn.start_date.split('-', 2)
       this.programOwn.start_date = noFormatDate[0] + '-' + noFormatDate[1]
     }
