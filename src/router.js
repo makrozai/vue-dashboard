@@ -104,6 +104,7 @@ const router = new Router({
     {
       path: '/dashboard',
       component: dashboard,
+      redirect: { name: 'home' },
       children: [
         {
           path: 'editar-participante',
