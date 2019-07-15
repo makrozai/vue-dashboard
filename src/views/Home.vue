@@ -71,7 +71,7 @@
           </v-card-title>
         </v-card>
       </v-flex>
-      <v-flex xs3>
+      <v-flex xs3 class="mt-4">
         <v-card >
           <v-card-title><h4>Ultimas entidades registradas :</h4></v-card-title>
           <v-divider></v-divider>
@@ -104,19 +104,82 @@
               <v-list-tile-content>Iron:</v-list-tile-content>
               <v-list-tile-content class="align-end">1%</v-list-tile-content>
             </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Iron:</v-list-tile-content>
+              <v-list-tile-content class="align-end">1%</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Iron:</v-list-tile-content>
+              <v-list-tile-content class="align-end">1%</v-list-tile-content>
+            </v-list-tile>
           </v-list>
         </v-card>
       </v-flex>
-      <v-flex xs9>
-        asdasd
+      <v-flex xs9 class="mt-4">
+        <v-card>
+          <v-card-text>
+            <line-chart :chart-data="datacollection" :styles="myStyles" :options="options"></line-chart>
+          </v-card-text>
+        </v-card>
+
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-export default {
+import LineChart from '../plugins/lineChart'
 
+export default {
+  components: {
+    LineChart
+  },
+  computed: {
+    myStyles () {
+      return {
+        height: `${this.height}px`,
+        position: 'relative'
+      }
+    }
+  },
+  data () {
+    return {
+      datacollection: null,
+      height: 400,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    }
+  },
+  created () {
+    this.fillData()
+  },
+  methods: {
+    fillData () {
+      this.datacollection = {
+        labels: [this.getRandomInt(), this.getRandomInt()],
+        datasets: [
+          {
+            label: 'Entidades',
+            backgroundColor: '#f87979',
+            data: [this.getRandomInt(), this.getRandomInt()]
+          }, {
+            label: 'Participantes',
+            backgroundColor: '#f22979',
+            data: [this.getRandomInt(), this.getRandomInt()]
+          }, {
+            label: 'Administradores',
+            backgroundColor: '#f22109',
+            data: [this.getRandomInt(), this.getRandomInt()]
+          }
+        ]
+      }
+    },
+    getRandomInt () {
+      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+    }
+  }
 }
 </script>
 
