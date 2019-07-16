@@ -11,6 +11,7 @@
         <v-card
           color="blue-grey darken-1"
           class="white--text c-dashboard__card"
+          :to="{name: 'programa'}"
         >
           <v-card-title>
             <div class="c-dashboard__card__stadistic">
@@ -30,6 +31,7 @@
         <v-card
           color="green darken-2"
           class="white--text c-dashboard__card"
+          :to="{name: 'iniciativa'}"
         >
           <v-card-title>
             <div class="c-dashboard__card__stadistic">
@@ -49,6 +51,7 @@
         <v-card
           color="blue darken-2"
           class="white--text c-dashboard__card"
+          :to="{name: 'entidad'}"
         >
           <v-card-title>
             <div class="c-dashboard__card__stadistic">
@@ -68,6 +71,7 @@
         <v-card
           color="yellow darken-3"
           class="white--text c-dashboard__card"
+          :to="{name: 'home'}"
         >
           <v-card-title>
             <div class="c-dashboard__card__stadistic">
