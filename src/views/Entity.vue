@@ -40,7 +40,7 @@
       </v-flex>
       <v-flex xs12 class="mt-5" v-if="!noData">
         <v-data-table
-          :headers="headers"
+          :headers="tableFormat"
           :items="allEntities"
           :search="search"
           item-key="id"
@@ -63,7 +63,7 @@
               <div class="c-data-table__socials">
                 <v-tooltip top v-if="props.item.website">
                   <template v-slot:activator="{ on }">
-                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                    <a v-on="on" :href="props.item.website" target="_blank" class="mx-1 c-data-table__socials__item">
                       <v-icon color="black">web_asset</v-icon>
                       <span>sitio web</span>
                     </a>
@@ -73,7 +73,7 @@
 
                 <v-tooltip top v-if="props.item.address">
                   <template v-slot:activator="{ on }">
-                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                    <a v-on="on" :href="`https://www.google.com/maps/place/${props.item.address}`" target="_blank" class="mx-1 c-data-table__socials__item">
                       <v-icon color="black">home</v-icon>
                       <span>dirección</span>
                     </a>
@@ -83,7 +83,7 @@
 
                 <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
                   <template v-slot:activator="{ on }">
-                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                    <a v-on="on" :href="`mailto:${props.item.contacts[0].email}`" target="_blank" class="mx-1 c-data-table__socials__item">
                       <v-icon color="black">contact_mail</v-icon>
                       <span>correo</span>
                     </a>
@@ -92,7 +92,7 @@
                 </v-tooltip>
                 <v-tooltip top v-if="props.item.contacts && props.item.contacts[0]">
                   <template v-slot:activator="{ on }">
-                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                    <a v-on="on" :href="`tel:${props.item.contacts[0].phone}`" target="_blank" class="mx-1 c-data-table__socials__item">
                       <v-icon color="black">phone</v-icon>
                       <span>Teléfono</span>
                     </a>
@@ -112,17 +112,25 @@
                 {{ badgeStatus(props.item.state).text }}
               </span>
             </td>
+            <td class="text-sm-center" v-if="userSesion.user.type_user_id !== 1">
+              {{nameTypeEntity(props.item.type_entity_id)}}
+            </td>
             <td
               class="text-sm-center c-data-table__options"
+              v-if="userSesion.user.type_user_id === 1"
             >
               <v-btn
-                :disabled="userSesion.user.type_user_id !== 1 ? true : false"
                 fab
                 small
                 @click.stop="selectEntity(props.item, props.index)"
               >
                 <v-icon>edit</v-icon>
               </v-btn>
+            </td>
+            <td
+              v-if="userSesion.user.type_user_id !== 1"
+            >
+              {{nameLineEntity(props.item.line_id)}}
             </td>
           </template>
         </v-data-table>
@@ -155,11 +163,39 @@
 
 <script>
 import ValidEntity from '../components/validEntity'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   components: { ValidEntity },
   computed: {
-    ...mapState(['allEntities', 'userSesion'])
+    ...mapState(['allEntities', 'userSesion']),
+    ...mapGetters(['getOnlyTypeEntity', 'getOnlyLineEntity']),
+    tableFormat () {
+      if (this.userSesion.user.type_user_id !== 1) {
+        return [
+          {
+            text: 'Entidad',
+            align: 'left',
+            value: 'name'
+          },
+          {
+            text: 'Contacto',
+            value: 'website',
+            align: 'left'
+          },
+          {
+            text: 'Tipo de entidad',
+            value: 'state',
+            align: 'center'
+          },
+          {
+            text: '',
+            value: '',
+            align: 'center'
+          }
+        ]
+      }
+      return this.headers
+    }
   },
   data () {
     return {
@@ -277,6 +313,18 @@ export default {
       if (this.userSesion.user.type_user_id !== 1) {
         this.headers.splice(4, 1)
       }
+    },
+    nameTypeEntity (id) {
+      if (id) {
+        return this.getOnlyTypeEntity(id).name
+      }
+      return ''
+    },
+    nameLineEntity (id) {
+      if (id) {
+        return this.getOnlyLineEntity(id).name
+      }
+      return ''
     }
   }
 }

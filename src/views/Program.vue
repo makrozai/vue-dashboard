@@ -79,7 +79,7 @@
               <div class="c-data-table__socials">
                 <v-tooltip top v-if="props.item.website">
                   <template v-slot:activator="{ on }">
-                    <a v-on="on" href="#!" class="mx-1 c-data-table__socials__item">
+                    <a v-on="on" :href="props.item.website" target="_blank" class="mx-1 c-data-table__socials__item">
                       <v-icon color="black">web_asset</v-icon>
                       <span>sitio web</span>
                     </a>

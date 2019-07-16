@@ -31,7 +31,7 @@ Validator.localize('es', es)
 
 Vue.config.productionTip = false
 
-Vue.http.options.root = 'https://api.exe.combativa.com/api/v1/'
+Vue.http.options.root = 'http://127.0.0.1:8000/api/v1/'
 Vue.http.interceptors.push((request, next) => {
   request.headers.set('Authorization', `Bearer ${window.localStorage.getItem('_token')}`)
   next()

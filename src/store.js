@@ -119,6 +119,12 @@ const store = new Vuex.Store({
     },
     getOnlyTypeProgram: (state) => (id) => {
       return state.typePrograms.filter(item => item.id === id)[0]
+    },
+    getOnlyTypeEntity: (state) => (id) => {
+      return state.typeEntities.filter(item => item.id === id)[0]
+    },
+    getOnlyLineEntity: (state) => (id) => {
+      return state.lines.filter(item => item.id === id)[0]
     }
   },
   mutations: {
