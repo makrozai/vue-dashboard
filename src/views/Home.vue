@@ -159,8 +159,16 @@ export default {
       datacollection: null,
       height: 400,
       options: {
+
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
       }
     }
   },
@@ -170,22 +178,31 @@ export default {
   methods: {
     fillData () {
       this.datacollection = {
-        labels: [this.getRandomInt(), this.getRandomInt()],
-        datasets: [
-          {
-            label: 'Entidades',
-            backgroundColor: '#f87979',
-            data: [this.getRandomInt(), this.getRandomInt()]
-          }, {
-            label: 'Participantes',
-            backgroundColor: '#f22979',
-            data: [this.getRandomInt(), this.getRandomInt()]
-          }, {
-            label: 'Administradores',
-            backgroundColor: '#f22109',
-            data: [this.getRandomInt(), this.getRandomInt()]
-          }
-        ]
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'Linea de trabajo de entidades',
+          data: [65, 59, 80, 81, 56, 55, 4],
+          fill: false,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+          ],
+          borderWidth: 1
+        }]
       }
     },
     getRandomInt () {
