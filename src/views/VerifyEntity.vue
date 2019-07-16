@@ -268,7 +268,7 @@
             <v-flex xs12>
               <p class="c-verify-entity__subtitle">Indícanos datos de contacto para la validación y contacto de la cuenta</p>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.email"
@@ -282,7 +282,7 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.cellphone"

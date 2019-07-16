@@ -8,7 +8,7 @@
         xs12
         class="c-dashboard-title mb-4"
       >
-        <h2>Ficha de verificación de entidad</h2>
+        <h2>Editar Perfil</h2>
       </v-flex>
     </v-layout>
     <form class="c-verify-entity ">
@@ -268,7 +268,7 @@
             <v-flex xs12>
               <p class="c-verify-entity__subtitle">Indícanos datos de contacto para la validación y contacto de la cuenta</p>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.email"
@@ -282,7 +282,7 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12>
+            <v-flex xs6>
               <v-text-field
                 :disabled="loadingSubmit"
                 v-model="perfil.cellphone"
