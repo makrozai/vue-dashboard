@@ -39,12 +39,11 @@
             <div class="c-card-program" v-if="programSelected">
               <div class="c-card-program__image">
                 <img :src="programSelected.logo_image_link || require('../assets/default-img.svg')" alt="">
-                <div class="c-card-program__image__icon" v-if="programSelected.entities.length !== 0">
-                  <img  :src="programSelected.entities[0].logo_image_link || require('../assets/icons/user.svg')" alt="">
+                <div class="c-card-program__image__icon" v-if="programSelected.entities.length !== 0 && programSelected.entities[0].logo_image_link">
+                  <img :src="programSelected.entities[0].logo_image_link" alt="">
                 </div>
               </div>
-              <p class="c-card-project__description">
-                {{ programSelected.description }}
+              <p class="c-card-project__description" v-html="programSelected.description ">
               </p>
             </div>
           </v-flex>
