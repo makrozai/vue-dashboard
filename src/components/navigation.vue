@@ -11,14 +11,14 @@
   >
     <v-toolbar flat class="transparent  c-navbar__logo">
       <v-list class="pa-0">
-        <v-list-tile avatar>
-          <v-list-tile-avatar>
-            <img src="../assets/exe.svg">
+        <v-list-tile avatar >
+          <v-list-tile-avatar >
+            <img @click="moveHome" src="../assets/exe.svg">
           </v-list-tile-avatar>
 
-          <v-list-tile-content>
+          <v-list-tile-content >
             <v-list-tile-title>
-              <img src="../assets/exe-text.svg" alt="">
+              <img @click="moveHome" src="../assets/exe-text.svg" alt="">
             </v-list-tile-title>
           </v-list-tile-content>
 
@@ -190,6 +190,9 @@ export default {
           time: 6000
         })
       }
+    },
+    moveHome () {
+      this.$router.push({ name: 'home' })
     }
   }
 }
