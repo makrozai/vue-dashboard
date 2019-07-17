@@ -435,7 +435,6 @@ export default {
       return arrayIds
     },
     resetFields () {
-      this.programOwn.owner_id = null
       this.programOwn.category = 1
       this.programOwn.logo_image_id = null
       this.programOwn.name = ''

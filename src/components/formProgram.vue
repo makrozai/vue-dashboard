@@ -386,11 +386,8 @@ export default {
             this.programOwn.entities.push(this.programOwn.owner_id)
             this.programOwn.entities = [...new Set(this.programOwn.entities)]
 
-            console.log(this.programOwn)
-
             this.saveProgram(this.programOwn)
               .then(response => {
-                console.log('response', response)
                 this.resetFields()
                 this.$emit('modal-state', false)
               })
@@ -441,7 +438,6 @@ export default {
       return arrayIds
     },
     resetFields () {
-      this.programOwn.owner_id = null
       this.programOwn.category = 1
       this.programOwn.logo_image_id = null
       this.programOwn.name = ''
