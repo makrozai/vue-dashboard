@@ -238,19 +238,21 @@
                 box
               ></v-text-field>
             </v-flex>
-            <v-flex xs12 md6>
-              <v-text-field
+            <v-flex xs12>
+              <v-radio-group
                 :disabled="loadingSubmit"
-                v-model="perfil.position"
                 v-validate="'required'"
-                maxlength="150"
-                :error-messages="errors.collect(getNameSpace('posición',index))"
-                label="cargo"
-                :data-vv-name="getNameSpace('posición',index)"
+                :error-messages="errors.collect(getNameSpace('tipo doc',index))"
+                :data-vv-name="getNameSpace('tipo doc',index)"
                 @keyup.enter="submit"
+                v-model="perfil.type_doc"
+                :mandatory="false"
                 required
-                box
-              ></v-text-field>
+                class="c-register__particular__radio"
+              >
+                <v-radio label="DNI" value="DNI" color="primary"></v-radio>
+                <v-radio label="Doc. Extranjería" value="DEX" color="primary"></v-radio>
+              </v-radio-group>
             </v-flex>
             <v-flex xs12 md6>
               <v-text-field
@@ -261,6 +263,20 @@
                 :error-messages="errors.collect(getNameSpace('dni',index))"
                 label="DNI"
                 :data-vv-name="getNameSpace('dni',index)"
+                required
+                box
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12 md6>
+              <v-text-field
+                :disabled="loadingSubmit"
+                v-model="perfil.position"
+                v-validate="'required'"
+                maxlength="150"
+                :error-messages="errors.collect(getNameSpace('posición',index))"
+                label="cargo"
+                :data-vv-name="getNameSpace('posición',index)"
+                @keyup.enter="submit"
                 required
                 box
               ></v-text-field>
@@ -450,6 +466,7 @@ export default {
           name: '',
           lastname: '',
           position: '',
+          type_doc: '',
           nro_doc: null,
           email: '',
           cellphone: null,
@@ -493,6 +510,7 @@ export default {
         name: '',
         lastname: '',
         position: '',
+        type_doc: '',
         nro_doc: null,
         email: '',
         cellphone: null,
