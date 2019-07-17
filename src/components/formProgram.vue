@@ -386,8 +386,11 @@ export default {
             this.programOwn.entities.push(this.programOwn.owner_id)
             this.programOwn.entities = [...new Set(this.programOwn.entities)]
 
+            console.log(this.programOwn)
+
             this.saveProgram(this.programOwn)
               .then(response => {
+                console.log('response', response)
                 this.resetFields()
                 this.$emit('modal-state', false)
               })
@@ -444,7 +447,7 @@ export default {
       this.programOwn.name = ''
       this.programOwn.type_program_id = null
       this.programOwn.start_date = null
-      this.programOwn.description = null
+      this.programOwn.description = ''
       this.programOwn.website = ''
       this.programOwn.twitter = ''
       this.programOwn.facebook = ''
