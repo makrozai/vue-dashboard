@@ -195,11 +195,19 @@
               ></v-textarea>-->
 
               <ckeditor
+                v-validate="'required'"
+                :error-messages="errors.collect('descripción  del programa')"
+                data-vv-name="descripción  del programa"
                 :editor="editor"
                 v-model="programOwn.description"
                 :config="editorConfig"
                 class="c-ckeditor"
+                required
               ></ckeditor>
+              <div class="c-recaptcha c-recaptcha--error">
+                <span>{{ errorDescription }}</span>
+              </div>
+
             </v-flex>
             <v-flex xs12>
               <h3>Redes :</h3>
@@ -337,7 +345,8 @@ export default {
       },
       // placeholder
       entityModel: null,
-      dialog: false
+      dialog: false,
+      errorDescription: ''
     }
   },
   watch: {
@@ -395,7 +404,11 @@ export default {
                 console.log(error)
               })
           } else {
-            console.log('formulario invalido revise los campos')
+            if (!this.programOwn.description) {
+              this.errorDescription = 'La descripción es obligatoria'
+            } else {
+              console.log('formulario invalido revise los campos')
+            }
           }
         })
     },
