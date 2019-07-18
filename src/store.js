@@ -163,7 +163,7 @@ const store = new Vuex.Store({
       state.placeholderUser = payload
     },
     setEntity (state, payload) {
-      state.placeholderEntity = payload
+      state.allEntities.push(payload)
     },
     validEntity (state, payload) {
       state.allEntities[payload.index] = payload.item

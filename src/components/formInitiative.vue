@@ -407,6 +407,7 @@ export default {
     },
     AggreEntityInvoled (involeds) {
       let onliEntity = this.getOnlyEntity(involeds.entity_id)
+      console.log(onliEntity)
       let objectInvoled = {
         entity_id: onliEntity.id,
         ruc: onliEntity.ruc,
@@ -427,6 +428,7 @@ export default {
         entity_id: generateInvoled.entity_id,
         participations: arrayParticipations
       }
+      console.log(responseInvoled)
       this.entitiesParticipans.push(this.AggreEntityInvoled(responseInvoled))
     },
     deleteReactive (arrayReactive) {

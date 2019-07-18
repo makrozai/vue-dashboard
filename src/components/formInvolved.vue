@@ -218,7 +218,7 @@ export default {
     this.resetInvoled()
   },
   methods: {
-    ...mapActions([ 'setEntity' ]),
+    ...mapActions([ 'setEntity', 'setAlert' ]),
 
     submit () {
       this.$validator.validateAll()
@@ -229,17 +229,28 @@ export default {
             if (involedSubmit.id) {
               // se ejecuta cuando la entdiad existe
               this.addInvolveds = false
+              console.log('sadasd')
               this.$emit('involed', involedSubmit)
             } else {
+              console.log('ingresa', involedSubmit)
               // se ejecuta primero para crear una entidad
               this.setEntity(involedSubmit)
                 .then(response => {
+                  involedSubmit.id = response.id
                   involedSubmit.entity_id = response.id
                   this.addInvolveds = false
+                })
+                .then(() => {
                   this.$emit('involed', involedSubmit)
                 })
                 .catch(error => {
-                  console.log(error)
+                  this.setAlert({
+                    text: error.body.message,
+                    state: true,
+                    dismissible: false,
+                    type: 'error',
+                    time: 5000
+                  })
                 })
             }
           }
