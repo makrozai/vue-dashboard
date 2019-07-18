@@ -171,7 +171,7 @@ export default {
                 this.statusSubmit = 'success'
 
                 this.setAlert({
-                  text: 'Verifica correctamente los campos',
+                  text: 'Actualizo el perfil',
                   state: true,
                   dismissible: false,
                   type: 'success',
