@@ -120,6 +120,11 @@ export default {
           return this.userSesion.entity.logo_image_link
         }
       }
+      if (this.userSesion.user.type_user_id === 3) {
+        if (this.userSesion.partaker.photo_image_link) {
+          return this.userSesion.partaker.photo_image_link
+        }
+      }
       // eslint-disable-next-line
       return require('../assets/default-img.svg')
     },
