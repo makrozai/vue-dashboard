@@ -18,7 +18,7 @@
             @image-resolve="uploadImage"
             @image-url="changeImageLink"
             :image="{url: partaker.logo_image_link, id: partaker.logo_image_id}"
-            type="entity_logo"
+            type="partaker_photo"
           ></upload-image>
         </div>
         <div class="c-verify-entity__row-large">
