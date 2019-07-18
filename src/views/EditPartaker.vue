@@ -17,7 +17,7 @@
           <upload-image
             @image-resolve="uploadImage"
             @image-url="changeImageLink"
-            :image="{url: partaker.logo_image_link, id: partaker.logo_image_id}"
+            :image="{url: partaker.photo_image_link, id: partaker.photo_image_id}"
             type="partaker_photo"
           ></upload-image>
         </div>
@@ -136,8 +136,8 @@ export default {
     return {
       partaker: {
         id: null,
-        logo_image_id: null,
-        logo_image_link: null,
+        photo_image_id: null,
+        photo_image_link: null,
         name: '',
         lastname: '',
         type_doc: '',
@@ -153,10 +153,10 @@ export default {
   methods: {
     ...mapActions(['image', 'setAlert', 'updatePartaker']),
     uploadImage (image) {
-      this.entity.logo_image_id = image
+      this.entity.photo_image_id = image
     },
     changeImageLink (image) {
-      this.entity.logo_image_link = image
+      this.entity.photo_image_link = image
     },
     submit () {
       this.loadingSubmit = true
