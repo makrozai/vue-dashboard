@@ -314,52 +314,95 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries', 'saveInitiative' ]),
+    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries', 'saveInitiative', 'setAlert' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            let arrayBeneficiaries = []
-            this.initiativeData.start_date = this.initiativeData.start_date + '-01'
-            this.benefitiesParticipans.forEach(element => {
-              arrayBeneficiaries.push(element.id)
-            })
-            let submitData = {
-              involveds: this.entitiesParticipans,
-              beneficiaries: arrayBeneficiaries
-            }
-            this.initiativeData.program_id = this.programSelected.id
-            submitData = Object.assign(submitData, this.initiativeData)
+            if (this.entitiesParticipans.length === 0 || this.benefitiesParticipans.length === 0) {
+              this.setAlert({
+                text: 'Es necesario agregar participantes o beneficiarios',
+                state: true,
+                dismissible: false,
+                type: 'error',
+                time: 3000
+              })
+            } else {
+              let arrayBeneficiaries = []
+              this.initiativeData.start_date = this.initiativeData.start_date + '-01'
+              this.benefitiesParticipans.forEach(element => {
+                arrayBeneficiaries.push(element.id)
+              })
+              let submitData = {
+                involveds: this.entitiesParticipans,
+                beneficiaries: arrayBeneficiaries
+              }
+              this.initiativeData.program_id = this.programSelected.id
+              submitData = Object.assign(submitData, this.initiativeData)
 
-            this.saveInitiative(submitData)
-              .then(response => {
-                this.$emit('modal-state', false)
-              })
-              .then(() => {
-                this.resetLabels()
-              })
+              this.saveInitiative(submitData)
+                .then(response => {
+                  this.$emit('modal-state', false)
+                })
+                .then(() => {
+                  this.resetLabels()
+                })
+            }
           } else {
             console.log('valid no correct')
           }
         })
     },
     registerInvolved () {
-      // se ejecuta cuando se desea abrir el modal
-
-      this.checkOtherEntity = !this.checkOtherEntity
-      // abre el modal
-      this.addInvolveds = true
-      // prepara el objeto de entidad para enviarlo al modal
-      this.openEntityInvoled = this.entitySelect
+      let validationDoble = false
+      if (this.entitySelect && this.entitySelect.id) {
+        this.entitiesParticipans.forEach(involed => {
+          if (involed.entity_id === this.entitySelect.id) {
+            this.setAlert({
+              text: 'No puede duplicar la entidad',
+              state: true,
+              dismissible: false,
+              type: 'warning',
+              time: 3000
+            })
+            validationDoble = true
+          }
+        })
+      }
+      if (!validationDoble) {
+        // se ejecuta cuando se desea abrir el modal
+        this.checkOtherEntity = !this.checkOtherEntity
+        // abre el modal
+        this.addInvolveds = true
+        // prepara el objeto de entidad para enviarlo al modal
+        this.openEntityInvoled = this.entitySelect
+      }
     },
     registerBeneficiare () {
-      // valida si el formulario debe se abrirse
-      if (this.benefitSelect !== null && typeof this.benefitSelect === 'object') {
-        this.benefitiesParticipans.push(Object.assign({}, this.benefitSelect))
-        this.benefitSelect = null
-      } else {
-        // abre el modal
-        this.addBeneficiaries = true
+      let validationDoble = false
+      if (this.benefitSelect && this.benefitSelect.id) {
+        this.benefitiesParticipans.forEach(beneficiarie => {
+          if (beneficiarie.id === this.benefitSelect.id) {
+            this.setAlert({
+              text: 'No puede duplicar la entidad',
+              state: true,
+              dismissible: false,
+              type: 'warning',
+              time: 3000
+            })
+            validationDoble = true
+          }
+        })
+      }
+      if (!validationDoble) {
+        // valida si el formulario debe se abrirse
+        if (this.benefitSelect !== null && typeof this.benefitSelect === 'object') {
+          this.benefitiesParticipans.push(Object.assign({}, this.benefitSelect))
+          this.benefitSelect = null
+        } else {
+          // abre el modal
+          this.addBeneficiaries = true
+        }
       }
     },
     AggreEntityInvoled (involeds) {
