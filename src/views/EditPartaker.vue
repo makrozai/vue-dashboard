@@ -153,10 +153,10 @@ export default {
   methods: {
     ...mapActions(['image', 'setAlert', 'updatePartaker']),
     uploadImage (image) {
-      this.entity.photo_image_id = image
+      this.partaker.photo_image_id = image
     },
     changeImageLink (image) {
-      this.entity.photo_image_link = image
+      this.partaker.photo_image_link = image
     },
     submit () {
       this.loadingSubmit = true
