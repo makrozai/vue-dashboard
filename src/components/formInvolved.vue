@@ -25,7 +25,7 @@
               v-validate="'required|max:180'"
               :disabled="bloquedEntity"
               v-model="involeds.social_reason"
-              maxlength="11"
+              maxlength="180"
               label="Razón social"
               :error-messages="errors.collect('razón social involucrado')"
               data-vv-name="razón social involucrado"

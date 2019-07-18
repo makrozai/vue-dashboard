@@ -199,7 +199,7 @@
           <v-flex xs5>
             <v-text-field
               v-model="initiativeData.total_investment_amount"
-              v-validate="'required'"
+              v-validate="'integer'"
               :error-messages="errors.collect('Inversión')"
               label="Inversión"
               data-vv-name="Inversión"
@@ -335,6 +335,9 @@ export default {
               .then(response => {
                 this.$emit('modal-state', false)
               })
+              .then(() => {
+                this.resetLabels()
+              })
           } else {
             console.log('valid no correct')
           }
@@ -427,6 +430,18 @@ export default {
     },
     closeEditBeneficiaries (value) {
       this.editBeneficiaryDialog = value
+    },
+    resetLabels () {
+      this.entitiesParticipans = []
+      this.benefitiesParticipans = []
+      this.initiativeData.program_id = null
+      this.initiativeData.name = ''
+      this.initiativeData.start_date = null
+      this.initiativeData.intervention_period = null
+      this.initiativeData.total_investment_amount = null
+      this.programSelected = null
+      this.entitySelect = null
+      this.$validator.reset()
     }
   }
 }
