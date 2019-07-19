@@ -229,7 +229,6 @@ export default {
             if (involedSubmit.id) {
               // se ejecuta cuando la entdiad existe
               this.addInvolveds = false
-              console.log('sadasd')
               this.$emit('involed', involedSubmit)
             } else {
               console.log('ingresa', involedSubmit)

@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     removeItem (index) {
-      console.log(index)
       this.$emit('remove-item', index)
     }
   }

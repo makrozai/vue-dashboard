@@ -149,7 +149,7 @@
 
           <!--autocompletado-->
           <v-flex xs12>
-            <card-entity :entities="entitiesParticipans"></card-entity>
+            <card-entity :entities="entitiesParticipans" @remove-item="removeInvoled"></card-entity>
           </v-flex>
           <v-flex xs12 class="mb-2">
             <h3>Beneficiados</h3>
@@ -407,7 +407,6 @@ export default {
     },
     AggreEntityInvoled (involeds) {
       let onliEntity = this.getOnlyEntity(involeds.entity_id)
-      console.log(onliEntity)
       let objectInvoled = {
         entity_id: onliEntity.id,
         ruc: onliEntity.ruc,
@@ -428,7 +427,6 @@ export default {
         entity_id: generateInvoled.entity_id,
         participations: arrayParticipations
       }
-      console.log(responseInvoled)
       this.entitiesParticipans.push(this.AggreEntityInvoled(responseInvoled))
     },
     deleteReactive (arrayReactive) {
@@ -487,6 +485,9 @@ export default {
       this.programSelected = null
       this.entitySelect = null
       this.$validator.reset()
+    },
+    removeInvoled (index) {
+      this.entitiesParticipans.splice(index, 1)
     }
   }
 }
