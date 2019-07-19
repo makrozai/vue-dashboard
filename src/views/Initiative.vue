@@ -67,7 +67,7 @@
         >
           <template v-slot:items="props">
             <td>
-              <div class="c-data-table__initiative">
+              <div class="c-data-table__initiative" @click="openEditForm(props.item)">
                 <img src="../assets/default-img.svg" alt="">
                 <div class="c-data-table__initiative__description">
                   <p><b>{{ props.item.name }}</b></p>
@@ -112,17 +112,28 @@
       >
         <form-initiative class="u-form--white c-card-fixed" @modal-state="responseInitiative"></form-initiative>
       </v-navigation-drawer>
+
+      <v-navigation-drawer
+        v-model="formDrawnerEdit"
+        temporary
+        right
+        fixed
+        width="550"
+      >
+        <form-initiative-edit class="u-form--white c-card-fixed" :initiative="selectInitiative" @modal-state="responseInitiative"></form-initiative-edit>
+      </v-navigation-drawer>
     </v-layout>
   </v-container>
 </template>
 
 <script>
 import FormInitiative from '../components/formInitiative'
+import FormInitiativeEdit from '../components/formInitiativeEdit'
 
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
-  components: { FormInitiative },
+  components: { FormInitiative, FormInitiativeEdit },
   computed: {
     ...mapState(['userSesion', 'allInitiatives', 'allEntities', 'allPrograms']),
     ...mapGetters(['getOnlyEntity', 'getOnlyProgram'])
@@ -132,6 +143,7 @@ export default {
       noData: false,
       search: '',
       formDrawner: null,
+      formDrawnerEdit: null,
 
       pagination: {
         rowsPerPage: 25
@@ -161,7 +173,8 @@ export default {
           align: 'center',
           sortable: true
         }
-      ]
+      ],
+      selectInitiative: null
     }
   },
   created () {
@@ -200,6 +213,10 @@ export default {
             this.noData = true
           }
         })
+    },
+    openEditForm (item) {
+      this.selectInitiative = item
+      this.formDrawnerEdit = !this.formDrawnerEdit
     }
   }
 }
