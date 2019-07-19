@@ -11,7 +11,7 @@
             <v-text-field
               v-validate="'required|max:180'"
               :disabled="bloquedEntity"
-              v-model="involeds.name"
+              v-model="entity.name"
               maxlength="180"
               label="Razón comercial"
               :error-messages="errors.collect('razón comercial involucrado')"
@@ -37,7 +37,7 @@
             <v-text-field
               v-validate="'required|integer|length:11'"
               :disabled="bloquedEntity"
-              v-model="involeds.ruc"
+              v-model="entity.ruc"
               maxlength="11"
               label="Ruc"
               :error-messages="errors.collect('ruc involucrado')"
@@ -128,12 +128,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  props: ['entity', 'changeValue'],
+  props: ['entity'],
   computed: {
-    ...mapState(['allEntities'])
+    ...mapState(['allEntities']),
+    ...mapGetters(['getOnlyEntity'])
   },
   data () {
     return {
@@ -170,78 +171,19 @@ export default {
     }
   },
   watch: {
-    changeValue (value) {
-      if (this.entity !== null && typeof this.entity === 'object') {
-        // bloquea los inputs
-        this.bloquedEntity = true
-        // evalua si envia una entidad
-        this.involeds.entity_id = this.entity.id
-        this.involeds.id = this.entity.id
-        this.involeds.name = this.entity.name
-        this.involeds.ruc = this.entity.ruc
-        this.involeds.social_reason = this.entity.social_reason
-      } else {
-        // bloquea los inputs
-        this.bloquedEntity = false
-        // en caso no lo envie, borra todo lo que estaba anteriormente
-        this.involeds.entity_id = null
-        this.involeds.id = null
-        this.involeds.name = ''
-        this.involeds.ruc = ''
-        this.involeds.social_reason = ''
-      }
-      // reset de participaciones
-      this.resetInvoled()
+    entity (value) {
+      this.completeValue(value)
     }
   },
   created () {
-    if (this.entity !== null && typeof this.entity === 'object') {
-      // bloquea los inputs
-      this.bloquedEntity = true
-      // evalua si envia una entidad
-      this.involeds.entity_id = this.entity.id
-      this.involeds.id = this.entity.id
-      this.involeds.name = this.entity.name
-      this.involeds.ruc = this.entity.ruc
-      this.involeds.social_reason = this.entity.social_reason
-    } else {
-      // bloquea los inputs
-      this.bloquedEntity = false
-      // en caso no lo envie, borra todo lo que estaba anteriormente
-      this.involeds.entity_id = null
-      this.involeds.id = null
-      this.involeds.name = ''
-      this.involeds.ruc = ''
-      this.involeds.social_reason = ''
-    }
-    // reset de participaciones
-    this.resetInvoled()
+    this.completeValue(this.entity)
   },
   methods: {
-    ...mapActions([ 'setEntity' ]),
-
     submit () {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            let involedSubmit = Object.assign({}, this.involeds)
-            involedSubmit.participations = this.validParticipations(involedSubmit.participations)
-            if (involedSubmit.id) {
-              // se ejecuta cuando la entdiad existe
-              this.addInvolveds = false
-              this.$emit('involed', involedSubmit)
-            } else {
-              // se ejecuta primero para crear una entidad
-              this.setEntity(involedSubmit)
-                .then(response => {
-                  involedSubmit.entity_id = response.id
-                  this.addInvolveds = false
-                  this.$emit('involed', involedSubmit)
-                })
-                .catch(error => {
-                  console.log(error)
-                })
-            }
+
           }
         })
     },
@@ -254,14 +196,23 @@ export default {
       })
       return arrayParticipations
     },
-    resetInvoled () {
-      this.involeds.participations.forEach(element => {
-        element.description = ''
-        element.amount = null
-      })
-    },
     close () {
       this.$emit('modal-close', false)
+    },
+    completeValue (entities) {
+      let entityData = this.getOnlyEntity(entities.entity_id)
+      this.involeds.name = entityData.name
+      this.involeds.social_reason = entityData.social_reason
+      this.involeds.ruc = entityData.ruc
+
+      this.involeds.participations.forEach((involed, index) => {
+        entities.participations.forEach(entity => {
+          if (involed.type === entity.type) {
+            this.involeds.participations[index].description = entity.description
+            this.involeds.participations[index].amount = entity.amount
+          }
+        })
+      })
     }
   }
 }

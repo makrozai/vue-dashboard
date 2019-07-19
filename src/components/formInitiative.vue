@@ -146,10 +146,18 @@
           >
             <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled" @modal-close="closeInvoled"></form-involved>
           </v-dialog>
+          <v-dialog
+            v-model="EditInvolveds"
+            lazy
+            full-width
+            width="500px"
+          >
+            <form-involved-edit :entity="editEntityInvoled" @modal-close="closeInvoled"></form-involved-edit>
+          </v-dialog>
 
           <!--autocompletado-->
           <v-flex xs12>
-            <card-entity :entities="entitiesParticipans" @remove-item="removeInvoled"></card-entity>
+            <card-entity :entities="entitiesParticipans" @remove-item="removeInvoled" @edit-item="editInvoled"></card-entity>
           </v-flex>
           <v-flex xs12 class="mb-2">
             <h3>Beneficiados</h3>
@@ -228,11 +236,12 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import CardEntity from './cardEntity'
 import CardBenefit from './cardBenefit'
 import FormInvolved from './formInvolved'
+import FormInvolvedEdit from './formInvolvedEdit'
 import FormBeneficiaries from './formBeneficiaries'
 import FormBeneficiariesEdit from './formBeneficiariesEdit'
 
 export default {
-  components: { CardEntity, CardBenefit, FormInvolved, FormBeneficiaries, FormBeneficiariesEdit },
+  components: { CardEntity, CardBenefit, FormInvolved, FormInvolvedEdit, FormBeneficiaries, FormBeneficiariesEdit },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities', 'allBeneficiaries']),
     ...mapGetters(['getOnlyEntity']),
@@ -245,6 +254,7 @@ export default {
     return {
       checkOtherEntity: false,
       addInvolveds: false,
+      EditInvolveds: false,
       addBeneficiaries: false,
       programSelected: null,
       dateStartModal: false,
@@ -257,6 +267,7 @@ export default {
       },
       editBeneficiaryDialog: false,
       editBeneficiaryData: null,
+      editEntityInvoled: null,
       // placeholder
       openEntityInvoled: null,
       entityAddDialog: null,
@@ -488,6 +499,10 @@ export default {
     },
     removeInvoled (index) {
       this.entitiesParticipans.splice(index, 1)
+    },
+    editInvoled (index) {
+      this.EditInvolveds = true
+      this.editEntityInvoled = this.entitiesParticipans[index]
     }
   }
 }

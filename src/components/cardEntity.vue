@@ -32,6 +32,7 @@
           small
           color="primary"
           v-if="onlyRemove == null"
+          @click="editItem(index)"
         >
           <v-icon>edit</v-icon>
         </v-btn>
@@ -76,6 +77,9 @@ export default {
   methods: {
     removeItem (index) {
       this.$emit('remove-item', index)
+    },
+    editItem (index) {
+      this.$emit('edit-item', index)
     }
   }
 }
