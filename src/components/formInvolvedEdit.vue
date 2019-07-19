@@ -1,7 +1,7 @@
 <template>
   <v-card class="c-form-involveds">
     <v-card-title>
-      <h3>AGREGAR ENTIDAD COMPROMETIDA</h3>
+      <h3>EDITAR ENTIDAD COMPROMETIDA</h3>
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
@@ -10,7 +10,7 @@
           <v-flex xs12>
             <v-text-field
               v-validate="'required|max:180'"
-              :disabled="bloquedEntity"
+              disabled
               v-model="entity.name"
               maxlength="180"
               label="Razón comercial"
@@ -23,7 +23,7 @@
           <v-flex xs6>
             <v-text-field
               v-validate="'required|max:180'"
-              :disabled="bloquedEntity"
+              disabled
               v-model="involeds.social_reason"
               maxlength="180"
               label="Razón social"
@@ -36,7 +36,7 @@
           <v-flex xs6>
             <v-text-field
               v-validate="'required|integer|length:11'"
-              :disabled="bloquedEntity"
+              disabled
               v-model="entity.ruc"
               maxlength="11"
               label="Ruc"
@@ -138,8 +138,7 @@ export default {
   },
   data () {
     return {
-      bloquedEntity: false,
-      tab: null,
+      tab: 0,
       involeds: {
         id: null,
         entity_id: null,
@@ -183,7 +182,9 @@ export default {
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-
+            let involedSubmit = Object.assign({}, this.involeds)
+            involedSubmit.participations = this.validParticipations(involedSubmit.participations)
+            this.$emit('change-value', involedSubmit)
           }
         })
     },
@@ -204,6 +205,7 @@ export default {
       this.involeds.name = entityData.name
       this.involeds.social_reason = entityData.social_reason
       this.involeds.ruc = entityData.ruc
+      this.involeds.entity_id = entityData.id
 
       this.involeds.participations.forEach((involed, index) => {
         entities.participations.forEach(entity => {

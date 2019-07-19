@@ -152,12 +152,12 @@
             full-width
             width="500px"
           >
-            <form-involved-edit :entity="editEntityInvoled" @modal-close="closeInvoled"></form-involved-edit>
+            <form-involved-edit :entity="editEntityInvoled" @modal-close="closeInvoled" @change-value="changeInvoled"></form-involved-edit>
           </v-dialog>
 
           <!--autocompletado-->
           <v-flex xs12>
-            <card-entity :entities="entitiesParticipans" @remove-item="removeInvoled" @edit-item="editInvoled"></card-entity>
+            <card-entity v-if="cardEntitiesVisibility" :entities="entitiesParticipans" @remove-item="removeInvoled" @edit-item="editInvoled"></card-entity>
           </v-flex>
           <v-flex xs12 class="mb-2">
             <h3>Beneficiados</h3>
@@ -252,6 +252,7 @@ export default {
   },
   data () {
     return {
+      cardEntitiesVisibility: true,
       checkOtherEntity: false,
       addInvolveds: false,
       EditInvolveds: false,
@@ -503,6 +504,20 @@ export default {
     editInvoled (index) {
       this.EditInvolveds = true
       this.editEntityInvoled = this.entitiesParticipans[index]
+    },
+    changeInvoled (data) {
+      this.EditInvolveds = false
+      this.cardEntitiesVisibility = false
+      this.entitiesParticipans.forEach((element, index) => {
+        // eslint-disable-next-line
+        if (element.entity_id = data.entity_id) {
+          this.entitiesParticipans[index] = data
+
+          setTimeout(() => {
+            this.cardEntitiesVisibility = true
+          }, 1)
+        }
+      })
     }
   }
 }
