@@ -258,7 +258,6 @@ export default {
     }
   },
   created () {
-    console.log(this.initiative)
     if (this.allPrograms.length === 0) {
       // en caso el usuario es tipo entidad
       if (this.userSesion.user.type_user_id === 2) {

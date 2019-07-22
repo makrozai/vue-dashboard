@@ -6,7 +6,9 @@
     <v-divider></v-divider>
     <v-card-text>
       <v-container grid-list-md class="py-0">
+
         <v-layout row wrap>
+          <v-chip v-if="bloquedEntity" color="warning" class="mb-3">Esta entidad ya esta registrada</v-chip>
           <v-flex xs12>
             <v-text-field
               v-validate="'required|max:180'"
