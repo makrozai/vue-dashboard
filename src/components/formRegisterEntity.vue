@@ -112,7 +112,7 @@
               class="mt-0"
             ></v-checkbox>
             <a @click="dialogTerms = true">¿Autoriza usted, que sus datos personales puedan ser tratados, para enviarle información y compartir la información relativa?</a>
-            <v-dialog v-model="dialogTerms" persistent max-width="560">
+            <v-dialog v-model="dialogTerms" max-width="560">
               <v-card>
                 <iframe :src="settings.iframeTG" height="650px" width="100%"></iframe>
                 <v-card-actions>
