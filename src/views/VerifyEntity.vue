@@ -494,10 +494,12 @@ export default {
 
     this.getContactsByEntity(this.entity.id)
       .then(response => {
-        this.perfilContact = response
+        if (response.length > 0) {
+          this.perfilContact = response
 
-        this.ubigeoPrepare.provinces = this.getTypeProvinces(this.entity.regions_id)
-        this.ubigeoPrepare.districts = this.getTypeDistricts(this.entity.provinces_id)
+          this.ubigeoPrepare.provinces = this.getTypeProvinces(this.entity.regions_id)
+          this.ubigeoPrepare.districts = this.getTypeDistricts(this.entity.provinces_id)
+        }
       })
       .catch(error => {
         console.log(error)
