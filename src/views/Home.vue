@@ -17,7 +17,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Programas</span>
-                <div class="headline">33</div>
+                <div class="headline">{{ dataReport.totalPrograms }}</div>
               </div>
               <i class="icon-program v-icon material-icons theme--light"></i>
             </div>
@@ -37,7 +37,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Iniciativas</span>
-                <div class="headline">33</div>
+                <div class="headline">{{ dataReport.totalInitiatives }}</div>
               </div>
               <i class="icon-init v-icon material-icons theme--light"></i>
             </div>
@@ -57,7 +57,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Entidades</span>
-                <div class="headline">33</div>
+                <div class="headline">{{ dataReport.totalEntities }}</div>
               </div>
               <i class="icon-entity v-icon material-icons theme--light"></i>
             </div>
@@ -77,7 +77,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Participantes</span>
-                <div class="headline">33</div>
+                <div class="headline">{{ dataReport.totalPartakers }}</div>
               </div>
               <v-icon>face</v-icon>
             </div>
@@ -144,6 +144,11 @@
 </template>
 
 <script>
+import partakersService from './../services/partakers'
+import initiativesService from './../services/initiatives'
+import programsService from './../services/programs'
+import entitiesService from './../services/entities'
+
 import LineChart from '../plugins/lineChart'
 
 export default {
@@ -173,11 +178,26 @@ export default {
             }
           }]
         }
+      },
+      dataReport: {
+        totalEntities: null,
+        totalPrograms: null,
+        totalInitiatives: null,
+        totalPartakers: null
       }
     }
   },
   created () {
     this.fillData()
+
+    partakersService.count().then(response => { this.dataReport.totalPartakers = response })
+      .catch(error => { console.log(error) })
+    initiativesService.count().then(response => { this.dataReport.totalInitiatives = response })
+      .catch(error => { console.log(error) })
+    programsService.count().then(response => { this.dataReport.totalPrograms = response })
+      .catch(error => { console.log(error) })
+    entitiesService.count().then(response => { this.dataReport.totalEntities = response })
+      .catch(error => { console.log(error) })
   },
   methods: {
     fillData () {

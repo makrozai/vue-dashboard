@@ -5,7 +5,7 @@ const entitiesService = {
     return new Promise((resolve, reject) => {
       Vue.http.post('entities', payload)
         .then(response => {
-          // enruta correctamente la entidad a la respuesta
+          // enruta correctamente la respuesta
           response = response.body.data.entity
           resolve(response)
         })
@@ -18,13 +18,13 @@ const entitiesService = {
     return new Promise((resolve, reject) => {
       Vue.http.get(`entities/${payload}`)
         .then(response => {
-          // enruta correctamente el usuario a la respuesta
+          // enruta correctamente la respuesta
           response = response.body.data.entity
-          // retornna respuesta del usuario
+          // retornna respuesta
           resolve(response)
         })
         .catch(error => {
-          // retorna error de usuario
+          // retorna error
           reject(error)
         })
     })
@@ -33,7 +33,7 @@ const entitiesService = {
     return new Promise((resolve, reject) => {
       Vue.http.put(`entities/${payload.id}`, payload)
         .then(response => {
-          // enruta correctamente la entidad a la respuesta
+          // enruta correctamente la respuesta
           response = response.body.data.entity
 
           resolve(response)
@@ -47,13 +47,28 @@ const entitiesService = {
     return new Promise((resolve, reject) => {
       Vue.http.get(`entities?${payload}`)
         .then(response => {
-          // enruta correctamente el usuario a la respuesta
+          // enruta correctamente la respuesta
           response = response.body.data.entities
-          // retornna respuesta del usuario
+          // retornna respuesta
           resolve(response)
         })
         .catch(error => {
-          // retorna error de usuario
+          // retorna error
+          reject(error)
+        })
+    })
+  },
+  count: () => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('entities/total')
+        .then(response => {
+          // enruta correctamente la respuesta
+          response = response.body.data
+          // retorna respuesta
+          resolve(response)
+        })
+        .catch(error => {
+          // retorna error
           reject(error)
         })
     })

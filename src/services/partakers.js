@@ -43,6 +43,21 @@ const partakersServices = {
           reject(error)
         })
     })
+  },
+  count: () => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('partakers/total')
+        .then(response => {
+          // enruta correctamente la respuesta
+          response = response.body.data
+          // retorna respuesta
+          resolve(response)
+        })
+        .catch(error => {
+          // retorna error
+          reject(error)
+        })
+    })
   }
 }
 
