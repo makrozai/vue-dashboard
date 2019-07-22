@@ -17,7 +17,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Programas</span>
-                <div class="headline">{{ dataReport.totalPrograms }}</div>
+                <div class="headline">{{ dataReport.totalPrograms < 10 ? '0' + dataReport.totalPrograms : dataReport.totalPrograms }}</div>
               </div>
               <i class="icon-program v-icon material-icons theme--light"></i>
             </div>
@@ -37,7 +37,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Iniciativas</span>
-                <div class="headline">{{ dataReport.totalInitiatives }}</div>
+                <div class="headline">{{ dataReport.totalInitiatives < 10 ? '0' + dataReport.totalInitiatives : dataReport.totalInitiatives }}</div>
               </div>
               <i class="icon-init v-icon material-icons theme--light"></i>
             </div>
@@ -57,7 +57,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Entidades</span>
-                <div class="headline">{{ dataReport.totalEntities }}</div>
+                <div class="headline">{{ dataReport.totalEntities < 10 ? '0' + dataReport.totalEntities : dataReport.totalEntities }}</div>
               </div>
               <i class="icon-entity v-icon material-icons theme--light"></i>
             </div>
@@ -77,7 +77,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Participantes</span>
-                <div class="headline">{{ dataReport.totalPartakers }}</div>
+                <div class="headline">{{ dataReport.totalPartakers < 10 ? '0' + dataReport.totalPartakers : dataReport.totalPartakers }}</div>
               </div>
               <v-icon>face</v-icon>
             </div>
@@ -154,10 +154,10 @@ export default {
         }
       },
       dataReport: {
-        totalEntities: null,
-        totalPrograms: null,
-        totalInitiatives: null,
-        totalPartakers: null
+        totalEntities: 0,
+        totalPrograms: 0,
+        totalInitiatives: 0,
+        totalPartakers: 0
       }
     }
   },
