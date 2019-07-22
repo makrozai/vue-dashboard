@@ -143,6 +143,7 @@
             lazy
             full-width
             width="500px"
+            persistent
           >
             <form-involved :entity="openEntityInvoled" :change-value="checkOtherEntity" @involed="AddInvoled" @modal-close="closeInvoled"></form-involved>
           </v-dialog>
@@ -151,6 +152,7 @@
             lazy
             full-width
             width="500px"
+            persistent
           >
             <form-involved-edit :entity="editEntityInvoled" @modal-close="closeInvoled" @change-value="changeInvoled"></form-involved-edit>
           </v-dialog>
@@ -184,6 +186,7 @@
               lazy
               full-width
               width="500px"
+              persistent
             >
               <form-beneficiaries @beneficiary="addBeneficiary" @modal-close="closeBeneficiaries"></form-beneficiaries>
             </v-dialog>
@@ -193,6 +196,7 @@
               lazy
               full-width
               width="500px"
+              persistent
             >
               <form-beneficiaries-edit :entity="editBeneficiaryData" @beneficiary="editBeneficiaryUpdate" @modal-close="closeEditBeneficiaries"></form-beneficiaries-edit>
             </v-dialog>

@@ -415,7 +415,7 @@
         </div>
       </div>
 
-      <v-dialog v-model="dialog" max-width="600px" scrollable>
+      <v-dialog v-model="dialog" max-width="600px" scrollable persistent>
         <form-program @modal-state="changeActivityModal" @modal-close="closeDialog"></form-program>
       </v-dialog>
       <!--@ registro de programa-->
