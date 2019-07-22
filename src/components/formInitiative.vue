@@ -43,7 +43,7 @@
                   <img :src="programSelected.entities[0].logo_image_link" alt="">
                 </div>
               </div>
-              <p class="c-card-project__description" v-html="programSelected.description ">
+              <p class="c-card-project__description" v-html="programSelected.description.substr(0,160) + ' ...' ">
               </p>
             </div>
           </v-flex>
