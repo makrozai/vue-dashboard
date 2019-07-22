@@ -430,7 +430,9 @@
     }
   }
   &__type-entities {
-    align-items: flex-end;
+    .align-end{
+      align-items: flex-end !important;
+    }
   }
 }
 .c-verify-entity{
