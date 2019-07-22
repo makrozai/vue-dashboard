@@ -31,7 +31,7 @@
           <div class="c-register__forms__item">
             <h3>Entidad</h3>
             <i class="icon-entidad"></i>
-            <p>Manejas o ejecutas proyectos relacionados a la educación y soy parte de EXE Plataforma Interconexion</p>
+            <p>Manejas o ejecutas proyectos relacionados a la educación y soy parte de <b>EXE Plataforma Interconexion</b></p>
             <v-btn color="primary" @click="registerPage = 'entity'">Regístrate</v-btn>
           </div>
         </div>
