@@ -1,9 +1,9 @@
 import Vue from 'vue'
 
 const typeEntitiesService = {
-  get: () => {
+  get: (payload) => {
     return new Promise((resolve, reject) => {
-      Vue.http.get('type-entities')
+      Vue.http.get(`type-entities?${payload}`)
         .then(response => {
           // enruta correctamente a la respuesta
           response = response.body.data.type_entities

@@ -446,9 +446,16 @@ const store = new Vuex.Store({
           })
       })
     },
-    getTypeEntities (context) {
+    getTypeEntities (context, payload) {
+      let dataFilters = ''
+      if (payload) {
+        dataFilters = Object.entries(payload)
+          .map(pair => pair.map(encodeURIComponent).join('='))
+          .join('&')
+      }
+
       return new Promise((resolve, reject) => {
-        typeEntitiesService.get()
+        typeEntitiesService.get(dataFilters)
           .then(response => {
             context.commit('getTypeEntities', response)
             resolve(response)

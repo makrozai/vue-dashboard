@@ -92,41 +92,12 @@
           <v-card-title><h4>Ultimas entidades registradas :</h4></v-card-title>
           <v-divider></v-divider>
           <v-list dense>
-            <v-list-tile>
-              <v-list-tile-content>Calories:</v-list-tile-content>
-              <v-list-tile-content class="align-end">159</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Fat:</v-list-tile-content>
-              <v-list-tile-content class="align-end">6</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Carbs:</v-list-tile-content>
-              <v-list-tile-content class="align-end">24</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Protein:</v-list-tile-content>
-              <v-list-tile-content class="align-end">4</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Sodium:</v-list-tile-content>
-              <v-list-tile-content class="align-end">87</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Calcium:</v-list-tile-content>
-              <v-list-tile-content class="align-end">14%</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Iron:</v-list-tile-content>
-              <v-list-tile-content class="align-end">1%</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Iron:</v-list-tile-content>
-              <v-list-tile-content class="align-end">1%</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content>Iron:</v-list-tile-content>
-              <v-list-tile-content class="align-end">1%</v-list-tile-content>
+            <v-list-tile
+              v-for="(item, index) in typeEntities"
+              :key="index"
+            >
+              <v-list-tile-content>{{ item.name }}:</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{ item.total_entities }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -151,11 +122,14 @@ import entitiesService from './../services/entities'
 
 import LineChart from '../plugins/lineChart'
 
+import { mapState } from 'vuex'
+
 export default {
   components: {
     LineChart
   },
   computed: {
+    ...mapState(['typeEntities']),
     myStyles () {
       return {
         height: `${this.height}px`,

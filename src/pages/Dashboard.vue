@@ -52,7 +52,7 @@ export default {
       this.getDistricts()
     }
     this.getLines()
-    this.getTypeEntities()
+    this.getTypeEntities({ with_total_entities: true })
     this.getTypePrograms()
     this.getTypeBeneficiaries()
   },
