@@ -91,13 +91,13 @@
         <v-card >
           <v-card-title><h4>Ultimas entidades registradas :</h4></v-card-title>
           <v-divider></v-divider>
-          <v-list dense>
+          <v-list dense class="c-dashboard__type-entities">
             <v-list-tile
               v-for="(item, index) in typeEntities"
               :key="index"
             >
               <v-list-tile-content>{{ item.name }}:</v-list-tile-content>
-              <v-list-tile-content class="align-end">{{ item.total_entities }}</v-list-tile-content>
+              <v-list-tile-content class="align-end text-xs-right">{{ item.total_entities }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
