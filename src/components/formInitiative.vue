@@ -5,7 +5,7 @@
         <v-layout wrap>
           <h2>INICIATIVA</h2>
 
-          <v-flex xs12 class="c-input__button-action">
+          <v-flex xs12>
             <v-select
               v-model="programSelected"
               :items="allPrograms"
@@ -30,9 +30,6 @@
                 </v-list-tile-content>
               </template>
             </v-select>
-            <v-btn fab small color="primary">
-              <i class="icon-dots"></i>
-            </v-btn>
           </v-flex>
 
           <v-flex xs12>
@@ -121,6 +118,7 @@
               item-text="name"
               item-value="id"
               prepend-inner-icon="search"
+              @keyup.enter="registerInvolved"
               box
             >
               <template v-slot:item="data">
@@ -133,8 +131,8 @@
                 </v-list-tile-content>
               </template>
             </v-combobox>
-            <v-btn fab small color="primary" class="mt-2" @click="registerInvolved">
-              <v-icon>add</v-icon>
+            <v-btn color="primary" class="mt-2" @click="registerInvolved">
+              Agregar
             </v-btn>
 
           </v-flex>
@@ -173,12 +171,13 @@
               item-text="name"
               item-value="id"
               prepend-inner-icon="search"
+              @keyup.enter="registerBeneficiare"
               return-object
               box
             >
             </v-combobox>
-            <v-btn fab small color="primary" class="mt-2" @click="registerBeneficiare">
-              <v-icon>add</v-icon>
+            <v-btn color="primary" class="mt-2" @click="registerBeneficiare">
+              Agregar
             </v-btn>
 
             <v-dialog
