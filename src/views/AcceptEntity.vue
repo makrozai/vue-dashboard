@@ -6,7 +6,7 @@
       <v-icon>done</v-icon>
     </span>
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam quaerat consequuntur ducimus similique officia aliquam facere placeat reprehenderit dignissimos dolorem nisi minus et, illo laudantium iste fugiat suscipit earum alias. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit cupiditate laboriosam atque reprehenderit expedita eveniet facere. Consectetur ex nulla cum a velit laboriosam, vitae eaque quos soluta consequuntur aspernatur repudiandae?</p>
+    <p>Gracias por registrar la ficha de Entidad, el equipo de EXE Peruanos de la educación revisarán los datos para su validación dentro  de la plataforma, recuerda que podrás acceder a reportes y herramientas de resultados e impacto  en la educación en el país. Ingresa una vez aprobado tu cuenta información verídica para generar mejor impacto en indicadores de nuestros módulos de Programas e Iniciativas.</p>
 
     <span>Telefono: (551) 652 8742 - (551) 652 8743</span>
     <span>E-mail: informes@empresariosporlaeducacion.org.pe</span>
