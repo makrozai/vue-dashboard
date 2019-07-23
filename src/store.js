@@ -320,7 +320,6 @@ const store = new Vuex.Store({
       })
     },
     logout (context) {
-
       return new Promise((resolve, reject) => {
         authService.logout()
           .then(response => {

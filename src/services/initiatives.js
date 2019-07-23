@@ -45,6 +45,18 @@ const initiativesService = {
           reject(error)
         })
     })
+  },
+  reportYears: () => {
+    return new Promise((resolve, reject) => {
+      Vue.http.get('initiatives/report/total-by-years')
+        .then(response => {
+          response = response.body.data.report
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 
 }

@@ -179,7 +179,7 @@ export default {
         })
         .catch(error => {
           this.setAlert({
-            text: response.body.message,
+            text: error.body.message,
             state: true,
             dismissible: false,
             type: 'error',

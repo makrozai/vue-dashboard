@@ -172,6 +172,9 @@ export default {
       .catch(error => { console.log(error) })
     entitiesService.count().then(response => { this.dataReport.totalEntities = response })
       .catch(error => { console.log(error) })
+
+    initiativesService.reportYears().then(response => { console.log(response) })
+      .catch(error => { console.log(error) })
   },
   methods: {
     fillData () {
