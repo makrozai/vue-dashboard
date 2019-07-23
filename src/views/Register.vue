@@ -24,13 +24,13 @@
         <div class="c-register__forms">
           <div class="c-register__forms__item">
             <h3>Consultas</h3>
-            <i class="icon-consultas"></i>
+            <img src="../assets/consulting.svg" alt="">
             <p>¿Deseas consultar información de la plataforma <b>EXE Plataforma Interconexion</b></p>
             <v-btn color="primary" @click="registerPage = 'particular'">Regístrate</v-btn>
           </div>
           <div class="c-register__forms__item">
             <h3>Entidad</h3>
-            <i class="icon-entidad"></i>
+            <img src="../assets/collaboration.svg" alt="">
             <p>Manejas o ejecutas proyectos relacionados a la educación y soy parte de <b>EXE Plataforma Interconexion</b></p>
             <v-btn color="primary" @click="registerPage = 'entity'">Regístrate</v-btn>
           </div>
