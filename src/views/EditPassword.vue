@@ -80,7 +80,7 @@
 <script>
 import usersService from './../services/users'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -105,19 +105,47 @@ export default {
     this.labels.id = this.userSesion.user.id
   },
   methods: {
+    ...mapActions(['setAlert']),
     submit () {
       this.loadingSubmit = true
 
       this.$validator.validateAll()
         .then(result => {
           if (result) {
-            usersService.password(this.labels)
-              .then(response => {
-                console.log(response)
+            if(this.labels.oldpassword !== this.labels.newpassword) {
+              usersService.password(this.labels)
+                .then(response => {
+                  this.setAlert({
+                    text: response.message,
+                    state: true,
+                    dismissible: false,
+                    type: 'success',
+                    time: 5000
+                  })
+                  this.loadingSubmit = false
+                  this.$router.push({ name: 'home' })
+                })
+                .catch(error => {
+                  this.setAlert({
+                    text: error.message,
+                    state: true,
+                    dismissible: false,
+                    type: 'success',
+                    time: 5000
+                  })
+                  this.loadingSubmit = false
+                })
+            } else {
+              this.setAlert({
+                text: 'debes ingresar una contraseña distinta ',
+                state: true,
+                dismissible: false,
+                type: 'warning',
+                time: 5000
               })
-              .catch(error => {
-                console.log(error)
-              })
+              this.loadingSubmit = false
+            }
+
           }
         })
     }
