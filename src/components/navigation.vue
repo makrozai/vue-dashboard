@@ -187,13 +187,7 @@ export default {
       } else if (this.userSesion.partaker && this.userSesion.user.type_user_id === 3) {
         this.$router.push({ name: 'editar-participante' })
       } else {
-        this.setAlert({
-          text: 'no se tiene acceso a esta pagina',
-          state: true,
-          dismissible: false,
-          type: 'warning',
-          time: 6000
-        })
+        this.$router.push({ name: 'editar-contrasena' })
       }
     },
     moveHome () {

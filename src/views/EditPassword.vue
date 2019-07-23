@@ -24,6 +24,7 @@
           required
           box
           @click:append="show3 = !show3"
+          @keyup.enter="submit"
         ></v-text-field>
       </v-flex>
       <p>Recuerde generar una contraseña diferente a la anterior.</p>
@@ -41,6 +42,7 @@
           required
           box
           @click:append="show1 = !show1"
+          @keyup.enter="submit"
         ></v-text-field>
       </v-flex>
       <v-flex xs12>
@@ -56,6 +58,7 @@
           required
           box
           @click:append="show2 = !show2"
+          @keyup.enter="submit"
         ></v-text-field>
       </v-flex>
       <v-btn
@@ -127,10 +130,10 @@ export default {
                 })
                 .catch(error => {
                   this.setAlert({
-                    text: error.message,
+                    text: error.body.message,
                     state: true,
                     dismissible: false,
-                    type: 'success',
+                    type: 'error',
                     time: 5000
                   })
                   this.loadingSubmit = false
@@ -140,12 +143,14 @@ export default {
                 text: 'debes ingresar una contraseña distinta ',
                 state: true,
                 dismissible: false,
-                type: 'warning',
+                type: 'error',
                 time: 5000
               })
               this.loadingSubmit = false
             }
 
+          } else {
+            this.loadingSubmit = false
           }
         })
     }
