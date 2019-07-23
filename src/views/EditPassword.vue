@@ -1,5 +1,5 @@
 <template>
-  <v-container class="c-container-dashboard c-container-dashboard--small">
+  <v-container class="c-container-dashboard c-container-dashboard--xsmall">
     <v-layout
       wrap="true"
       justify-space-between
@@ -26,6 +26,7 @@
           @click:append="show3 = !show3"
         ></v-text-field>
       </v-flex>
+      <p>Recuerde generar una contraseña diferente a la anterior.</p>
       <v-flex xs12>
         <v-text-field
           :disabled="loadingSubmit"
