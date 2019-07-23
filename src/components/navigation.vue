@@ -167,7 +167,25 @@ export default {
     ...mapActions(['logout', 'setAlert']),
     endSesion () {
       this.logout()
-      this.$router.push({ name: 'login' })
+        .then(response => {
+          this.setAlert({
+            text: response.body.message,
+            state: true,
+            dismissible: false,
+            type: 'error',
+            time: 5000
+          })
+          this.$router.push({ name: 'login' })
+        })
+        .catch(error => {
+          this.setAlert({
+            text: response.body.message,
+            state: true,
+            dismissible: false,
+            type: 'error',
+            time: 5000
+          })
+        })
     },
     getName (type) {
       switch (type) {

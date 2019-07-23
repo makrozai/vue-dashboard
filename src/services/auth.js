@@ -46,6 +46,17 @@ const authService = {
           reject(error)
         })
     })
+  },
+  logout: () => {
+    return new Promise((resolve, reject) => {
+      Vue.http.post('auth/logout')
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }
 

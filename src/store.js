@@ -320,8 +320,18 @@ const store = new Vuex.Store({
       })
     },
     logout (context) {
-      window.localStorage.removeItem('_token')
-      context.commit('setLogged')
+
+      return new Promise((resolve, reject) => {
+        authService.logout()
+          .then(response => {
+            window.localStorage.removeItem('_token')
+            context.commit('setLogged')
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     },
     setUser (context, payload) {
       return new Promise((resolve, reject) => {
