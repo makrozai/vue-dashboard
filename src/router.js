@@ -17,6 +17,7 @@ import home from './views/Home'
 import pageNotFound from './views/PageNotFound'
 import editProfile from './views/EditProfile'
 import editPartaker from './views/EditPartaker'
+import editPassword from './views/EditPassword'
 
 /* eslint-disable no-undef */
 import store from './store'
@@ -212,6 +213,15 @@ const router = new Router({
           meta: {
             Auth: true,
             title: 'Inicio'
+          }
+        },
+        {
+          path: 'editar-contrasena',
+          name: 'editar-contrasena',
+          component: editPassword,
+          meta: {
+            Auth: true,
+            title: 'Editar Contraseña'
           }
         }
       ]

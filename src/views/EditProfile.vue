@@ -8,7 +8,9 @@
         xs12
         class="c-dashboard-title mb-4"
       >
-        <h2>Editar Perfil</h2>
+        <h2>Editar Perfil
+          <router-link :to="{name: 'editar-contrasena'}" class="c-dashboard-title__setting">cambiar contraseña</router-link>
+        </h2>
       </v-flex>
     </v-layout>
     <form class="c-verify-entity ">

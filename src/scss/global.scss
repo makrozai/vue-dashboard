@@ -403,6 +403,13 @@
       max-width: 30em;
       margin-top: 1em !important;
     }
+    &__setting{
+      text-transform: none;
+      font-weight: normal;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--v-secondary-darken1);
+    }
   }
   &__card{
     &__stadistic{

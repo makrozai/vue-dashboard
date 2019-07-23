@@ -23,7 +23,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-          <v-btn flat color="white">Explore</v-btn>
+          <v-btn flat color="white">Ver más ...</v-btn>
         </v-card-actions>
         </v-card>
       </v-flex>
@@ -43,7 +43,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="white">Explore</v-btn>
+            <v-btn flat color="white">Ver más ...</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -63,7 +63,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="white">Explore</v-btn>
+            <v-btn flat color="white">Ver más ...</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -83,7 +83,7 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="white">Explore</v-btn>
+            <v-btn flat color="white">Ver más ...</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
