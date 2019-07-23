@@ -30,6 +30,21 @@ const usersService = {
           reject(error)
         })
     })
+  },
+  password: (payload) => {
+    return new Promise((resolve, reject) => {
+      Vue.http.put(`users/${payload.id}/password`, payload)
+        .then(response => {
+          // enruta correctamente la respuesta
+          response = response.body
+          // retorna la respuesta
+          resolve(response)
+        })
+        .catch(error => {
+          // retorna el error
+          reject(error)
+        })
+    })
   }
 }
 

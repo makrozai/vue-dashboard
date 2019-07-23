@@ -14,7 +14,7 @@
       <v-flex xs12>
         <v-text-field
           :disabled="loadingSubmit"
-          v-model="passwordOld"
+          v-model="labels.oldpassword"
           v-validate="'required|min:8'"
           :append-icon="show3 ? 'visibility' : 'visibility_off'"
           :type="show3 ? 'text' : 'password'"
@@ -30,7 +30,7 @@
       <v-flex xs12>
         <v-text-field
           :disabled="loadingSubmit"
-          v-model="password"
+          v-model="labels.newpassword"
           v-validate="'required|min:8'"
           :append-icon="show1 ? 'visibility' : 'visibility_off'"
           :type="show1 ? 'text' : 'password'"
@@ -46,7 +46,7 @@
       <v-flex xs12>
         <v-text-field
           :disabled="loadingSubmit"
-          v-model="passwordComfirmed"
+          v-model="labels.passwordComfirmed"
           v-validate="'required|min:8|confirmed:password'"
           :append-icon="show2 ? 'visibility' : 'visibility_off'"
           :type="show2 ? 'text' : 'password'"
@@ -58,25 +58,71 @@
           @click:append="show2 = !show2"
         ></v-text-field>
       </v-flex>
+      <v-btn
+        :disabled="loadingSubmit"
+        large
+        :color='statusSubmit'
+        class="elevation-0"
+        @click="submit"
+      >
+        cambiar
+        <v-progress-circular
+          indeterminate
+          color="gray"
+          class="ml-4"
+          v-if="loadingSubmit"
+        ></v-progress-circular>
+      </v-btn>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        loadingSubmit: false,
-        statusSubmit: 'primary',
-        show1: false,
-        show2: false,
-        show3: false,
-        passwordOld: '',
-        password: '',
+import usersService from './../services/users'
+
+import { mapState } from 'vuex'
+
+export default {
+  data () {
+    return {
+      loadingSubmit: false,
+      statusSubmit: 'primary',
+      show1: false,
+      show2: false,
+      show3: false,
+      labels: {
+        id: null,
+        oldpassword: '',
+        newpassword: '',
         passwordComfirmed: ''
       }
     }
+  },
+  computed: {
+    ...mapState(['userSesion'])
+  },
+  created () {
+    this.labels.id = this.userSesion.user.id
+  },
+  methods: {
+    submit () {
+      this.loadingSubmit = true
+
+      this.$validator.validateAll()
+        .then(result => {
+          if (result) {
+            usersService.password(this.labels)
+              .then(response => {
+                console.log(response)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
+        })
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
