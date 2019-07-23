@@ -17,7 +17,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Programas</span>
-                <div class="headline">{{ dataReport.totalPrograms < 10 ? '0' + dataReport.totalPrograms : dataReport.totalPrograms }}</div>
+                <div class="headline">{{ parseCountTarjet(dataReport.totalPrograms) }}</div>
               </div>
               <i class="icon-program v-icon material-icons theme--light"></i>
             </div>
@@ -37,7 +37,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Iniciativas</span>
-                <div class="headline">{{ dataReport.totalInitiatives < 10 ? '0' + dataReport.totalInitiatives : dataReport.totalInitiatives }}</div>
+                <div class="headline">{{ parseCountTarjet(dataReport.totalInitiatives) }}</div>
               </div>
               <i class="icon-init v-icon material-icons theme--light"></i>
             </div>
@@ -57,7 +57,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Entidades</span>
-                <div class="headline">{{ dataReport.totalEntities < 10 ? '0' + dataReport.totalEntities : dataReport.totalEntities }}</div>
+                <div class="headline">{{ parseCountTarjet(dataReport.totalEntities) }}</div>
               </div>
               <i class="icon-entity v-icon material-icons theme--light"></i>
             </div>
@@ -77,7 +77,7 @@
             <div class="c-dashboard__card__stadistic">
               <div>
                 <span>Participantes</span>
-                <div class="headline">{{ dataReport.totalPartakers < 10 ? '0' + dataReport.totalPartakers : dataReport.totalPartakers }}</div>
+                <div class="headline">{{ parseCountTarjet(dataReport.totalPartakers)}}</div>
               </div>
               <v-icon>face</v-icon>
             </div>
@@ -205,6 +205,12 @@ export default {
     },
     getRandomInt () {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+    },
+    parseCountTarjet (counter) {
+      if (counter < 10) {
+        return '0' + counter
+      }
+      return counter
     }
   }
 }
