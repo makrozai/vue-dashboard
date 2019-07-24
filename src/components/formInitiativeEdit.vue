@@ -5,8 +5,21 @@
         <v-layout wrap>
           <h2>EDITAR INICIATIVA</h2>
 
-          <v-flex xs12>
-            <div class="c-card-program" v-if="programSelected">
+          <v-flex xs12 v-if="programSelected">
+            <v-text-field
+              disabled
+              v-model="programSelected.name"
+              v-validate="'required'"
+              :error-messages="errors.collect('programa seleccionado')"
+              label="Programa seleccionado"
+              data-vv-name="programa seleccionado"
+              required
+              box
+            ></v-text-field>
+          </v-flex>
+
+          <v-flex xs12 v-if="programSelected">
+            <div class="c-card-program">
               <div class="c-card-program__image">
                 <img :src="programSelected.logo_image_link || require('../assets/default-img.svg')" alt="">
                 <div class="c-card-program__image__icon" v-if="programSelected.entities.length !== 0 && programSelected.entities[0].logo_image_link">
@@ -215,7 +228,7 @@ export default {
   components: { CardEntity, CardBenefit, FormInvolved, FormInvolvedEdit, FormBeneficiaries, FormBeneficiariesEdit },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities', 'allBeneficiaries']),
-    ...mapGetters(['getOnlyEntity']),
+    ...mapGetters(['getOnlyEntity','getOnlyProgram']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -231,6 +244,7 @@ export default {
       programSelected: null,
       dateStartModal: false,
       initiativeData: {
+        id: null,
         program_id: null,
         name: '',
         start_date: null,
@@ -254,7 +268,11 @@ export default {
       value && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
     },
     initiative (value) {
-      console.log(value)
+      let dateNoFormat = value.start_date.split('-', 2)
+      value.start_date = dateNoFormat[0] + '-' + dateNoFormat[1]
+      value.total_investment_amount = parseInt(value.total_investment_amount)
+      this.initiativeData = value
+      this.programSelected = this.getOnlyProgram(value.program_id)
     }
   },
   created () {

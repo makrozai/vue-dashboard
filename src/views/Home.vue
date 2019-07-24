@@ -189,7 +189,6 @@ export default {
         })
       })
       .then(() => {
-        console.log('holi')
         this.fillData()
         this.loaded = true
       })
