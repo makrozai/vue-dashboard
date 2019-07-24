@@ -34,7 +34,14 @@ import MNavigation from '../components/navigation'
 export default {
   components: { MNavigation },
   computed: {
-    ...mapState(['ubigeo', 'userSesion'])
+    ...mapState([
+      'ubigeo',
+      'userSesion',
+      'lines',
+      'typeEntities',
+      'typePrograms',
+      'typeBeneficiaries'
+    ])
   },
   data () {
     return {
@@ -51,13 +58,29 @@ export default {
     if (!this.ubigeo.districts) {
       this.getDistricts()
     }
-    this.getLines()
-    this.getTypeEntities({ with_total_entities: true })
-    this.getTypePrograms()
-    this.getTypeBeneficiaries()
+    if (this.lines.length === 0) {
+      this.getLines()
+    }
+    if (this.typeEntities.length === 0) {
+      this.getTypeEntities({ with_total_entities: true })
+    }
+    if (this.typePrograms.length === 0) {
+      this.getTypePrograms()
+    }
+    if (this.typeBeneficiaries.length === 0) {
+      this.getTypeBeneficiaries()
+    }
   },
   methods: {
-    ...mapActions(['getRegions', 'getProvinces', 'getDistricts', 'getLines', 'getTypeEntities', 'getTypePrograms', 'getTypeBeneficiaries']),
+    ...mapActions([
+      'getRegions',
+      'getProvinces',
+      'getDistricts',
+      'getLines',
+      'getTypeEntities',
+      'getTypePrograms',
+      'getTypeBeneficiaries'
+    ]),
     updateNavbar (response) {
       this.navbarStatus = response
     }
