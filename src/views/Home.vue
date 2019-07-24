@@ -105,7 +105,7 @@
       <v-flex xs9 class="mt-4">
         <v-card>
           <v-card-text>
-            <line-chart :chart-data="datacollection" :styles="myStyles" :options="options"></line-chart>
+            <line-chart v-if="loaded" :chart-data="chartdata" :options="options"></line-chart>
           </v-card-text>
         </v-card>
 
@@ -162,11 +162,12 @@ export default {
           labels: [],
           data: []
         }
-      }
+      },
+      loaded: false,
+      chartdata: null
     }
   },
   created () {
-    this.fillData()
 
     partakersService.count().then(response => { this.dataReport.totalPartakers = response })
       .catch(error => { console.log(error) })
@@ -184,11 +185,16 @@ export default {
           this.dataReport.forYears.data.push(element.total_initiatives)
         })
       })
+      .then(() => {
+        console.log('holi')
+        this.fillData()
+        this.loaded = true
+      })
       .catch(error => { console.log(error) })
   },
   methods: {
     fillData () {
-      this.datacollection = {
+      this.chartdata = {
         labels: this.dataReport.forYears.labels,
         datasets: [{
           label: 'Linea de trabajo de entidades',
