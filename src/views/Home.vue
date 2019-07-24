@@ -152,7 +152,7 @@ export default {
             }
           }],
           yAxes: [{
-              stacked: true
+            stacked: true
           }]
         }
       },
@@ -171,7 +171,6 @@ export default {
     }
   },
   created () {
-
     partakersService.count().then(response => { this.dataReport.totalPartakers = response })
       .catch(error => { console.log(error) })
     initiativesService.count().then(response => { this.dataReport.totalInitiatives = response })

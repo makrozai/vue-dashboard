@@ -228,7 +228,7 @@ export default {
   components: { CardEntity, CardBenefit, FormInvolved, FormInvolvedEdit, FormBeneficiaries, FormBeneficiariesEdit },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities', 'allBeneficiaries']),
-    ...mapGetters(['getOnlyEntity','getOnlyProgram']),
+    ...mapGetters(['getOnlyEntity', 'getOnlyProgram']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
