@@ -231,20 +231,8 @@ export default {
     }
   },
   created () {
-    if (this.userSesion.user.type_user_id === 1) {
-      this.getAllEntities({ with_contacts: true, state_in: '1,2,3,4' })
-        .then(response => {
-          if (this.allEntities.length === 0) {
-            this.noData = true
-          }
-        })
-    } else {
-      this.getAllEntities({ with_contacts: true })
-        .then(response => {
-          if (this.allEntities.length === 0) {
-            this.noData = true
-          }
-        })
+    if (this.allEntities.length === 0) {
+      this.noData = true
     }
 
     if (this.userSesion.user.type_user_id !== 1) {

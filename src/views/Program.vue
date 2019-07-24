@@ -187,26 +187,6 @@ export default {
     }
   },
   created () {
-    if (this.allPrograms.length === 0) {
-      switch (this.userSesion.user.type_user_id) {
-        case 1:
-          this.getAllPrograms()
-            .then(response => {
-              if (this.allPrograms.length === 0) {
-                this.noData = true
-              }
-            })
-          break
-        case 2:
-          this.getAllPrograms({ entity_id: this.userSesion.entity.id })
-            .then(response => {
-              if (this.allPrograms.length === 0) {
-                this.noData = true
-              }
-            })
-          break
-      }
-    }
   },
   methods: {
     ...mapActions(['getAllPrograms']),

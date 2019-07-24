@@ -178,27 +178,6 @@ export default {
     }
   },
   created () {
-    if (this.allInitiatives.length === 0) {
-      if (this.userSesion.user.type_user_id === 1) {
-        this.getAllInitiatives({ with_involveds: true })
-          .then(response => {
-            if (this.allInitiatives.length === 0) {
-              this.noData = true
-            }
-          })
-      }
-      if (this.userSesion.user.type_user_id === 2) {
-        this.getAllInitiatives({ entity_id: this.userSesion.entity.id, with_involveds: true })
-          .then(response => {
-            if (this.allInitiatives.length === 0) {
-              this.noData = true
-            }
-          })
-      }
-      if (this.userSesion.user.type_user_id === 3) {
-        console.log('participante')
-      }
-    }
   },
   methods: {
     ...mapActions(['getAllInitiatives']),
