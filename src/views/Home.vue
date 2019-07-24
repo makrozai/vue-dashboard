@@ -148,8 +148,11 @@ export default {
         scales: {
           xAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: false
             }
+          }],
+          yAxes: [{
+              stacked: true
           }]
         }
       },
