@@ -266,7 +266,7 @@ router.beforeEach((to, from, next) => {
           }
         })
         .catch(error => {
-          if (error.body.code === 'token_expired') {
+          if (error.body.code === 'token_expired' || error.body.code === 'token_invalid') {
             store.dispatch('logout')
             next({ name: 'login' })
           }

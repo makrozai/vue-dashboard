@@ -328,7 +328,12 @@ const store = new Vuex.Store({
             resolve(response)
           })
           .catch(error => {
-            reject(error)
+            if (error.body.code === 'failed_token_logout') {
+              window.localStorage.removeItem('_token')
+              context.commit('setLogged')
+            } else {
+              reject(error)
+            }
           })
       })
     },

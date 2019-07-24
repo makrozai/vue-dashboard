@@ -157,7 +157,11 @@ export default {
         totalEntities: 0,
         totalPrograms: 0,
         totalInitiatives: 0,
-        totalPartakers: 0
+        totalPartakers: 0,
+        forYears: {
+          labels: [],
+          data: []
+        }
       }
     }
   },
@@ -173,16 +177,22 @@ export default {
     entitiesService.count().then(response => { this.dataReport.totalEntities = response })
       .catch(error => { console.log(error) })
 
-    initiativesService.reportYears().then(response => { console.log(response) })
+    initiativesService.reportYears()
+      .then(response => {
+        response.forEach(element => {
+          this.dataReport.forYears.labels.push(element.year)
+          this.dataReport.forYears.data.push(element.total_initiatives)
+        })
+      })
       .catch(error => { console.log(error) })
   },
   methods: {
     fillData () {
       this.datacollection = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: this.dataReport.forYears.labels,
         datasets: [{
           label: 'Linea de trabajo de entidades',
-          data: [65, 59, 80, 81, 56, 55, 4],
+          data: this.dataReport.forYears.data,
           fill: false,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -205,9 +215,6 @@ export default {
           borderWidth: 1
         }]
       }
-    },
-    getRandomInt () {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     },
     parseCountTarjet (counter) {
       if (counter < 10) {
