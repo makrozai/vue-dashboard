@@ -32,6 +32,7 @@
           </v-flex>
           <v-flex xs12>
             <v-text-field
+              disabled
               v-model="initiativeData.name"
               v-validate="'required'"
               :error-messages="errors.collect('nombre de iniciativa')"
@@ -52,6 +53,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
+                  disabled
                   v-model="initiativeData.start_date"
                   v-validate="'required'"
                   :error-messages="errors.collect('fecha de inicio')"
@@ -80,6 +82,7 @@
           </v-flex>
           <v-flex xs4>
             <v-text-field
+              disabled
               v-model="initiativeData.intervention_period"
               v-validate="'required|integer|max:4'"
               :error-messages="errors.collect('periodo')"
@@ -98,6 +101,7 @@
           <!--autocompletado-->
           <v-flex xs12 class="c-input__button-action">
             <v-combobox
+              disabled
               v-model="entitySelect"
               :items="allEntities"
               label="Buscar entidad comprometida"
@@ -116,7 +120,7 @@
                 </v-list-tile-content>
               </template>
             </v-combobox>
-            <v-btn fab small color="primary" class="mt-2" @click="registerInvolved">
+            <v-btn disabled fab small color="primary" class="mt-2" @click="registerInvolved">
               <v-icon>add</v-icon>
             </v-btn>
 
@@ -140,7 +144,7 @@
 
           <!--autocompletado-->
           <v-flex xs12>
-            <card-entity v-if="cardEntitiesVisibility" :entities="entitiesParticipans" @remove-item="removeInvoled" @edit-item="editInvoled"></card-entity>
+            <card-entity v-if="cardEntitiesVisibility" disabled :entities="entitiesParticipans" @remove-item="removeInvoled" @edit-item="editInvoled"></card-entity>
           </v-flex>
           <v-flex xs12 class="mb-2">
             <h3>Beneficiados</h3>
@@ -148,6 +152,7 @@
           <!--autocompletado-->
           <v-flex xs12 class="c-input__button-action">
             <v-combobox
+              disabled
               v-model="benefitSelect"
               :items="allBeneficiaries"
               label="Buscar entidad propietaria del programa"
@@ -158,7 +163,7 @@
               box
             >
             </v-combobox>
-            <v-btn fab small color="primary" class="mt-2" @click="registerBeneficiare">
+            <v-btn disabled fab small color="primary" class="mt-2" @click="registerBeneficiare">
               <v-icon>add</v-icon>
             </v-btn>
 
@@ -182,13 +187,14 @@
           </v-flex>
           <!--autocompletado-->
           <v-flex xs12 class="mb-4">
-            <card-benefit :entities="benefitiesParticipans" @delete="deleteBeneficiary" @edit="editBeneficiary"></card-benefit>
+            <card-benefit disabled :entities="benefitiesParticipans" @delete="deleteBeneficiary" @edit="editBeneficiary"></card-benefit>
           </v-flex>
           <v-flex xs7>
             <p>Indicar el monto en soles de la inversión generada en la iniciativa</p>
           </v-flex>
           <v-flex xs5>
             <v-text-field
+              disabled
               v-model="initiativeData.total_investment_amount"
               v-validate="'decimal:3'"
               :error-messages="errors.collect('Inversión')"
@@ -207,7 +213,7 @@
 
     <v-card-actions>
       <v-container class="py-0">
-        <v-btn large color="primary" @click="submit">Guardar</v-btn>
+        <v-btn disabled large color="primary" @click="submit">Editar - Aun no habilitado</v-btn>
       </v-container>
 
     </v-card-actions>
@@ -272,9 +278,26 @@ export default {
       value.start_date = dateNoFormat[0] + '-' + dateNoFormat[1]
       this.initiativeData = value
       this.programSelected = this.getOnlyProgram(value.program_id)
+
+      // agree beneficiaries
       this.benefitiesParticipans = []
       value.beneficiaries.forEach(beneficiary => {
         this.benefitiesParticipans.push(this.getOnlyBeneficiary(beneficiary.id))
+      })
+
+      // agree involveds
+      this.entitiesParticipans = []
+      value.involveds.forEach(involved => {
+        let entityInvolved = this.getOnlyEntity(involved.entity_id)
+        let placeholderInvolved = {
+          entity_id: involved.entity_id,
+          ruc: entityInvolved.ruc,
+          name: entityInvolved.name,
+          status: entityInvolved.state,
+          participations: involved.participations,
+          logo_image_link: entityInvolved.logo_image_link
+        }
+        this.entitiesParticipans.push(placeholderInvolved)
       })
     }
   },

@@ -4,7 +4,7 @@
       v-for="(item, index) in entities"
       :key="index"
     >
-      <v-btn fab small color="primary" @click="deleteBeneficiary(index)">
+      <v-btn :disabled="disabled" fab small color="primary" @click="deleteBeneficiary(index)">
         <v-icon>remove</v-icon>
       </v-btn>
       <div class="c-card-benefit__entity__header">
@@ -17,7 +17,7 @@
           <li>La {{ nameRegionBeneficiary(item.region_id) }} / {{ nameProvinceBeneficiary(item.province_id) }} / {{ nameDistrictBeneficiary(item.district_id) }}</li>
         </ul>
       </div>
-      <v-btn fab small color="primary" @click="editBeneficiary(index)">
+      <v-btn :disabled="disabled" fab small color="primary" @click="editBeneficiary(index)">
         <v-icon>edit</v-icon>
       </v-btn>
     </div>
@@ -27,7 +27,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  props: ['entities'],
+  props: ['entities', 'disabled'],
   computed: {
     ...mapGetters(['getRegion', 'getProvince', 'getDistrict', 'getTypeBeneficiary'])
   },

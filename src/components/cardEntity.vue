@@ -31,6 +31,7 @@
           fab
           small
           color="primary"
+          :disabled="disabled"
           v-if="onlyRemove == null"
           @click="editItem(index)"
         >
