@@ -84,10 +84,10 @@ const store = new Vuex.Store({
     allEntities: [],
     allPrograms: [],
     allInitiatives: [],
+    allBeneficiaries: [],
     recoverPass: null,
     website: 'https://exe.combativa.com/',
     preloadIframe: false,
-    allBeneficiaries: [],
     settings: {
       iframeTG: 'https://exe.combativa.com/politicias-de-privacidad/?modal=99fe1294ecf6fd28741e231a21d5228f'
     }
@@ -104,6 +104,9 @@ const store = new Vuex.Store({
     },
     getOnlyProgram: (state) => (id) => {
       return state.allPrograms.filter(item => item.id === id)[0]
+    },
+    getOnlyBeneficiary: (state) => (id) => {
+      return state.allBeneficiaries.filter(item => item.id === id)[0]
     },
     getRegion: (state) => (id) => {
       return state.ubigeo.regions.filter(item => item.id === id)[0]

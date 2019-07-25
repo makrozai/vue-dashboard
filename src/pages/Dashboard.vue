@@ -78,11 +78,11 @@ export default {
 
     if (this.userSesion.user.type_user_id === 1) {
       filtersEntities = { with_contacts: true, state_in: '1,2,3,4' }
-      filterInitiatives = { with_involveds: true }
+      filterInitiatives = { with_involveds: true, with_beneficiaries: true }
     } else if (this.userSesion.user.type_user_id === 2) {
       filtersEntities = { with_contacts: true }
       filtersPrograms = { entity_id: this.userSesion.entity.id }
-      filterInitiatives = { entity_id: this.userSesion.entity.id, with_involveds: true }
+      filterInitiatives = { entity_id: this.userSesion.entity.id, with_involveds: true, with_beneficiaries: true }
     }
 
     this.getAllEntities(filtersEntities)

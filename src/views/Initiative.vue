@@ -135,7 +135,7 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   components: { FormInitiative, FormInitiativeEdit },
   computed: {
-    ...mapState(['userSesion', 'allInitiatives', 'allEntities', 'allPrograms', 'userSesion']),
+    ...mapState(['userSesion', 'allInitiatives', 'allEntities', 'allPrograms', 'userSesion', 'allBeneficiaries']),
     ...mapGetters(['getOnlyEntity', 'getOnlyProgram'])
   },
   data () {
@@ -146,7 +146,8 @@ export default {
       formDrawnerEdit: null,
 
       pagination: {
-        rowsPerPage: 25
+        rowsPerPage: 25,
+        descending: true
       },
       headers: [
         {
@@ -178,9 +179,14 @@ export default {
     }
   },
   created () {
+    if (this.allBeneficiaries.length === 0) {
+      this.getAllBeneficiaries()
+        .then(response => { console.log('carga de beneficiarios exitosa') })
+        .catch(error => { console.log('error al cargar beneficiarios', error) })
+    }
   },
   methods: {
-    ...mapActions(['getAllInitiatives']),
+    ...mapActions(['getAllInitiatives', 'getAllBeneficiaries']),
     nameProgram (id) {
       let name = this.getOnlyProgram(id)
       return name.name

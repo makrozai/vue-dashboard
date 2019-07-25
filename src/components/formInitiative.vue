@@ -210,7 +210,7 @@
           <v-flex xs5>
             <v-text-field
               v-model="initiativeData.total_investment_amount"
-              v-validate="'integer'"
+              v-validate="'decimal:3'"
               :error-messages="errors.collect('Inversión')"
               label="Inversión"
               data-vv-name="Inversión"
@@ -287,31 +287,6 @@ export default {
     }
   },
   created () {
-    if (this.allPrograms.length === 0) {
-      // en caso el usuario es tipo entidad
-      if (this.userSesion.user.type_user_id === 2) {
-        this.getAllPrograms({ entity_id: this.userSesion.user.entity.id })
-          .then(response => {
-
-          })
-      }
-      // en caso el usuario es tipo administrador
-      if (this.userSesion.user.type_user_id === 1) {
-        this.getAllPrograms()
-          .then(response => {
-
-          })
-      }
-    }
-    if (this.allEntities.length === 0) {
-      this.getAllEntities({ state_in: '1,2,4' })
-    }
-
-    if (this.allBeneficiaries.length === 0) {
-      this.getAllBeneficiaries()
-        .then(response => {
-        })
-    }
   },
   mounted () {
     if (document.querySelector('.c-card-fixed')) {
@@ -329,7 +304,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries', 'saveInitiative', 'setAlert' ]),
+    ...mapActions([ 'saveInitiative', 'setAlert' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {

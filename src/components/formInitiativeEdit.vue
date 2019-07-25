@@ -190,7 +190,7 @@
           <v-flex xs5>
             <v-text-field
               v-model="initiativeData.total_investment_amount"
-              v-validate="'integer'"
+              v-validate="'decimal:3'"
               :error-messages="errors.collect('Inversión')"
               label="Inversión"
               data-vv-name="Inversión"
@@ -228,7 +228,7 @@ export default {
   components: { CardEntity, CardBenefit, FormInvolved, FormInvolvedEdit, FormBeneficiaries, FormBeneficiariesEdit },
   computed: {
     ...mapState(['userSesion', 'allPrograms', 'allEntities', 'allBeneficiaries']),
-    ...mapGetters(['getOnlyEntity', 'getOnlyProgram']),
+    ...mapGetters(['getOnlyEntity', 'getOnlyProgram', 'getOnlyBeneficiary']),
     entityFullName () {
       let fullname = 'RUC ' + this.userSesion.entity.ruc + ' ' + this.userSesion.entity.name
       return fullname.toUpperCase()
@@ -270,37 +270,15 @@ export default {
     initiative (value) {
       let dateNoFormat = value.start_date.split('-', 2)
       value.start_date = dateNoFormat[0] + '-' + dateNoFormat[1]
-      value.total_investment_amount = parseInt(value.total_investment_amount)
       this.initiativeData = value
       this.programSelected = this.getOnlyProgram(value.program_id)
+      this.benefitiesParticipans = []
+      value.beneficiaries.forEach(beneficiary => {
+        this.benefitiesParticipans.push(this.getOnlyBeneficiary(beneficiary.id))
+      })
     }
   },
   created () {
-    if (this.allPrograms.length === 0) {
-      // en caso el usuario es tipo entidad
-      if (this.userSesion.user.type_user_id === 2) {
-        this.getAllPrograms({ entity_id: this.userSesion.user.entity.id })
-          .then(response => {
-
-          })
-      }
-      // en caso el usuario es tipo administrador
-      if (this.userSesion.user.type_user_id === 1) {
-        this.getAllPrograms()
-          .then(response => {
-
-          })
-      }
-    }
-    if (this.allEntities.length === 0) {
-      this.getAllEntities({ state_in: '1,2,4' })
-    }
-
-    if (this.allBeneficiaries.length === 0) {
-      this.getAllBeneficiaries()
-        .then(response => {
-        })
-    }
   },
   mounted () {
     if (document.querySelector('.c-card-fixed')) {
@@ -318,7 +296,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([ 'getAllPrograms', 'getAllEntities', 'getAllBeneficiaries', 'saveInitiative', 'setAlert' ]),
+    ...mapActions([ 'saveInitiative', 'setAlert' ]),
     submit () {
       this.$validator.validateAll()
         .then(result => {
