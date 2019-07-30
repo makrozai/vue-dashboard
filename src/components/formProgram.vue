@@ -82,7 +82,19 @@
             <!--@ select entities in group program-->
             <template v-if="programOwn.category == 2">
               <v-flex xs12 class="c-input__button-action">
-                <v-combobox
+                <v-autocomplete
+                  v-model="completeInput.select"
+                  :loading="completeInput.loading"
+                  :items="completeInput.items"
+                  :search-input.sync="searchComplete"
+                  cache-items
+                  class="mt-2"
+                  box
+                  hide-no-data
+                  hide-details
+                  label="Buscar entidad propietaria del programa"
+                >
+                <!--<v-combobox
                   v-model="entityModel"
                   :items="allEntities"
                   label="Buscar entidad propietaria del programa"
@@ -91,7 +103,7 @@
                   @keyup.enter="submit"
                   class="pt-2"
                   box
-                >
+                >-->
                   <template v-slot:item="data">
                     <v-list-tile-avatar>
                       <img :src="data.item.logo_image_link || require('./../assets/default-img.svg')">
@@ -101,7 +113,8 @@
                       <v-list-tile-sub-title v-html="data.item.ruc"></v-list-tile-sub-title>
                     </v-list-tile-content>
                   </template>
-                </v-combobox>
+                </v-autocomplete>
+                <!--</v-combobox>-->
                 <v-btn color="primary" @click="addEntityGroup">
                   agregar
                 </v-btn>
@@ -184,15 +197,6 @@
               ></upload-image>
             </v-flex>
             <v-flex xs12>
-              <!--<v-textarea
-                v-model="programOwn.description"
-                v-validate="'required'"
-                :error-messages="errors.collect('descripción  del programa')"
-                label="Descripción del programa"
-                data-vv-name="descripción  del programa"
-                @keyup.enter="submit"
-                box
-              ></v-textarea>-->
 
               <ckeditor
                 v-validate="'required'"
@@ -346,7 +350,13 @@ export default {
       // placeholder
       entityModel: null,
       dialog: false,
-      errorDescription: ''
+      errorDescription: '',
+      searchComplete: null,
+      completeInput:{
+        select: null,
+        loading: false,
+        items:[]
+      } 
     }
   },
   watch: {
@@ -355,7 +365,10 @@ export default {
     },
     entityOwner (valueOnwer) {
       this.programOwn.owner_id = valueOnwer.id
-    }
+    },
+    searchComplete (value){
+      value && value !== this.completeInput.select && this.querySelections(value)
+    } 
   },
   created () {
     this.programOwn.owner_id = this.userSesion.entity.id
@@ -470,7 +483,10 @@ export default {
     },
     close () {
       this.$emit('modal-close', false)
-    }
+    },
+    querySelections (v){
+      
+    } 
   }
 }
 </script>
