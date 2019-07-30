@@ -102,8 +102,8 @@
                     </v-list-tile-content>
                   </template>
                 </v-combobox>
-                <v-btn fab small color="primary" @click="addEntityGroup">
-                  <v-icon dark>add</v-icon>
+                <v-btn color="primary" @click="addEntityGroup">
+                  agregar
                 </v-btn>
               </v-flex>
 
