@@ -315,6 +315,8 @@ import UploadImage from './uploadImage'
 import CardEntity from './cardEntity'
 import FormRegisterContact from './formRegisterContact'
 
+import entitiesService from './../services/entities'
+
 export default {
   components: { UploadImage, CardEntity, FormRegisterContact },
   computed: {
@@ -352,11 +354,11 @@ export default {
       dialog: false,
       errorDescription: '',
       searchComplete: null,
-      completeInput:{
+      completeInput: {
         select: null,
         loading: false,
-        items:[]
-      } 
+        items: []
+      }
     }
   },
   watch: {
@@ -366,9 +368,9 @@ export default {
     entityOwner (valueOnwer) {
       this.programOwn.owner_id = valueOnwer.id
     },
-    searchComplete (value){
+    searchComplete (value) {
       value && value !== this.completeInput.select && this.querySelections(value)
-    } 
+    }
   },
   created () {
     this.programOwn.owner_id = this.userSesion.entity.id
@@ -484,9 +486,8 @@ export default {
     close () {
       this.$emit('modal-close', false)
     },
-    querySelections (v){
-      
-    } 
+    querySelections (v) {
+    }
   }
 }
 </script>
